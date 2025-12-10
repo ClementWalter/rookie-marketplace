@@ -1,0 +1,17 @@
+{
+  "name": "rookie-marketplace",
+  "owner": {
+    "name": "Clément Walter"
+  },
+  "metadata": {
+    "description": "Agent Context Protocol (ACP) skills for any kind of tasks, managed by Claude herself, added as she works",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "github-issues",
+      "description": "GitHub issue management utilities: move sub-issues between parent issues, add labels in bulk. Scripts: move_subissues.py - Move all sub-issues from one parent to another with optional labels (uv run move_subissues.py <source_url> <target_url> [--label LABEL]...)",
+      "source": "./github-issues"
+    }
+  ]
+}
