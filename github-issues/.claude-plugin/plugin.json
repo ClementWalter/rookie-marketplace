@@ -1,8 +1,8 @@
 {
-"name": "github-issues",
-"description": "GitHub issue management utilities)",
-"version": "1.0.0",
-"author": {
-"name": "Clément Walter"
-}
+  "name": "github-issues",
+  "description": "GitHub issue and milestone management utilities",
+  "version": "1.0.0",
+  "author": {
+    "name": "Clément Walter"
+  }
 }

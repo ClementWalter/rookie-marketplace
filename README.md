@@ -10,22 +10,25 @@ This marketplace contains reusable skills (plugins) for Claude Code that automat
 
 ### github-issues
 
-GitHub issue management utilities for streamlined project management.
+GitHub issue and milestone management utilities for streamlined project management.
 
-**Commands:**
+**Slash Commands:**
 
 | Command | Description |
 |---------|-------------|
-| `/work [pr-url]` | Autonomous issue management and PR workflow. Reviews PRs, creates issues, and resolves them in parallel using git worktrees. |
-| `/commit` | Smart git commit with automatic change analysis, conventional commit messages, and CI pre-checks. |
-| `/new-issue` | Create well-structured GitHub issues with Why/What/How format. |
-| `/pr [issue-url]` | Complete PR workflow: commit pending changes, rebase, and create/update PRs. |
-| `/move_subissues` | Move sub-issues between parent issues with optional labeling. |
+| `/work [pr-url]` | Autonomous issue management and PR workflow |
+| `/commit` | Smart git commit with automatic change analysis |
+| `/new-issue` | Create well-structured GitHub issues |
+| `/pr [issue-url]` | Complete PR workflow: commit, rebase, create/update PRs |
 
-**Scripts:**
+**Python Scripts:**
+
+All scripts are uv-compatible and can be run directly.
+
+#### move_subissues.py
+Move sub-issues between parent issues with optional labeling.
 
 ```bash
-# Move sub-issues from one parent to another
 uv run github-issues/commands/move_subissues.py <source_url> <target_url> [--label LABEL]...
 
 # Example
@@ -33,6 +36,76 @@ uv run github-issues/commands/move_subissues.py \
   https://github.com/org/repo/issues/123 \
   https://github.com/org/repo/issues/456 \
   --label scalability
+```
+
+#### milestone_from_issues.py
+Convert issues from a milestone into milestones, with prefix-based routing for different repos.
+
+```bash
+uv run github-issues/commands/milestone_from_issues.py <milestone_url> [options]
+
+# Options:
+#   --due-date YYYY-MM-DD   Due date for milestones (default: 2025-12-31)
+#   --route PREFIX=REPO     Route issues by prefix to specific repos
+#   --target-repo REPO      Fallback repo for issues without matching routes
+#   --dry-run               Show what would be done
+#   --limit N               Limit issues to process
+
+# Example with routing
+uv run github-issues/commands/milestone_from_issues.py \
+  https://github.com/org/planning/milestone/26 \
+  --route "[MPC]=org/mpc-repo" \
+  --route "[Gateway]=org/gateway-repo" \
+  --dry-run
+```
+
+#### set_milestone_recursive.py
+Recursively set milestone on all sub-issues of issues in a given milestone.
+
+```bash
+uv run github-issues/commands/set_milestone_recursive.py <milestone_url> [--dry-run]
+
+# Example
+uv run github-issues/commands/set_milestone_recursive.py \
+  https://github.com/org/repo/milestone/26 \
+  --dry-run
+```
+
+#### set_milestone_recursive_all.py
+Process all milestones in a repository, setting milestones on sub-issues recursively. Uses parallel processing for speed.
+
+```bash
+uv run github-issues/commands/set_milestone_recursive_all.py <owner/repo> [options]
+
+# Options:
+#   --dry-run           Show what would be done
+#   --state STATE       Filter milestones: open, closed, all (default: all)
+#   --milestone TITLE   Process only a specific milestone
+#   --workers N         Number of parallel workers (default: 10)
+
+# Example
+uv run github-issues/commands/set_milestone_recursive_all.py \
+  org/repo \
+  --dry-run \
+  --workers 20
+```
+
+#### division_issues_to_milestones.py
+Convert issues with a specific label (default: "Division") from a milestone into milestones.
+
+```bash
+uv run github-issues/commands/division_issues_to_milestones.py <milestone_url> [options]
+
+# Options:
+#   --dry-run           Show what would be done
+#   --due-date DATE     Due date (default: 2025-12-31)
+#   --label LABEL       Label to filter by (default: Division)
+#   --workers N         Parallel workers (default: 10)
+
+# Example
+uv run github-issues/commands/division_issues_to_milestones.py \
+  https://github.com/org/repo/milestone/26 \
+  --dry-run
 ```
 
 ## Installation
@@ -61,7 +134,11 @@ rookie-marketplace/
 │       ├── commit.md        # Smart commit command
 │       ├── new-issue.md     # Issue creation command
 │       ├── pr.md            # PR workflow command
-│       └── move_subissues.py # Sub-issue migration script
+│       ├── move_subissues.py
+│       ├── milestone_from_issues.py
+│       ├── set_milestone_recursive.py
+│       ├── set_milestone_recursive_all.py
+│       └── division_issues_to_milestones.py
 └── README.md
 ```
 

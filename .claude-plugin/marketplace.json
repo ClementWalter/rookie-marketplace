@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "github-issues",
-      "description": "GitHub issue management utilities: move sub-issues between parent issues, add labels in bulk. Scripts: move_subissues.py - Move all sub-issues from one parent to another with optional labels (uv run move_subissues.py <source_url> <target_url> [--label LABEL]...)",
+      "description": "GitHub issue and milestone management utilities. Scripts: move_subissues.py (move sub-issues between parents), milestone_from_issues.py (convert issues to milestones with routing), set_milestone_recursive.py (set milestone on sub-issues recursively), set_milestone_recursive_all.py (process all milestones in a repo), division_issues_to_milestones.py (convert Division-labeled issues to milestones)",
       "source": "./github-issues"
     }
   ]
