@@ -1,6 +1,6 @@
 ---
 name: Agent Coordination
-description: This skill should be used when the user asks about "coordinate coding agents", "orchestrate agent team", "manage multiple agents", "vibekanban workflow", "task delegation to agents", "agent swarm coordination", "parallel agent execution", or needs guidance on coordinating autonomous coding agents, task breakdown strategies, or multi-agent workflow patterns.
+description: This skill should be used when the user asks about "coordinate coding agents", "orchestrate agent team", "manage multiple agents", "vibekanban workflow", "task delegation to agents", "agent swarm coordination", "parallel agent execution", "chief of staff mode", "cos mode", "create tasks for agents", "dispatch agents", or needs guidance on coordinating autonomous coding agents, task breakdown strategies, or multi-agent workflow patterns.
 ---
 
 # Agent Coordination Patterns
@@ -218,6 +218,7 @@ When handing off between agents or sessions:
 
 For detailed patterns:
 - **`references/vibekanban-api.md`** - VibeKanban MCP tool reference
+- **`references/cos-workflow.md`** - Chief of Staff workflow procedure
 
 ### Examples
 
