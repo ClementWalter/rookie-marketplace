@@ -29,58 +29,38 @@ rookie-marketplace/
 └── README.md                 # User-facing documentation
 ```
 
-## Adding a New Skill
+## Skill Creation
 
-### To Existing Plugin
+**Primary Guide:** Use the `plugin-dev:skill-development` skill for comprehensive guidance. Invoke it when creating or editing skills:
+```
+/skill plugin-dev:skill-development
+```
 
+The skill provides detailed methodology for:
+- Understanding use cases with concrete examples
+- Planning reusable skill contents
+- Writing effective SKILL.md with proper frontmatter
+- Progressive disclosure design
+- Validation and testing
+
+### Quick Reference (Baseline)
+
+**To existing plugin:**
 ```bash
 mkdir -p <plugin>/skills/<skill-name>/{references,examples,scripts}
 ```
 
-Create `SKILL.md`:
-```yaml
----
-name: Skill Name
-description: This skill should be used when the user asks about "phrase 1", "phrase 2", or needs [topic] guidance.
----
-
-# Skill Title
-
-[Content in imperative form]
+**To new plugin:**
+```bash
+mkdir -p <plugin>/.claude-plugin
+mkdir -p <plugin>/skills/<skill-name>
 ```
 
-### To New Plugin
+Then create `plugin.json` and register in `.claude-plugin/marketplace.json`.
 
-1. Create structure:
-   ```bash
-   mkdir -p <plugin>/.claude-plugin
-   mkdir -p <plugin>/skills/<skill-name>
-   ```
+### Script Requirements
 
-2. Create `<plugin>/.claude-plugin/plugin.json`:
-   ```json
-   {
-     "name": "<plugin>",
-     "description": "What it does",
-     "version": "1.0.0",
-     "author": {"name": "Clément Walter"}
-   }
-   ```
-
-3. Create SKILL.md in the skill folder
-
-4. Register in `.claude-plugin/marketplace.json`:
-   ```json
-   {
-     "name": "<plugin>",
-     "description": "What it does",
-     "source": "./<plugin>"
-   }
-   ```
-
-## Script Requirements
-
-All Python scripts must be uv-compatible:
+All Python scripts must be uv-compatible (this takes precedence over any other script format):
 
 ```python
 #!/usr/bin/env -S uv run --script
@@ -104,18 +84,21 @@ Types: `feat`, `fix`, `docs`, `refactor`, `chore`
 
 ## Quality Guidelines
 
+See `plugin-dev:skill-development` for comprehensive guidelines. Key points:
+
 ### SKILL.md
 - Use third-person description: "This skill should be used when..."
 - Include specific trigger phrases in quotes
 - Body in imperative form (not "you should")
-- Keep under 2,000 words
-- Reference supporting files
+- Keep under 2,000 words (ideally 1,500-2,000)
+- Reference supporting files in an "Additional Resources" section
 
 ### References
 - Move detailed content here (>500 words on single topic)
-- Name descriptively: `api-reference.md`, `workflow.md`
+- Name descriptively: `patterns.md`, `api-reference.md`, `workflow.md`
 
 ### Scripts
+- **Must use uv inline metadata** (no plain Python)
 - Document with docstrings and usage examples
 - Support `--dry-run` for destructive operations
 - Use argparse for CLI

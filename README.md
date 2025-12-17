@@ -125,15 +125,17 @@ When you ask Claude about "milestone planning" or "coordinate agents", the relev
 
 ## Contributing
 
-New plugins are added as Claude works on tasks. To add a plugin manually:
+**Primary Guide:** Use the `plugin-dev:skill-development` skill for comprehensive skill creation guidance:
+```
+/skill plugin-dev:skill-development
+```
 
-1. Create a new directory for the plugin
-2. Add a `.claude-plugin/plugin.json` with metadata
-3. Create `skills/<skill-name>/SKILL.md` with YAML frontmatter
-4. Add `references/` for detailed documentation
-5. Add `examples/` for working samples
-6. Add `scripts/` for uv Python utilities
-7. Update the marketplace.json to register the plugin
+### Quick Start
+
+1. Create plugin directory with `.claude-plugin/plugin.json`
+2. Create `skills/<skill-name>/SKILL.md` with YAML frontmatter
+3. Add `references/`, `examples/`, `scripts/` as needed
+4. Register in `.claude-plugin/marketplace.json`
 
 ### Skill Structure
 
@@ -141,15 +143,15 @@ New plugins are added as Claude works on tasks. To add a plugin manually:
 skill-name/
 ├── SKILL.md           # Required: Core knowledge
 │   ├── YAML frontmatter (name, description with triggers)
-│   └── Markdown body (1,500-2,000 words)
-├── references/        # Optional: Detailed docs
+│   └── Markdown body (1,500-2,000 words, imperative form)
+├── references/        # Optional: Detailed docs (loaded on demand)
 ├── examples/          # Optional: Working samples
 └── scripts/           # Optional: uv Python scripts
 ```
 
 ### Script Requirements
 
-All Python scripts must be uv-compatible:
+All Python scripts **must** use uv inline metadata (no plain Python):
 
 ```python
 #!/usr/bin/env -S uv run --script
@@ -158,6 +160,15 @@ All Python scripts must be uv-compatible:
 # dependencies = []
 # ///
 ```
+
+### Writing Guidelines
+
+The `plugin-dev:skill-development` skill covers these in detail:
+
+- **Description:** Third-person format with specific trigger phrases
+- **Body:** Imperative/infinitive form (verb-first), not second person
+- **Progressive disclosure:** Keep SKILL.md lean, move details to references/
+- **Validation:** Use `skill-reviewer` agent to check quality
 
 ## License
 
