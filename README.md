@@ -12,6 +12,12 @@ This marketplace contains reusable skills (plugins) for Claude Code that automat
 
 VibeKanban-powered project coordination and task orchestration for agent teams.
 
+**Skills (auto-loaded by Claude):**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `agent-coordination` | "coordinate agents", "orchestrate tasks", "manage agent team", "vibekanban workflow" |
+
 **Slash Commands:**
 
 | Command | Description |
@@ -31,6 +37,12 @@ VibeKanban-powered project coordination and task orchestration for agent teams.
 ### github-issues
 
 GitHub issue and milestone management utilities for streamlined project management.
+
+**Skills (auto-loaded by Claude):**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `github-workflow` | "github issue workflow", "organize issues", "milestone planning", "PR workflow", "issue hierarchy", "sub-issues" |
 
 **Slash Commands:**
 
@@ -79,24 +91,31 @@ rookie-marketplace/
 ├── chief-of-staff/
 │   ├── .claude-plugin/
 │   │   └── plugin.json       # Plugin metadata
-│   └── commands/
-│       └── cos.md            # Chief of Staff coordination mode
+│   ├── commands/
+│   │   └── cos.md            # Chief of Staff coordination mode
+│   └── skills/
+│       └── agent-coordination/
+│           ├── SKILL.md      # Agent coordination patterns
+│           ├── references/   # VibeKanban API reference
+│           └── examples/     # Task templates
 ├── github-issues/
 │   ├── .claude-plugin/
 │   │   └── plugin.json       # Plugin metadata
-│   └── commands/
-│       ├── work.md           # Autonomous workflow command
-│       ├── commit.md         # Smart commit command
-│       ├── new-issue.md      # Issue creation command
-│       ├── pr.md             # PR workflow command
-│       ├── set-milestone-recursive.md
-│       ├── milestone-from-issues.md
-│       ├── division-to-milestones.md
-│       ├── move-subissues.md
-│       ├── _set_milestone_recursive.py   # Helper script
-│       ├── _milestone_from_issues.py     # Helper script
-│       ├── _division_to_milestones.py    # Helper script
-│       └── _move_subissues.py            # Helper script
+│   ├── commands/
+│   │   ├── work.md           # Autonomous workflow command
+│   │   ├── commit.md         # Smart commit command
+│   │   ├── new-issue.md      # Issue creation command
+│   │   ├── pr.md             # PR workflow command
+│   │   ├── set-milestone-recursive.md
+│   │   ├── milestone-from-issues.md
+│   │   ├── division-to-milestones.md
+│   │   ├── move-subissues.md
+│   │   └── _*.py             # Helper scripts
+│   └── skills/
+│       └── github-workflow/
+│           ├── SKILL.md      # GitHub workflow patterns
+│           ├── references/   # gh CLI patterns
+│           └── examples/     # Issue templates
 ├── diagnostics/
 │   └── marketplace_debug.py  # Marketplace validation tool
 └── README.md
@@ -104,13 +123,24 @@ rookie-marketplace/
 
 ## Contributing
 
-New skills are added organically as Claude works on tasks. To add a skill manually:
+New plugins are added organically as Claude works on tasks. To add a plugin manually:
 
-1. Create a new directory for the skill
+1. Create a new directory for the plugin
 2. Add a `.claude-plugin/plugin.json` with metadata
 3. Add commands as `.md` files in a `commands/` directory
-4. Add scripts as uv-compatible Python files
-5. Update the marketplace.json to register the new plugin
+4. Add skills as `SKILL.md` files in `skills/<skill-name>/` directories
+5. Add scripts as uv-compatible Python files
+6. Update the marketplace.json to register the new plugin
+
+### Adding Skills
+
+Skills provide contextual knowledge that Claude loads automatically based on trigger phrases. To add a skill:
+
+1. Create `skills/<skill-name>/SKILL.md` with YAML frontmatter
+2. Include `name` and `description` (with trigger phrases) in frontmatter
+3. Write the skill body in imperative form
+4. Add `references/` for detailed documentation
+5. Add `examples/` for working code samples
 
 ## License
 
