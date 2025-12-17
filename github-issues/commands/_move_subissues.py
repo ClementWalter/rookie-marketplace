@@ -7,12 +7,12 @@
 Move all sub-issues from one parent issue to another and optionally add labels.
 
 Usage:
-    uv run move_subissues.py <source_issue_url> <target_issue_url> [--label LABEL]...
+    uv run _move_subissues.py <source_issue_url> <target_issue_url> [--label LABEL]...
 
 Examples:
-    uv run move_subissues.py https://github.com/org/repo/issues/123 https://github.com/org/other-repo/issues/456
-    uv run move_subissues.py https://github.com/org/repo/issues/123 https://github.com/org/other-repo/issues/456 --label scalability
-    uv run move_subissues.py https://github.com/org/repo/issues/123 https://github.com/org/other-repo/issues/456 --label scalability --label priority
+    uv run _move_subissues.py https://github.com/org/repo/issues/123 https://github.com/org/other-repo/issues/456
+    uv run _move_subissues.py https://github.com/org/repo/issues/123 https://github.com/org/other-repo/issues/456 --label scalability
+    uv run _move_subissues.py https://github.com/org/repo/issues/123 https://github.com/org/other-repo/issues/456 --label scalability --label priority
 """
 
 import argparse

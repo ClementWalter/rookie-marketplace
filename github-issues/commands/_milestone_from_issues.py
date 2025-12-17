@@ -15,16 +15,16 @@ For issues WITHOUT sub-issues, use --target-repo to specify where the milestone 
 Use --route to specify prefix-based routing: issues starting with a prefix go to a specific repo.
 
 Usage:
-    uv run milestone_from_issues.py <milestone_url> [--due-date YYYY-MM-DD] [--dry-run] [--limit N]
-    uv run milestone_from_issues.py <milestone_url> --target-repo owner/repo [--dry-run]
-    uv run milestone_from_issues.py <milestone_url> --route "[MPC]=org/mpc-repo" --route "[Gateway]=org/gateway-repo"
+    uv run _milestone_from_issues.py <milestone_url> [--due-date YYYY-MM-DD] [--dry-run] [--limit N]
+    uv run _milestone_from_issues.py <milestone_url> --target-repo owner/repo [--dry-run]
+    uv run _milestone_from_issues.py <milestone_url> --route "[MPC]=org/mpc-repo" --route "[Gateway]=org/gateway-repo"
 
 Examples:
-    uv run milestone_from_issues.py https://github.com/org/repo/milestone/26
-    uv run milestone_from_issues.py https://github.com/org/repo/milestone/26 --due-date 2025-12-31
-    uv run milestone_from_issues.py https://github.com/org/repo/milestone/26 --limit 1 --dry-run
-    uv run milestone_from_issues.py https://github.com/org/repo/milestone/26 --target-repo org/other-repo
-    uv run milestone_from_issues.py https://github.com/org/repo/milestone/26 \\
+    uv run _milestone_from_issues.py https://github.com/org/repo/milestone/26
+    uv run _milestone_from_issues.py https://github.com/org/repo/milestone/26 --due-date 2025-12-31
+    uv run _milestone_from_issues.py https://github.com/org/repo/milestone/26 --limit 1 --dry-run
+    uv run _milestone_from_issues.py https://github.com/org/repo/milestone/26 --target-repo org/other-repo
+    uv run _milestone_from_issues.py https://github.com/org/repo/milestone/26 \\
         --route "[MPC]=zama-ai/kms-internal" \\
         --route "[Copro]=zama-ai/fhevm-internal" \\
         --route "[Gateway]=zama-ai/fhevm-internal"
@@ -168,17 +168,6 @@ def set_issue_milestone(owner: str, repo: str, issue_number: int, milestone_titl
     return result.returncode == 0
 
 
-def get_milestone_by_title(owner: str, repo: str, title: str) -> dict | None:
-    """Get a milestone by title."""
-    milestones = run_gh_json([
-        "api", f"repos/{owner}/{repo}/milestones?state=all&per_page=100"
-    ])
-    for m in milestones:
-        if m["title"] == title:
-            return m
-    return None
-
-
 def find_route_target(title: str, routes: dict[str, str]) -> str | None:
     """Find the target repo for an issue based on its title prefix."""
     for prefix, target in routes.items():
@@ -306,8 +295,8 @@ def main():
                 target_repos_for_milestone = args.target_repos
                 print(f"  No sub-issues found, will create milestone in target repo(s): {', '.join(target_repos_for_milestone)}")
             else:
-                print(f"  WARNING: No sub-issues, no matching route, and no --target-repo specified. Skipping milestone creation.")
-                print(f"  Use --route 'prefix=owner/repo' or --target-repo owner/repo to specify where to create the milestone.")
+                print("  WARNING: No sub-issues, no matching route, and no --target-repo specified. Skipping milestone creation.")
+                print("  Use --route 'prefix=owner/repo' or --target-repo owner/repo to specify where to create the milestone.")
                 continue
 
         if args.dry_run:

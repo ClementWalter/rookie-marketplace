@@ -1,17 +1,42 @@
-# New issue
+# New Issue
 
-Use the gh cli to create an issue with the current repository. Describe the
-issue body as Why/What/How, ie first why we need to do something, then what is
-supposed to be done or fixed, then a concise to-do to actually implement the
-what. Make sure to use the correct formatting and syntax for the issue content.
+Create a GitHub issue with Why/What/How structure.
 
-You will not change the current codebase nor create any code; focus on project
-management and creating the issue properly.
+## Arguments
 
-Get the issue content based on our previous conversion if any, the current
-context (any pending diff) and `$ARGUMENTS` if any. When invoking the command,
-first displays the proposed issue content, and then asks you to confirm it. You
-will make sure to create the issue by pushing markdown syntax, without escaping
-backticks.
+- `$ARGUMENTS` - Optional: issue title or description to base the issue on
 
-Assign to the issue the current github user.
+## Examples
+
+```
+/new-issue                                    # Create based on conversation context
+/new-issue Add dark mode support              # Create issue with this title
+/new-issue Fix login timeout after 5 minutes  # Create issue for this bug
+```
+
+## Instructions
+
+Use the gh CLI to create an issue in the current repository.
+
+Structure the issue body as **Why/What/How**:
+1. **Why** - Why we need to do this
+2. **What** - What needs to be done or fixed
+3. **How** - Concise to-do list to implement the what
+
+Do not change the codebase or create any code. Focus only on project management
+and creating the issue properly.
+
+Get the issue content from:
+1. Previous conversation context (if any)
+2. Current pending diff (if any)
+3. `$ARGUMENTS` (if provided)
+
+**Before creating**:
+1. Display the proposed issue content
+2. Ask for confirmation
+3. Create the issue with proper markdown syntax (don't escape backticks)
+
+Assign the issue to the current GitHub user:
+```bash
+gh api user --jq '.login'
+```

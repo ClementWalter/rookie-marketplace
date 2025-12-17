@@ -12,11 +12,11 @@ For each issue with the "Division" label in the source milestone:
 3. Set the description from the issue body
 
 Usage:
-    uv run division_issues_to_milestones.py <milestone_url> [--dry-run]
+    uv run _division_to_milestones.py <milestone_url> [--dry-run]
 
 Examples:
-    uv run division_issues_to_milestones.py https://github.com/zama-ai/planning-blockchain/milestone/26 --dry-run
-    uv run division_issues_to_milestones.py https://github.com/zama-ai/planning-blockchain/milestone/26
+    uv run _division_to_milestones.py https://github.com/zama-ai/planning-blockchain/milestone/26 --dry-run
+    uv run _division_to_milestones.py https://github.com/zama-ai/planning-blockchain/milestone/26
 """
 
 import argparse

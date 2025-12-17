@@ -8,6 +8,26 @@ This marketplace contains reusable skills (plugins) for Claude Code that automat
 
 ## Available Skills
 
+### chief-of-staff
+
+VibeKanban-powered project coordination and task orchestration for agent teams.
+
+**Slash Commands:**
+
+| Command | Description |
+| ------- | ----------- |
+| `/cos [project]` | Start Chief of Staff mode for coordinating agent teams via VibeKanban |
+
+**What it does:**
+- Acts as coordinator/orchestrator for a team of coding agents
+- Creates and manages tasks on VibeKanban
+- Assigns agents to tasks and tracks progress
+- Does NOT execute tasks directly—only plans, clarifies, and coordinates
+
+**Requires:** VibeKanban MCP server configured
+
+---
+
 ### github-issues
 
 GitHub issue and milestone management utilities for streamlined project management.
@@ -15,98 +35,28 @@ GitHub issue and milestone management utilities for streamlined project manageme
 **Slash Commands:**
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `/work [pr-url]` | Autonomous issue management and PR workflow |
 | `/commit` | Smart git commit with automatic change analysis |
 | `/new-issue` | Create well-structured GitHub issues |
 | `/pr [issue-url]` | Complete PR workflow: commit, rebase, create/update PRs |
+| `/set-milestone-recursive` | Recursively set milestone on sub-issues |
+| `/milestone-from-issues` | Convert milestone issues into new milestones |
+| `/division-to-milestones` | Convert Division-labeled issues to milestones |
+| `/move-subissues` | Move sub-issues between parent issues |
 
-**Python Scripts:**
+**Python Utilities:**
 
-All scripts are uv-compatible and can be run directly.
+All scripts are uv-compatible and can be run directly. They are prefixed with `_` to indicate they are helper utilities called by the slash commands.
 
-#### move_subissues.py
-Move sub-issues between parent issues with optional labeling.
+| Script | Purpose |
+| ------ | ------- |
+| `_move_subissues.py` | Move sub-issues between parent issues |
+| `_milestone_from_issues.py` | Convert issues into new milestones |
+| `_set_milestone_recursive.py` | Set milestone on sub-issues recursively |
+| `_division_to_milestones.py` | Convert Division-labeled issues to milestones |
 
-```bash
-uv run github-issues/commands/move_subissues.py <source_url> <target_url> [--label LABEL]...
-
-# Example
-uv run github-issues/commands/move_subissues.py \
-  https://github.com/org/repo/issues/123 \
-  https://github.com/org/repo/issues/456 \
-  --label scalability
-```
-
-#### milestone_from_issues.py
-Convert issues from a milestone into milestones, with prefix-based routing for different repos.
-
-```bash
-uv run github-issues/commands/milestone_from_issues.py <milestone_url> [options]
-
-# Options:
-#   --due-date YYYY-MM-DD   Due date for milestones (default: 2025-12-31)
-#   --route PREFIX=REPO     Route issues by prefix to specific repos
-#   --target-repo REPO      Fallback repo for issues without matching routes
-#   --dry-run               Show what would be done
-#   --limit N               Limit issues to process
-
-# Example with routing
-uv run github-issues/commands/milestone_from_issues.py \
-  https://github.com/org/planning/milestone/26 \
-  --route "[MPC]=org/mpc-repo" \
-  --route "[Gateway]=org/gateway-repo" \
-  --dry-run
-```
-
-#### set_milestone_recursive.py
-Recursively set milestone on all sub-issues of issues in a given milestone.
-
-```bash
-uv run github-issues/commands/set_milestone_recursive.py <milestone_url> [--dry-run]
-
-# Example
-uv run github-issues/commands/set_milestone_recursive.py \
-  https://github.com/org/repo/milestone/26 \
-  --dry-run
-```
-
-#### set_milestone_recursive_all.py
-Process all milestones in a repository, setting milestones on sub-issues recursively. Uses parallel processing for speed.
-
-```bash
-uv run github-issues/commands/set_milestone_recursive_all.py <owner/repo> [options]
-
-# Options:
-#   --dry-run           Show what would be done
-#   --state STATE       Filter milestones: open, closed, all (default: all)
-#   --milestone TITLE   Process only a specific milestone
-#   --workers N         Number of parallel workers (default: 10)
-
-# Example
-uv run github-issues/commands/set_milestone_recursive_all.py \
-  org/repo \
-  --dry-run \
-  --workers 20
-```
-
-#### division_issues_to_milestones.py
-Convert issues with a specific label (default: "Division") from a milestone into milestones.
-
-```bash
-uv run github-issues/commands/division_issues_to_milestones.py <milestone_url> [options]
-
-# Options:
-#   --dry-run           Show what would be done
-#   --due-date DATE     Due date (default: 2025-12-31)
-#   --label LABEL       Label to filter by (default: Division)
-#   --workers N         Parallel workers (default: 10)
-
-# Example
-uv run github-issues/commands/division_issues_to_milestones.py \
-  https://github.com/org/repo/milestone/26 \
-  --dry-run
-```
+These are typically invoked via slash commands (e.g., `/move-subissues`, `/milestone-from-issues`) which provide guided usage with dry-run confirmation.
 
 ## Installation
 
@@ -125,20 +75,30 @@ git clone https://github.com/clementwalter/rookie-marketplace.git
 ```
 rookie-marketplace/
 ├── .claude-plugin/
-│   └── marketplace.json     # Marketplace metadata
+│   └── marketplace.json      # Marketplace metadata
+├── chief-of-staff/
+│   ├── .claude-plugin/
+│   │   └── plugin.json       # Plugin metadata
+│   └── commands/
+│       └── cos.md            # Chief of Staff coordination mode
 ├── github-issues/
 │   ├── .claude-plugin/
-│   │   └── plugin.json      # Plugin metadata
+│   │   └── plugin.json       # Plugin metadata
 │   └── commands/
-│       ├── work.md          # Autonomous workflow command
-│       ├── commit.md        # Smart commit command
-│       ├── new-issue.md     # Issue creation command
-│       ├── pr.md            # PR workflow command
-│       ├── move_subissues.py
-│       ├── milestone_from_issues.py
-│       ├── set_milestone_recursive.py
-│       ├── set_milestone_recursive_all.py
-│       └── division_issues_to_milestones.py
+│       ├── work.md           # Autonomous workflow command
+│       ├── commit.md         # Smart commit command
+│       ├── new-issue.md      # Issue creation command
+│       ├── pr.md             # PR workflow command
+│       ├── set-milestone-recursive.md
+│       ├── milestone-from-issues.md
+│       ├── division-to-milestones.md
+│       ├── move-subissues.md
+│       ├── _set_milestone_recursive.py   # Helper script
+│       ├── _milestone_from_issues.py     # Helper script
+│       ├── _division_to_milestones.py    # Helper script
+│       └── _move_subissues.py            # Helper script
+├── diagnostics/
+│   └── marketplace_debug.py  # Marketplace validation tool
 └── README.md
 ```
 

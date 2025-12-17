@@ -1,0 +1,13 @@
+{
+  "name": "chief-of-staff",
+  "description": "VibeKanban-powered project coordination and task orchestration",
+  "version": "1.0.0",
+  "author": {
+    "name": "Clément Walter"
+  },
+  "commands": {
+    "cos": {
+      "description": "Start Chief of Staff mode for agent team coordination via VibeKanban"
+    }
+  }
+}

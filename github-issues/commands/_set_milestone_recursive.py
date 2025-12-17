@@ -4,25 +4,30 @@
 # dependencies = []
 # ///
 """
-Recursively set milestone on all sub-issues for ALL milestones in a repository.
+Recursively set milestone on all sub-issues for milestones in a repository.
 
-For each milestone in the repo, and for each issue in that milestone,
-traverses all sub-issues recursively and ensures they have the correct
-milestone set (matching the root issue's milestone).
+For each issue in a milestone, traverses all sub-issues recursively
+and ensures they have the correct milestone set (matching the root issue's milestone).
 
-Uses parallel processing for speed.
+Can process a single milestone (via URL) or all milestones in a repo.
 
 Usage:
-    uv run set_milestone_recursive_all.py <repo> [--dry-run] [--state STATE] [--workers N]
+    uv run _set_milestone_recursive.py <milestone_url_or_repo> [--dry-run] [--state STATE] [--workers N]
 
 Examples:
-    uv run set_milestone_recursive_all.py zama-ai/planning-blockchain --dry-run
-    uv run set_milestone_recursive_all.py zama-ai/planning-blockchain --state open
-    uv run set_milestone_recursive_all.py zama-ai/planning-blockchain --workers 20
+    # Process a single milestone
+    uv run _set_milestone_recursive.py https://github.com/org/repo/milestone/26 --dry-run
+    uv run _set_milestone_recursive.py https://github.com/org/repo/milestone/26
+
+    # Process all milestones in a repo
+    uv run _set_milestone_recursive.py zama-ai/planning-blockchain --dry-run
+    uv run _set_milestone_recursive.py zama-ai/planning-blockchain --state open
+    uv run _set_milestone_recursive.py zama-ai/planning-blockchain --workers 20
 """
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -89,6 +94,22 @@ def run_graphql(query: str) -> dict:
     if result.returncode != 0:
         raise RuntimeError(f"GraphQL query failed: {result.stderr}")
     return json.loads(result.stdout)
+
+
+def parse_milestone_url(url: str) -> tuple[str, str, int] | None:
+    """Parse a GitHub milestone URL and return (owner, repo, milestone_number)."""
+    pattern = r"https://github\.com/([^/]+)/([^/]+)/milestone/(\d+)"
+    match = re.match(pattern, url)
+    if not match:
+        return None
+    return match.group(1), match.group(2), int(match.group(3))
+
+
+def get_milestone_info(owner: str, repo: str, milestone_number: int) -> dict:
+    """Get milestone info including title."""
+    return run_gh_json([
+        "api", f"repos/{owner}/{repo}/milestones/{milestone_number}"
+    ])
 
 
 def get_all_milestones(owner: str, repo: str, state: str = "all") -> list[dict]:
@@ -351,9 +372,9 @@ def process_milestone(owner: str, repo: str, milestone: dict, dry_run: bool, max
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Recursively set milestone on all sub-issues for ALL milestones in a repo."
+        description="Recursively set milestone on all sub-issues for milestones."
     )
-    parser.add_argument("repo", help="Repository (format: owner/repo)")
+    parser.add_argument("target", help="Milestone URL or repo (format: owner/repo)")
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -363,12 +384,12 @@ def main():
         "--state",
         choices=["open", "closed", "all"],
         default="all",
-        help="Filter milestones by state (default: all)",
+        help="Filter milestones by state when processing all (default: all)",
     )
     parser.add_argument(
         "--milestone",
         type=str,
-        help="Process only a specific milestone by title (optional)",
+        help="Process only a specific milestone by title (when using repo format)",
     )
     parser.add_argument(
         "--workers",
@@ -376,34 +397,51 @@ def main():
         default=10,
         help="Number of parallel workers (default: 10)",
     )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=0,
+        help="Limit number of root issues to process (0 = all)",
+    )
 
     args = parser.parse_args()
 
-    # Parse repo
-    if "/" not in args.repo:
-        print(f"ERROR: Invalid repo format '{args.repo}'. Expected 'owner/repo'")
-        return 1
+    # Check if target is a milestone URL or a repo
+    milestone_parsed = parse_milestone_url(args.target)
 
-    owner, repo = args.repo.split("/", 1)
-    print(f"Repository: {owner}/{repo}")
+    if milestone_parsed:
+        # Single milestone mode
+        owner, repo, milestone_number = milestone_parsed
+        print(f"Repository: {owner}/{repo}")
+        print(f"Milestone number: {milestone_number}")
+
+        milestone_info = get_milestone_info(owner, repo, milestone_number)
+        milestones = [milestone_info]
+    else:
+        # All milestones in repo mode
+        if "/" not in args.target:
+            print(f"ERROR: Invalid target '{args.target}'. Expected milestone URL or 'owner/repo'")
+            return 1
+
+        owner, repo = args.target.split("/", 1)
+        print(f"Repository: {owner}/{repo}")
+
+        milestones = get_all_milestones(owner, repo, args.state)
+
+        if args.milestone:
+            milestones = [m for m in milestones if m["title"] == args.milestone]
+            if not milestones:
+                print(f"Milestone '{args.milestone}' not found")
+                return 1
+
     print(f"Workers: {args.workers}")
 
     if args.dry_run:
         print("\n[DRY RUN MODE - No changes will be made]")
 
-    # Get all milestones
-    milestones = get_all_milestones(owner, repo, args.state)
-
     if not milestones:
-        print(f"No milestones found (state={args.state})")
+        print("No milestones found")
         return 0
-
-    # Filter by specific milestone if requested
-    if args.milestone:
-        milestones = [m for m in milestones if m["title"] == args.milestone]
-        if not milestones:
-            print(f"Milestone '{args.milestone}' not found")
-            return 1
 
     print(f"Found {len(milestones)} milestone(s) to process")
 

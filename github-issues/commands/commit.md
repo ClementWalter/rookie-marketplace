@@ -1,25 +1,37 @@
 # Smart Git Commit
 
+Analyze changes and create a meaningful conventional commit.
+
+## Arguments
+
+- `$ARGUMENTS` - Optional: commit message override (if you want to specify your own message)
+
+## Examples
+
+```
+/commit                           # Auto-generate commit message
+/commit fix: typo in README       # Use provided message
+```
+
+## Instructions
+
 I'll analyze your changes and create a meaningful commit message.
 
-First, make sure the linter pass by running `trunk check --ci --fix`. Fix any
-error until the linter pass.
+First, make sure the linter passes by running `trunk check --ci --fix`. Fix any
+errors until the linter passes.
 
-**CRITICAL**: Check branch before committing. Never ever commit to the main
-branch. Use
+**CRITICAL**: Check branch before committing. Never commit to the main branch.
 
 ```bash
 git rev-parse --abbrev-ref HEAD
 ```
 
-to get the current branch name. If this is `main`, start by creating a new
-branch following these steps:
-
+If on `main`, create a new branch first:
 1. Pick a relevant name based on current changes
-2. Create the new branch: `git checkout -b <branch-name>`
+2. Create the branch: `git checkout -b <branch-name>`
 3. Then proceed with the commit
 
-First, let me check what's changed:
+Check what's changed:
 
 ```bash
 # Check if we have changes to commit
@@ -36,23 +48,20 @@ git diff --cached --stat
 git diff --stat
 ```
 
-I will not forget to add all untracked files and review their content afterwards
-to update the commit message.
+Add all untracked files and review their content to update the commit message.
 
-Now I'll analyze the changes to determine:
-
+Analyze the changes to determine:
 1. What files were modified
 2. The nature of changes (feature, fix, refactor, etc.)
 3. The scope/component affected
 
-If the analysis or commit encounters errors:
-
-- I'll explain what went wrong
+If analysis or commit encounters errors:
+- Explain what went wrong
 - Suggest how to resolve it
 - Ensure no partial commits occur
 
 ```bash
-# If nothing is staged, I'll stage modified files (not untracked)
+# If nothing is staged, stage modified files (not untracked)
 if git diff --cached --quiet; then
     echo "No files staged. Staging modified files..."
     git add -u
@@ -62,20 +71,17 @@ fi
 git diff --cached --name-status
 ```
 
-Based on the analysis, I'll create a conventional commit message:
-
+Create a conventional commit message:
 - **Type**: feat|fix|docs|style|refactor|test|chore
 - **Scope**: component or area affected
 - **Subject**: clear description in present tense
 - **Body**: why the change was made (if needed)
 
-I will not add myself as co-author of the commit, nor add any "Generated with
-Claude Code" footer or any other mention of AI assistance. The commit should be
-entirely attributed to you.
+Do not add co-author or AI assistance mentions. The commit should be entirely
+attributed to you.
 
-Before committing, I'll run the `trunk check --ci --fix` command to ensure that
-the code is formatted correctly. If there are any errors, I'll ask the you to
-fix them manually.
+Before committing, run `trunk check --ci --fix` to ensure code is formatted
+correctly. If there are errors, ask to fix them manually.
 
-The commit message will be concise, meaningful, and follow your project's
-conventions if I can detect them from recent commits.
+The commit message will be concise, meaningful, and follow the project's
+conventions if detectable from recent commits.

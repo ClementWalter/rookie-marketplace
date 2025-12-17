@@ -10,8 +10,13 @@
   "plugins": [
     {
       "name": "github-issues",
-      "description": "GitHub issue and milestone management utilities. Scripts: move_subissues.py (move sub-issues between parents), milestone_from_issues.py (convert issues to milestones with routing), set_milestone_recursive.py (set milestone on sub-issues recursively), set_milestone_recursive_all.py (process all milestones in a repo), division_issues_to_milestones.py (convert Division-labeled issues to milestones)",
+      "description": "GitHub issue and milestone management utilities.",
       "source": "./github-issues"
+    },
+    {
+      "name": "chief-of-staff",
+      "description": "VibeKanban-powered project coordination and task orchestration for agent teams.",
+      "source": "./chief-of-staff"
     }
   ]
 }

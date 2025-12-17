@@ -1,8 +1,34 @@
 {
   "name": "github-issues",
-  "description": "GitHub issue and milestone management utilities",
-  "version": "1.0.0",
+  "description": "GitHub issue, PR and milestone management utilities",
+  "version": "1.2.0",
   "author": {
     "name": "Clément Walter"
+  },
+  "commands": {
+    "commit": {
+      "description": "Analyze changes and create a conventional commit. Args: [message] (optional)"
+    },
+    "new-issue": {
+      "description": "Create a GitHub issue with Why/What/How structure. Args: [title] (optional)"
+    },
+    "pr": {
+      "description": "Commit changes and create/update a PR. Args: [issue #] to close (optional)"
+    },
+    "work": {
+      "description": "Auto-work on unassigned issues. Args: [PR URL] to review first (optional)"
+    },
+    "set-milestone-recursive": {
+      "description": "Set milestone on all sub-issues recursively. Args: <milestone URL or owner/repo>"
+    },
+    "milestone-from-issues": {
+      "description": "Convert issues in a milestone into new milestones. Args: <milestone URL>"
+    },
+    "division-to-milestones": {
+      "description": "Convert Division-labeled issues to milestones. Args: <milestone URL>"
+    },
+    "move-subissues": {
+      "description": "Move sub-issues between parent issues. Args: <source URL> <target URL>"
+    }
   }
 }

@@ -1,27 +1,59 @@
-# PR workflow
+# PR Workflow
 
-Use the [commit](./commit.md) command if there are any pending changes, possibly
-related to untracked files. Untracked files should be committed, and not
-ignored.
+Commit pending changes and create/update a pull request.
 
-If you find a bunch of unrelated changes, feel free to make several commits.
+## Arguments
 
-Once the git tree is clean, do a `git pull --rebase origin main` to make sure to
-observe only the latest changes against the main branch. The branch itself may
-have been used for other PRs so don't use the whole branch history but only the
-diff between origin/main and the rebased current branch.
+- `$ARGUMENTS` - Optional: issue URL/number to close (e.g., `#123` or full URL)
 
-Use the git and gh cli tools to fetch the diff between origin/main and the
-rebased current branch. Generate a concise summary of the content and purpose of
-these changes based on the observed diff.
+## Examples
 
-IMPORTANT: Do not add yourself as co-author in commit messages, nor add any
-"Generated with Claude Code" footer or any other mention of AI assistance in
-commits or PR descriptions. All work should be attributed solely to the user.
+```
+/pr                                              # Create PR and auto-create issue
+/pr #123                                         # Create PR that closes issue #123
+/pr https://github.com/org/repo/issues/123       # Same, with full URL
+```
 
-If some $ARGUMENTS are given, add to the summary "Close $ARGUMENTS". Otherwise,
-you MUST use the [new-issue](./new-issue.md) command to create an issue. This is
-mandatory - do NOT create issues in the current repository.
+## Instructions
 
-If there is already an open PR for the current branch, update it instead of
+### Step 1: Commit pending changes
+
+Use the [commit](./commit.md) command if there are any pending changes.
+Untracked files should be committed, not ignored.
+
+If you find unrelated changes, make several commits.
+
+### Step 2: Sync with main
+
+Once the git tree is clean:
+```bash
+git pull --rebase origin main
+```
+
+Use only the diff between origin/main and the rebased current branch (not the
+whole branch history, as the branch may have been used for other PRs).
+
+### Step 3: Generate PR summary
+
+```bash
+git diff origin/main...HEAD
+```
+
+Generate a concise summary of the content and purpose of these changes.
+
+**IMPORTANT**: Do not add co-author or AI assistance mentions in commits or PR
+descriptions. All work should be attributed solely to the user.
+
+### Step 4: Handle issue reference
+
+- If `$ARGUMENTS` is provided: add "Closes $ARGUMENTS" to the PR summary
+- If no arguments: use [new-issue](./new-issue.md) to create an issue first
+
+### Step 5: Create or update PR
+
+If there's already an open PR for the current branch, update it instead of
 creating a new one.
+
+```bash
+gh pr list --head $(git branch --show-current) --state open
+```
