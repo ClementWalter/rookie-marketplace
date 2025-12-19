@@ -8,6 +8,30 @@ version: 1.0.0
 
 This skill guides agents tasked with writing technical documentation sections. It emphasizes breaking down large work into manageable subtasks and coordinating via VibeKanban.
 
+## ⚠️ CRITICAL: Base Branch Configuration
+
+**ALWAYS use the current local branch as the base branch for VK task attempts, NEVER "main".**
+
+When starting task attempts via `start_task_attempt`, you MUST:
+
+1. Get the current branch name: `git branch --show-current`
+2. Use that branch as `base_branch` in the repos parameter
+
+```typescript
+// ❌ WRONG - hardcoding "main"
+start_task_attempt({
+  repos: [{ repo_id: "...", base_branch: "main" }]
+})
+
+// ✅ CORRECT - using current branch
+const currentBranch = await getCurrentBranch(); // e.g., "cw/comprehensive-doc"
+start_task_attempt({
+  repos: [{ repo_id: "...", base_branch: currentBranch }]
+})
+```
+
+**Why this matters:** Tasks targeting the wrong branch will fail to commit changes properly, causing silent execution failures where agents mark work complete but produce no output.
+
 ## Core Principle: Break Down Large Tasks
 
 **CRITICAL**: If your assigned documentation task is large (>2000 words or covers 3+ major topics), you MUST break it into subtasks rather than attempting to write everything at once.
