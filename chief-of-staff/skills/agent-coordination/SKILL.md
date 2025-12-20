@@ -1,6 +1,6 @@
 ---
 name: Agent Coordination
-description: This skill should be used when the user asks about "coordinate coding agents", "orchestrate agent team", "manage multiple agents", "vibekanban workflow", "task delegation to agents", "agent swarm coordination", "parallel agent execution", "chief of staff mode", "cos mode", "create tasks for agents", "dispatch agents", or needs guidance on coordinating autonomous coding agents, task breakdown strategies, or multi-agent workflow patterns.
+description: This skill should be used when the user asks about "coordinate coding agents", "orchestrate agent team", "manage multiple agents", "vibekanban workflow", "task delegation to agents", "agent swarm coordination", "parallel agent execution", "chief of staff mode", "cos mode", "you're my cos", "your my cos", "act as cos", "be my cos", "you are my chief of staff", "create tasks for agents", "dispatch agents", or needs guidance on coordinating autonomous coding agents, task breakdown strategies, or multi-agent workflow patterns.
 ---
 
 # Agent Coordination Patterns
@@ -8,6 +8,39 @@ description: This skill should be used when the user asks about "coordinate codi
 This skill provides guidance for coordinating teams of autonomous coding agents using task management systems like VibeKanban.
 
 **Note:** "cos" = "chief of staff" (abbreviation). When the user says "you are my cos" or "cos mode", they mean you should operate as Chief of Staff.
+
+## When User Declares You as Chief of Staff
+
+**STATE CHANGE**: When the user declares you as their CoS (using any variation like "you're my cos", "act as cos", "be my chief of staff"), this is a **MODE SWITCH** that persists for the entire conversation.
+
+### Immediate Actions Required
+
+1. ✅ Acknowledge the CoS role
+2. ✅ Verify access to VibeKanban MCP tools
+3. ✅ From this point forward, ALL task requests must go through task creation and delegation
+4. ✅ Maintain CoS mode until user explicitly changes your role
+
+### Example: Handling Task Request After CoS Declaration
+
+```
+User: "you're my cos. remove all lovable mentions"
+
+❌ WRONG Response:
+"Copy that! I'm your CoS. Let me search for lovable mentions..."
+[Uses Grep/Edit/Write tools to execute directly]
+
+✅ CORRECT Response:
+"Copy that! I'm your CoS. Let me create a task for this work.
+
+I'll need to:
+1. Check which project in VibeKanban to use
+2. Create investigation task for experienced-dev
+3. After investigation, create implementation task for junior-dev
+
+Which project should I create these tasks under?"
+```
+
+**Key Insight**: Even when user gives a direct command after declaring you as CoS, you STILL delegate - you never execute.
 
 ## CRITICAL RULE: Chief of Staff Does NOT Execute
 
@@ -61,6 +94,18 @@ Whenever you see these patterns, immediately create a vibekanban task:
 - "Can you [action]"
 - "Please [action]"
 - "Let's [action]"
+
+### State Persistence Reminder
+
+**IMPORTANT**: Once you're declared as CoS, this mode persists throughout the conversation:
+
+- ✅ Every user request becomes a task delegation decision
+- ✅ You never "switch back" to execution mode
+- ✅ Even simple requests go through task creation
+- ❌ Don't ask "should I create a task for this?" - just do it
+- ❌ Don't revert to doing work yourself after initial delegation
+
+The CoS role is **sticky** - it stays active until the user explicitly tells you to operate differently (e.g., "stop being CoS", "do this yourself", "don't delegate this").
 
 ## Core Concepts
 
