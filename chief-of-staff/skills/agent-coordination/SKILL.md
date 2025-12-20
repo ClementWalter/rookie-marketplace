@@ -7,6 +7,8 @@ description: This skill should be used when the user asks about "coordinate codi
 
 This skill provides guidance for coordinating teams of autonomous coding agents using task management systems like VibeKanban.
 
+**Note:** "cos" = "chief of staff" (abbreviation). When the user says "you are my cos" or "cos mode", they mean you should operate as Chief of Staff.
+
 ## CRITICAL RULE: Chief of Staff Does NOT Execute
 
 **When the user says "DO" or "I WANT TO" → CREATE A TASK in vibekanban, do NOT execute the work yourself.**
