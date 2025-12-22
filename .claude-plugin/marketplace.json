@@ -17,6 +17,11 @@
       "name": "chief-of-staff",
       "description": "VibeKanban-powered project coordination and task orchestration for agent teams.",
       "source": "./chief-of-staff"
+    },
+    {
+      "name": "rust-dev",
+      "description": "Senior-level Rust development best practices and workspace architecture patterns.",
+      "source": "./rust-dev"
     }
   ]
 }

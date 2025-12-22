@@ -60,6 +60,26 @@ Run scripts with uv:
 uv run skills/github-workflow/scripts/set_milestone_recursive.py <milestone_url> --dry-run
 ```
 
+---
+
+### rust-dev
+
+Senior-level Rust development practices and workspace architecture.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `senior-rust-practices` | "rust workspace", "rust best practices", "cargo workspace", "rust architecture", "rust dependencies", "rust testing strategy", "scalable rust" |
+
+**What it provides:**
+- Workspace architecture patterns ("one product = one workspace")
+- Crate organization and boundary design
+- Dependency hygiene (workspace deps, features, MSRV)
+- Testing pyramid (unit, integration, e2e, property tests)
+- CI quality gates and compile-time optimization
+- Project-specific patterns (CLI, services, ZK, WASM)
+
 ## Installation
 
 Add this marketplace to your Claude Code configuration:
