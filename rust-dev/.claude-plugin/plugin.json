@@ -1,10 +1,8 @@
 {
   "name": "rust-dev",
+  "description": "Senior-level Rust development best practices and workspace architecture patterns",
+  "version": "1.0.0",
   "author": {
     "name": "Clément Walter"
-  },
-  "metadata": {
-    "description": "Senior-level Rust development best practices and workspace architecture patterns",
-    "version": "1.0.0"
   }
 }
