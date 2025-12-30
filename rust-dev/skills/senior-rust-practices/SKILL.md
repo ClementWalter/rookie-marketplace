@@ -69,10 +69,10 @@ members = ["crates/*"]
 resolver = "2"
 
 [workspace.dependencies]
-anyhow = "1"
-thiserror = "2"
-serde = { version = "1", features = ["derive"] }
-tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+anyhow = "*"  # use latest
+thiserror = "*"  # use latest
+serde = { version = "*", features = ["derive"] }  # use latest
+tokio = { version = "*", features = ["macros", "rt-multi-thread"] }  # use latest
 ```
 
 In crate `Cargo.toml`:
@@ -262,11 +262,11 @@ async fn test_async_something() {
 }
 ```
 
-Add to `Cargo.toml`:
+Add to `Cargo.toml` (use latest versions):
 ```toml
 [dev-dependencies]
-test-log = { version = "0.2", features = ["trace"] }
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+test-log = { version = "*", features = ["trace"] }  # use latest
+tracing-subscriber = { version = "*", features = ["env-filter"] }  # use latest
 ```
 
 Run tests with visible logs: `RUST_LOG=debug cargo test -- --nocapture`
