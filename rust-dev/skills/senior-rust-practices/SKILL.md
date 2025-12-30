@@ -7,6 +7,16 @@ description: This skill should be used when the user asks about "rust workspace"
 
 Battle-tested patterns for Rust workspace architecture, code organization, dependencies, and testing that scale from prototype to production.
 
+## Git Worktree Workflow Compliance
+
+**All coding work MUST happen in git worktrees.** Before making any code changes:
+
+1. Create a worktree: `git worktree add ../<repo>-<task> -b feat/<task>`
+2. Work in that directory
+3. Use `/merge` to consolidate changes back to main
+
+Never edit files directly in the main worktree.
+
 ## Workspace Architecture
 
 ### Start from "One Product = One Repo = One Workspace"
@@ -206,6 +216,25 @@ If you have a service:
 ### 5. Doctests Are Underrated
 
 Doctests enforce that examples compile and keep your public API honest.
+
+## Clippy Rules to Follow
+
+### Inline Format Arguments (`clippy::uninlined_format_args`)
+
+Always use variables directly in format strings instead of passing them as arguments:
+
+```rust
+// Good - variable inlined
+let name = "world";
+println!("Hello, {name}!");
+format!("Value: {value}, Count: {count}")
+
+// Bad - uninlined arguments
+println!("Hello, {}!", name);
+format!("Value: {}, Count: {}", value, count)
+```
+
+This improves readability and reduces potential argument ordering mistakes.
 
 ## CI / Quality Gates (Minimum Set)
 
