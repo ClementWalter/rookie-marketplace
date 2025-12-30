@@ -217,6 +217,60 @@ If you have a service:
 
 Doctests enforce that examples compile and keep your public API honest.
 
+## Logging and Tracing
+
+### Never Use `println!` - Use Tracing Instead
+
+**NEVER use `println!`, `eprintln!`, or `dbg!` for output.** Always use the `tracing` crate:
+
+```rust
+use tracing::{debug, info, warn, error, trace};
+
+// Good - structured logging
+info!("Processing request for user {user_id}");
+debug!("Cache hit: {key}");
+warn!("Retry attempt {attempt} of {max_retries}");
+error!("Failed to connect: {err}");
+
+// Bad - never do this
+println!("Processing request for user {}", user_id);
+dbg!(value);
+```
+
+**Why:**
+- Structured logging with levels (filter noise in production)
+- Spans for distributed tracing
+- Configurable output (JSON, pretty, etc.)
+- Zero-cost when disabled
+
+### Use `test-log` for Tests
+
+Always use `test_log::test` attribute for tests to capture tracing output:
+
+```rust
+use test_log::test;
+
+#[test]
+fn test_something() {
+    info!("This will be visible when test fails or with --nocapture");
+    assert!(true);
+}
+
+#[test(tokio::test)]
+async fn test_async_something() {
+    debug!("Async test with tracing");
+}
+```
+
+Add to `Cargo.toml`:
+```toml
+[dev-dependencies]
+test-log = { version = "0.2", features = ["trace"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+```
+
+Run tests with visible logs: `RUST_LOG=debug cargo test -- --nocapture`
+
 ## Clippy Rules to Follow
 
 ### Inline Format Arguments (`clippy::uninlined_format_args`)
@@ -226,11 +280,11 @@ Always use variables directly in format strings instead of passing them as argum
 ```rust
 // Good - variable inlined
 let name = "world";
-println!("Hello, {name}!");
+info!("Hello, {name}!");
 format!("Value: {value}, Count: {count}")
 
 // Bad - uninlined arguments
-println!("Hello, {}!", name);
+info!("Hello, {}!", name);
 format!("Value: {}, Count: {}", value, count)
 ```
 
