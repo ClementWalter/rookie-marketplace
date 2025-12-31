@@ -1,0 +1,8 @@
+{
+  "name": "air-cryptographer",
+  "description": "Expert-level AIR (Algebraic Intermediate Representation) cryptographer for ZK constraint systems",
+  "version": "1.0.0",
+  "author": {
+    "name": "Clément Walter"
+  }
+}

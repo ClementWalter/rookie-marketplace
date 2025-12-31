@@ -80,6 +80,34 @@ Senior-level Rust development practices and workspace architecture.
 - CI quality gates and compile-time optimization
 - Project-specific patterns (CLI, services, ZK, WASM)
 
+**Hooks:**
+- `Stop`: Enforces running `cargo test` and `trunk check` before task completion
+
+---
+
+### air-cryptographer
+
+Expert-level AIR (Algebraic Intermediate Representation) cryptographer for ZK constraint systems.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `air-expertise` | "AIR", "algebraic intermediate representation", "ZK constraints", "trace design", "constraint soundness", "lookup arguments", "permutation arguments", "memory consistency", "transition constraints", "boundary constraints", "vanishing polynomial", "FRI", "STARK" |
+
+**What it provides:**
+- Finite field foundations and polynomial mechanics
+- Trace design principles (column classification, row semantics)
+- Constraint categories (transition, boundary, booleanity, selectors)
+- Global consistency arguments (permutation, lookup, memory)
+- Quotient and composition reasoning
+- Fiat-Shamir hygiene
+- Adversarial witness exercises
+- Common vulnerability patterns
+
+**References:**
+- `review-checklist.md`: Complete systematic AIR soundness review procedure
+
 ## Installation
 
 Add this marketplace to your Claude Code configuration:
@@ -127,6 +155,22 @@ rookie-marketplace/
 │               ├── milestone_from_issues.py
 │               ├── division_to_milestones.py
 │               └── move_subissues.py
+├── rust-dev/
+│   ├── .claude-plugin/
+│   │   └── plugin.json         # Plugin metadata
+│   ├── hooks/
+│   │   └── stop.md             # Pre-completion verification hook
+│   └── skills/
+│       └── senior-rust-practices/
+│           └── SKILL.md        # Core knowledge (auto-loaded)
+├── air-cryptographer/
+│   ├── .claude-plugin/
+│   │   └── plugin.json         # Plugin metadata
+│   └── skills/
+│       └── air-expertise/
+│           ├── SKILL.md        # Core knowledge (auto-loaded)
+│           └── references/     # Detailed docs (loaded on demand)
+│               └── review-checklist.md
 ├── diagnostics/
 │   └── marketplace_debug.py    # Marketplace validation tool
 └── README.md
