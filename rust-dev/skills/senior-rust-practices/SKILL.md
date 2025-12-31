@@ -11,11 +11,21 @@ Battle-tested patterns for Rust workspace architecture, code organization, depen
 
 **All coding work MUST happen in git worktrees.** Before making any code changes:
 
-1. Create a worktree: `git worktree add ../<repo>-<task> -b feat/<task>`
+1. Create a worktree: `git worktree add ~/.claude/worktrees/$(basename $(pwd))/<task> -b feat/<task>`
 2. Work in that directory
 3. Use `/merge` to consolidate changes back to main
 
 Never edit files directly in the main worktree.
+
+## Completion Requirements
+
+**Before completing ANY Rust task, you MUST:**
+
+1. Run tests: `cargo test --workspace`
+2. Run linting: `trunk check`
+3. Fix any issues before declaring done
+
+If trunk has formatting issues, run `trunk fmt` to auto-fix.
 
 ## Workspace Architecture
 

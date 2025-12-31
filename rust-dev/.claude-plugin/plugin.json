@@ -1,8 +1,14 @@
 {
   "name": "rust-dev",
   "description": "Senior-level Rust development best practices and workspace architecture patterns",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Clément Walter"
-  }
+  },
+  "hooks": [
+    {
+      "event": "Stop",
+      "path": "${CLAUDE_PLUGIN_ROOT}/hooks/stop.md"
+    }
+  ]
 }
