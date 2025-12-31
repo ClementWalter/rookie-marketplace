@@ -22,6 +22,11 @@
       "name": "rust-dev",
       "description": "Senior-level Rust development best practices and workspace architecture patterns.",
       "source": "./rust-dev"
+    },
+    {
+      "name": "air-cryptographer",
+      "description": "Expert-level AIR cryptographer for ZK constraint systems and soundness review.",
+      "source": "./air-cryptographer"
     }
   ]
 }
