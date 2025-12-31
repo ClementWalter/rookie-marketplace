@@ -157,9 +157,7 @@ rookie-marketplace/
 │               └── move_subissues.py
 ├── rust-dev/
 │   ├── .claude-plugin/
-│   │   └── plugin.json         # Plugin metadata
-│   ├── hooks/
-│   │   └── stop.md             # Pre-completion verification hook
+│   │   └── plugin.json         # Plugin metadata (includes Stop hook)
 │   └── skills/
 │       └── senior-rust-practices/
 │           └── SKILL.md        # Core knowledge (auto-loaded)
