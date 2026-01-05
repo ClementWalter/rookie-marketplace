@@ -42,6 +42,11 @@
       "name": "security-researcher",
       "description": "Senior security researcher guidelines based on NIST, CIS, OWASP, MITRE ATT&CK, and SLSA frameworks.",
       "source": "./security-researcher"
+    },
+    {
+      "name": "growth-hacker",
+      "description": "Modern growth strategy: loops, PLG, experimentation, and ethical constraints.",
+      "source": "./growth-hacker"
     }
   ]
 }
