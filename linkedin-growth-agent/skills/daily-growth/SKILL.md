@@ -202,6 +202,57 @@ No rigid templates. Just follow these principles:
     - Light, appetizing framing
     - Good for announcements
 
+16. **Napkin math / "Calcul de coin de table"**
+    - "Calcul de coin de table, source des chiffres: grok"
+    - Show your work with simple math
+    - "Autrement dit, il suffit de ponctionner 500/35000=0,0143, ou 1,43%"
+    - Makes complex economics tangible
+
+17. **One-word power openers**
+    - "NON" (then explain)
+    - "OUI" / "STOP" / "VICTOIRE"
+    - Grabs attention, then context
+
+18. **Neologisms and wordplay**
+    - "ecoanxieux" → "galloanxieux"
+    - Create new terms that resonate
+    - French wordplay and portmanteaus
+
+19. **Emotional intensity when warranted**
+    - "je n'en peux plus de recevoir ce genre de message"
+    - "Alors s'il vous plait, STOP aux..."
+    - Authentic frustration, not performed
+
+20. **Parenthetical asides**
+    - "(coucou @Théo Madzou)"
+    - "(🤷)" for shoulder shrug
+    - Conversational, like talking to friends
+
+21. **News commentary with brief take**
+    - Share article link
+    - Add ONE punchy line of commentary
+    - "Qu'on le veuille ou non, la guerre des monnaies a commencé ; et elle se passe on chain."
+
+22. **Hétérodoxe/contrarian with self-awareness**
+    - "Un point de vue peut-être hétérodoxe pour un entrepreneur deep tech MAIS"
+    - Acknowledge your position before the take
+    - "En tant que docteur moi-même..."
+
+23. **Casual sign-offs**
+    - "merci et bonne journée à tous"
+    - "bref, ne faites pas tourner"
+    - Human, not corporate
+
+24. **Ironic/sarcastic framing**
+    - "Vous rêvez de travailler dans les télécommunications mais les grands groupes ne sont pas pour vous ? OrangeLabs est là !"
+    - "notés 10/10 par Bastion quand on les a dépanné"
+    - Humor through absurdity
+
+25. **Tech solutionism with concrete examples**
+    - "Aujourd'hui il est même déjà possible de voter à bulletin secret en scannant la puce de passeport depuis son smartphone"
+    - Show what's possible NOW
+    - Concrete > abstract
+
 ### What to NEVER write:
 
 - Corporate French ("Je suis ravi de vous annoncer...")
@@ -222,6 +273,30 @@ No rigid templates. Just follow these principles:
 
 **Personal situation:**
 - `En plein travaux dans mon appartement...`
+
+**One-word power opener:**
+- `NON`
+- `STOP`
+
+**Napkin math:**
+- `Calcul de coin de table, source des chiffres: grok`
+
+**News reaction:**
+- `Qu'on le veuille ou non, la guerre des monnaies a commencé`
+- `Et il existe encore des gens pour promouvoir...`
+
+**Contrarian with self-awareness:**
+- `Un point de vue peut-être hétérodoxe pour un entrepreneur deep tech MAIS`
+
+**Neologism intro:**
+- `Nous connaissions les ecoanxieux, nous avons désormais les galloanxieux`
+
+**Ironic setup:**
+- `Vous rêvez de travailler dans les télécommunications mais les grands groupes ne sont pas pour vous ?`
+
+**Tech milestone announcement:**
+- `L'histoire d'Ethereum retiendra la date du 22 novembre 2025...`
+- `Du nouveau au classement mondial de l'identité numérique...`
 
 ### Sample Posts (YOUR LinkedIn voice):
 
