@@ -1,0 +1,11 @@
+{
+  "name": "security-researcher",
+  "description": "Senior security researcher guidelines based on NIST, CIS, OWASP, MITRE ATT&CK, and SLSA frameworks",
+  "version": "1.0.0",
+  "author": {
+    "name": "Clement Walter"
+  },
+  "skills": {
+    "autoDiscover": true
+  }
+}
