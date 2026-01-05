@@ -253,6 +253,57 @@ No rigid templates. Just follow these principles:
     - Show what's possible NOW
     - Concrete > abstract
 
+26. **Vindication/callback posts**
+    - "Il y a 7 mois je publiais ce post. Aujourd'hui, ce genre d'application sort de YC"
+    - Reference your past predictions when proven right
+    - Shows pattern recognition and foresight
+
+27. **Physical-world analogies for digital issues**
+    - "Qui s'imagine donner sa carte d'identité pour entrer chez Franprix ou à la Fnac ?"
+    - "Distribuer des photocopies de son passeport au tout venant dans une brocante"
+    - Makes abstract digital risks viscerally understandable
+
+28. **Escalating rhetorical questions**
+    - "Est-il plus risqué d'avoir 1 ou 10 ou 1000€ sur soi ? Est-il plus sûr de stocker 1 ou 10 ou 1000 passeports ?"
+    - Build momentum through repetition
+    - Drive home a point through scale
+
+29. **Classic proverbs adapted**
+    - "L'enfer est pavé de bonnes intentions"
+    - "La mauvaise monnaie chasse la bonne" (then subvert it)
+    - Root modern arguments in timeless wisdom
+
+30. **Agricultural/growth metaphors**
+    - "cela fait près de 3 ans que nous semmons, et il semble bien que l'heure de la moisson approche"
+    - Patient, long-term framing
+    - Organic growth narrative
+
+31. **Specific date/place anchoring**
+    - "Mardi dernier, alors que j'étais à Bercy..."
+    - "Le même jour, Google publie..."
+    - Grounds abstract topics in concrete moments
+
+32. **"C'est bien la première fois que..." milestone**
+    - "C'est bien la première fois que j'ai la sensation d'être rattrapé par Google"
+    - Personal reflection on industry shifts
+    - Shows humility and awareness
+
+33. **Literary/philosophical closings**
+    - Quote Chateaubriand, Danton, etc. to close
+    - Elevates the argument
+    - "Lorsque Chateaubriand déclare que «sans la liberté il n'y a rien dans le monde»..."
+
+34. **"Ce qui se passe actuellement sans bruit..."**
+    - Draw attention to hidden/invisible issues
+    - "Ce qui se passe actuellement sans bruit dans le monde numérique serait tout simplement inacceptable dans le monde physique"
+    - Urgency through revelation
+
+35. **Long-form essay style (for important topics)**
+    - More formal, structured arguments
+    - Multiple paragraphs, building a case
+    - Reserved for political/societal stakes
+    - Still personal voice, not academic
+
 ### What to NEVER write:
 
 - Corporate French ("Je suis ravi de vous annoncer...")
@@ -297,6 +348,26 @@ No rigid templates. Just follow these principles:
 **Tech milestone announcement:**
 - `L'histoire d'Ethereum retiendra la date du 22 novembre 2025...`
 - `Du nouveau au classement mondial de l'identité numérique...`
+
+**Vindication callback:**
+- `Il y a 7 mois je publiais ce post. Aujourd'hui...`
+
+**Hidden issue revelation:**
+- `Ce qui se passe actuellement sans bruit dans le monde numérique...`
+
+**Physical-world analogy:**
+- `Qui s'imagine donner sa carte d'identité pour entrer chez Franprix ?`
+
+**Specific moment anchoring:**
+- `Mardi dernier, alors que j'étais à Bercy...`
+
+**Agricultural metaphor:**
+- `Cela fait près de 3 ans que nous semmons...`
+
+**Bullet list with "C'est une excellente nouvelle :"**
+- Then: `- ils font l'éducation du marché`
+- `- nous allons enfin protéger nos mineurs`
+- `- et surtout, nous n'avons pas besoin d'eux !`
 
 ### Sample Posts (YOUR LinkedIn voice):
 
