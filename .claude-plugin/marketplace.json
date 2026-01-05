@@ -9,9 +9,9 @@
   },
   "plugins": [
     {
-      "name": "github-issues",
-      "description": "GitHub issue and milestone management utilities.",
-      "source": "./github-issues"
+      "name": "git-master",
+      "description": "Complete Git and GitHub workflow: issues, PRs, milestones, commits, worktrees, and merge utilities.",
+      "source": "./git-master"
     },
     {
       "name": "chief-of-staff",

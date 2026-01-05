@@ -1,8 +1,0 @@
-{
-  "name": "git-workflow",
-  "description": "Git worktree workflow management with merge utilities",
-  "version": "1.0.0",
-  "author": {
-    "name": "Clément Walter"
-  }
-}

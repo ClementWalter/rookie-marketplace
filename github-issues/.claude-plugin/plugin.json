@@ -1,8 +1,0 @@
-{
-  "name": "github-issues",
-  "description": "GitHub issue, PR, and milestone management workflows and utilities",
-  "version": "2.0.0",
-  "author": {
-    "name": "Clément Walter"
-  }
-}

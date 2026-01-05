@@ -1,13 +1,40 @@
 ---
-name: GitHub Workflow
-description: This skill should be used when the user asks about "github issue workflow", "organize issues with milestones", "manage github project", "issue hierarchy", "sub-issues", "milestone planning", "PR workflow", "issue triage", "git commit", "create PR", "work on issues", "autonomous issue resolution", or needs guidance on GitHub issue management, milestone organization, commit workflows, PR creation, or automated issue workflows.
+name: Git & GitHub Workflow
+description: This skill should be used when the user asks about "github issue workflow", "organize issues with milestones", "manage github project", "issue hierarchy", "sub-issues", "milestone planning", "PR workflow", "issue triage", "git commit", "create PR", "work on issues", "autonomous issue resolution", "git worktree", "merge worktrees", or needs guidance on Git/GitHub workflow management.
 ---
 
-# GitHub Workflow Patterns
+# Git & GitHub Workflow Patterns
 
-This skill provides guidance for managing GitHub issues, milestones, pull requests, and automated workflows.
+Complete guidance for Git operations (commits, branches, worktrees) and GitHub workflows (issues, PRs, milestones).
 
-## Core Concepts
+## Git Worktree Workflow
+
+**All coding work happens in git worktrees, never in the main working directory.**
+
+### Worktree Location
+
+```
+~/.claude/worktrees/
+└── <repo-name>/
+    ├── <task-slug-1>/
+    └── <task-slug-2>/
+```
+
+### Create Worktree
+
+```bash
+mkdir -p ~/.claude/worktrees/$(basename $(pwd))
+git worktree add ~/.claude/worktrees/$(basename $(pwd))/<task-slug> -b <branch-name>
+cd ~/.claude/worktrees/$(basename $(pwd))/<task-slug>
+```
+
+### Merge Worktrees
+
+Use `/merge` command to merge all worktree changes back to main with AI-generated commit.
+
+---
+
+## GitHub Issue Management
 
 ### Issue Hierarchy
 
@@ -48,6 +75,8 @@ Milestones represent time-boxed delivery targets:
 | Type | `bug`, `feature`, `chore`, `docs` |
 | Status | `needs-triage`, `blocked`, `ready` |
 | Area | `frontend`, `api`, `infra` |
+
+---
 
 ## Workflow Procedures
 
@@ -99,9 +128,11 @@ For parallel issue work:
 
 1. Fetch unassigned issues
 2. Self-assign to claim
-3. Create worktree: `git worktree add -b fix/issue-<n> /tmp/repo-issue-<n> main`
+3. Create worktree: `git worktree add -b fix/issue-<n> ~/.claude/worktrees/<repo>/issue-<n> main`
 4. Implement, test, commit
 5. Create PR and report
+
+---
 
 ## Utility Scripts
 
@@ -122,11 +153,20 @@ uv run scripts/milestone_from_issues.py <milestone_url> --dry-run
 uv run scripts/move_subissues.py <source_url> <target_url> --dry-run
 ```
 
+---
+
+## Commands
+
+| Command | Purpose |
+| ------- | ------- |
+| `/merge` | Merge all worktree changes back to main branch |
+
+---
+
 ## Additional Resources
 
 ### Reference Files
 
-For detailed procedures, consult:
 - **`references/commit-workflow.md`** - Detailed commit procedure
 - **`references/pr-workflow.md`** - PR creation and management
 - **`references/work-workflow.md`** - Autonomous issue resolution
@@ -134,12 +174,10 @@ For detailed procedures, consult:
 
 ### Examples
 
-Working examples in `examples/`:
 - **`examples/issue-template.md`** - Issue templates (bug, feature, chore)
 
 ### Scripts
 
-Utility scripts in `scripts/`:
 - **`scripts/set_milestone_recursive.py`** - Milestone propagation
 - **`scripts/milestone_from_issues.py`** - Issue-to-milestone conversion
 - **`scripts/division_to_milestones.py`** - Division label processing

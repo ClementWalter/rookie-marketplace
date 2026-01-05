@@ -8,6 +8,41 @@ This marketplace contains skills for Claude Code that provide specialized knowle
 
 ## Available Plugins
 
+### git-master
+
+Complete Git and GitHub workflow management.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `git-workflow` | "github issue", "milestone planning", "PR workflow", "git commit", "git worktree", "merge worktrees", "work on issues", "sub-issues" |
+
+**Commands:**
+
+| Command | Purpose |
+| ------- | ------- |
+| `/merge` | Merge all worktree changes back to main branch |
+
+**What it provides:**
+- Git worktree workflow (create, manage, merge)
+- GitHub issue hierarchy and milestones
+- Commit and PR workflows
+- Autonomous issue resolution patterns
+- gh CLI command reference
+- Milestone management scripts (uv)
+
+**Scripts:**
+
+| Script | Purpose |
+| ------ | ------- |
+| `set_milestone_recursive.py` | Set milestone on sub-issues recursively |
+| `milestone_from_issues.py` | Convert issues into new milestones |
+| `division_to_milestones.py` | Convert Division-labeled issues to milestones |
+| `move_subissues.py` | Move sub-issues between parent issues |
+
+---
+
 ### chief-of-staff
 
 Agent coordination and task orchestration.
@@ -28,34 +63,6 @@ Agent coordination and task orchestration.
 - **Efficient web scraping guidance** (uv scripts over reading thousands of lines)
 
 **Requires:** VibeKanban MCP server configured
-
----
-
-### github-issues
-
-GitHub issue, PR, and milestone management workflows.
-
-**Skills:**
-
-| Skill | Triggers On |
-| ----- | ----------- |
-| `github-workflow` | "github issue", "milestone planning", "PR workflow", "git commit", "work on issues", "sub-issues" |
-
-**What it provides:**
-- Issue hierarchy and milestone strategies
-- Commit and PR workflows
-- Autonomous issue resolution patterns
-- gh CLI command reference
-- Milestone management scripts (uv)
-
-**Scripts (in skills/github-workflow/scripts/):**
-
-| Script | Purpose |
-| ------ | ------- |
-| `set_milestone_recursive.py` | Set milestone on sub-issues recursively |
-| `milestone_from_issues.py` | Convert issues into new milestones |
-| `division_to_milestones.py` | Convert Division-labeled issues to milestones |
-| `move_subissues.py` | Move sub-issues between parent issues |
 
 ---
 
@@ -166,18 +173,6 @@ Daily LinkedIn growth automation for Clément Walter.
 
 ---
 
-### git-workflow
-
-Git worktree workflow commands.
-
-**Commands:**
-
-| Command | Purpose |
-| ------- | ------- |
-| `/merge` | Merge worktree changes back to main branch |
-
----
-
 ### 1password-mcp
 
 Secure 1Password credential access via official `op` CLI.
@@ -255,14 +250,16 @@ git clone https://github.com/clementwalter/rookie-marketplace.git
 rookie-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json        # Marketplace metadata
+├── git-master/
+│   ├── skills/
+│   │   └── git-workflow/
+│   └── commands/
+│       └── merge.md
 ├── chief-of-staff/
 │   └── skills/
 │       ├── agent-coordination/
 │       ├── doc-writing-coordination/
 │       └── efficient-scraping/
-├── github-issues/
-│   └── skills/
-│       └── github-workflow/
 ├── rust-dev/
 │   └── skills/
 │       └── senior-rust-practices/
@@ -278,9 +275,6 @@ rookie-marketplace/
 ├── linkedin-growth-agent/
 │   └── skills/
 │       └── daily-growth/
-├── git-workflow/
-│   └── commands/
-│       └── merge.md
 ├── 1password-mcp/
 │   └── skills/
 │       └── credential-lookup/
