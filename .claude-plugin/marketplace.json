@@ -27,6 +27,11 @@
       "name": "air-cryptographer",
       "description": "Expert-level AIR cryptographer for ZK constraint systems and soundness review.",
       "source": "./air-cryptographer"
+    },
+    {
+      "name": "1password-mcp",
+      "description": "Secure 1Password credential access via official op CLI.",
+      "source": "./1password-mcp"
     }
   ]
 }

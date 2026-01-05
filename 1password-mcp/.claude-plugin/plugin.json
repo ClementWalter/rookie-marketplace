@@ -1,0 +1,17 @@
+{
+  "name": "1password-mcp",
+  "description": "Secure 1Password credential access via official op CLI",
+  "version": "1.0.0",
+  "author": {
+    "name": "Clement Walter"
+  },
+  "mcp": {
+    "servers": {
+      "1password": {
+        "type": "stdio",
+        "command": "uv",
+        "args": ["run", "${CLAUDE_PLUGIN_ROOT}/server.py"]
+      }
+    }
+  }
+}
