@@ -56,10 +56,10 @@ Review tweets you liked in the last 7 days. These represent content YOU found va
 - Aligns with content pillars below
 
 **How to Use Liked Content**:
-- Add YOUR perspective/commentary (not just reshare)
-- Frame as "Saw this from [Person] - here's why it matters:"
-- Connect to your own experience or work
-- Credit original author clearly
+- Add YOUR angle (not just reshare)
+- "[Person] on [topic] - [your brief take]"
+- Connect to what you're building
+- Credit original author
 
 #### Source C: Your Engagement (Replies/Retweets)
 Navigate to https://x.com/ClementWalter (Replies tab)
@@ -85,110 +85,187 @@ Look for threads where you added substantive commentary - these can become stand
 **Priority Order for Selection**:
 ```
 1. Your viral tweet (≥100 likes) → Direct adaptation
-2. Notable person's tweet you liked → Commentary post
+2. Notable person's tweet you liked → Add your angle
 3. Your solid tweet (≥50 likes) → Direct adaptation
-4. Interesting liked tweet → "Here's what I think about..."
-5. Your reply that stands alone → Expand into full post
+4. Interesting liked tweet → Brief commentary
+5. Your reply that stands alone → Expand into post
 ```
 
 ### Step 3: Adapt Content for LinkedIn
 
 Transform the selected Twitter content using this framework:
 
-#### Structure Template (Your Own Content)
+#### Structure (Keep it Simple)
 
-```
-[HOOK - First 150 characters, must grab attention before "See more"]
+No rigid templates. Just follow these principles:
 
-[CONTEXT - 1-2 sentences expanding the hook]
-
-[BODY - Key points with line breaks]
-→ Point 1
-→ Point 2
-→ Point 3
-
-[WHY IT MATTERS - Bridge to broader audience]
-
-[CTA - Question to drive comments]
-
-
-```
-
-#### Structure Template (Curated Content - Others' Tweets)
-
-```
-[HOOK - Attribution + why it matters]
-
-[SUMMARY - What they said (1-2 sentences)]
-
-[YOUR TAKE - Your perspective/commentary]
-→ Why you agree/disagree
-→ How it connects to your work
-→ What you'd add
-
-[BRIDGE - Why LinkedIn audience should care]
-
-[CTA - Question to drive comments]
-
-
-
-[First comment: Link to original tweet]
-```
-
-**Example (Curated Post):**
-```
-Vitalik just mass laid out the future of L2 scaling. Worth reading.
-
-His core argument: [summary of key point]
-
-Here's what I think:
-→ This aligns with what we're seeing at Kakarot
-→ The part about [X] is underrated
-→ One thing I'd add: [your unique insight]
-
-For anyone building on Ethereum L2s, this shapes the roadmap.
-
-What's your take on [specific point]?
-
-
-```
-
-#### Hook Formulas (rotate these)
-
-**For YOUR OWN content:**
-1. **Quote opener**: `"Build it" - that's what [Person] told me.`
-2. **Contrarian**: `Everyone thinks [X]. Here's why that's wrong:`
-3. **Number**: `3 things I learned [doing X]:`
-4. **Result first**: `500 kHz. That's how fast our new [X] runs.`
-5. **Question**: `What if [X] was possible? We just did it.`
-
-**For CURATED content (others' tweets you liked):**
-1. **Signal boost**: `[Person] just dropped something important.`
-2. **My take**: `Vitalik posted about [X]. Here's what I think:`
-3. **Connection**: `This thread from [Person] connects to what we're building:`
-4. **Underrated**: `This might be the most underrated take of the week:`
-5. **Agreement+**: `[Person] nailed it. And I'd add one thing:`
-6. **Counter**: `Interesting take from [Person]. I see it differently:`
+1. **First 150 chars = hook** (appears before "See more")
+2. **Short paragraphs** with line breaks
+3. **No CTAs** like "What's your take?" - let people react naturally
+4. **Link in first comment**, never in post body
 
 #### Adaptation Rules
 
 | Twitter Element | LinkedIn Transformation |
 |-----------------|------------------------|
 | Thread (1/n) | Single post, combine key points |
-| Quote tweet | Screenshot OR summarize with attribution |
+| Quote tweet | Summarize with attribution |
 | Link in tweet | Move link to FIRST COMMENT |
-| @mentions | Keep for major accounts, spell out others |
-| Abbreviations | Expand first use (ZK → zero-knowledge) |
-| "gm" / meme speak | Remove entirely |
-| Emojis | Keep sparingly for visual breaks only |
+| @mentions | Tag on LinkedIn if they have account, otherwise name |
+| Abbreviations | Keep as-is (readers who get it, get it) |
+| Emojis | Minimal, functional only |
 
-#### Tone Guidelines
+---
 
-- Professional but not corporate
-- Technical credibility maintained
-- Direct, no fluff
+## TONE GUIDELINES (CRITICAL)
 
-- End with engagement question: "What's your take?" / "Anyone else seeing this?"
+**Your voice is NOT corporate LinkedIn.** It's casual, stream-of-consciousness, technically confident, and dry.
+
+### Voice Characteristics (from your actual Twitter posts):
+
+1. **Telegram-style short sentences**
+   - No fluff. No "I'm excited to share..."
+   - Just state the thing.
+
+2. **Dry humor / understatement**
+   - "probably nothing" (when it's clearly something big)
+   - Wordplay: "should we close this? should we claude this?"
+   - Never explain the joke
+
+3. **Technical confidence**
+   - Assume reader knowledge. Don't spell out ZK, FHE, zkVM
+   - Drop numbers matter-of-factly: "20khz sha256 on client side"
+   - Use "sota" not "state of the art"
+
+4. **Casual grammar is OK**
+   - "Bcz Claude is just better" OK
+   - "plz pull and try" OK
+   - Occasional typos feel authentic, don't over-polish
+
+5. **Arrow notation for flows**
+   - "Fiat => IBAN => $ => withdraw => done"
+   - "hot take => [thing]"
+
+6. **Matter-of-fact announcements**
+   - NOT: "I'm thrilled to announce..."
+   - YES: "The next frontier is privacy. 3 years ago we pioneered..."
+
+7. **Direct questions to people**
+   - "Any hint @EliBenSasson?"
+   - "wen a button to load directly?"
+
+8. **Hot takes delivered flat**
+   - "hot take of the agentic world: scaling teams of agents is no different from scaling teams of humans"
+   - No hedging, no "in my humble opinion"
+
+9. **Self-corrections with strikethrough**
+   - "just few ~months~ weeks of work"
+
+10. **Productivity tip format**
+    - "productivity boost of the day: [thing]"
+    - "pro tips: don't write custom commands, do it once with claude"
+
+### What to NEVER write:
+
+- "I'm excited to share..."
+- "Thrilled to announce..."
+- "Great post!"
+- "Thought leadership"
+- "Leverage" / "synergy" / corporate buzzwords
+- Emoji spam
+- Long intros before getting to the point
+- Excessive punctuation!!!
+- Formal closings
+- "What's your take?" or "Anyone else seeing this?" (too generic)
+
+### Hook Patterns (from your actual posts):
+
+**Results-first (flat):**
+- `20khz sha256 on client side proving (M4)`
+- `500khz on M2 Max & up to 1Mhz when running several`
+- `The first ever confidential ERC20 transfer on L1 has been done`
+
+**Hot take format:**
+- `hot take: [statement delivered matter-of-factly]`
+- No preamble, just the take
+
+**Productivity tip:**
+- `productivity boost of the day: [thing]`
+- `pro tips: [thing]`
+- `Emergency task for the day: [thing]`
+
+**Understated humor:**
+- `probably nothing`
+- `Make no mistake` (after revealing something is automated)
+- Wordplay without explanation
+
+**Flow/Process:**
+- `Fiat => BleapApp => $ => arbitrum => done`
+- `Source => Parser => Semantic => MIR => Codegen => CASM`
+
+**Question to expert:**
+- `Wondering suddenly why the P of ZKP is for Proof and not Protocol. Any hint?`
+- `wen [thing]?`
+
+**Commentary on others:**
+- `[Person] just [did thing]. [One sentence why it matters].`
+- `This aligns with what we're seeing at [place]`
+- Keep it brief, add YOUR angle
+
+### Sample Adapted Posts (YOUR voice):
+
+**Example 1 - Technical result:**
+```
+500khz proving on M2 Max
+
+The new RISC-V prover is live. rv32im, client-side, real device.
+
+For context: a month ago Justin Drake mentioned it would be nice to have a Stwo-based RISC-V prover
+
+holidays + opus 4.5 = done
+
+All benchmarks in first comment
+```
+
+**Example 2 - Curated content:**
+```
+Vitalik on fileverse - finally a decentralized docs tool that doesn't break
+
+Been waiting for this. Every month they fix bugs, now it actually works for collaboration.
+
+probably nothing for the "web3 has no real apps" crowd
+```
+
+**Example 3 - Hot take:**
+```
+hot take: scaling teams of agents is no different from scaling teams of humans
+
+1. hard core quantified planning (poker planning)
+2. continuous improvement
+3. PO yelling at everyone
+
+You are the boss. Talk to your Chief of Staff agent.
+```
+
+**Example 4 - Productivity tip:**
+```
+productivity boost of the day
+
+Ask Claude to generate a CSS stylesheet matching your VSCode theme for GitHub
+
+Since everything is Microsoft, wen a button to sync directly?
+```
+
+**Example 5 - Commentary:**
+```
+Two 5090s now prove every L1 EVM block
+
+Just saw Justin Drake's demo. Mainnet proofs on two gaming GPUs. ~1kW.
+
+Basically a toaster.
+
+This changes the decentralization game for validators.
+```
 
 ### Step 4: Post to LinkedIn
 
@@ -221,10 +298,10 @@ Find and comment on 5-10 posts from accounts in these categories:
 - Web3 builders
 
 **Comment Quality Rules**:
-- Add genuine insight, not "Great post!"
-- Reference your own experience when relevant
-- Ask thoughtful questions
-- Minimum 2-3 sentences
+- Add actual insight or experience, never "Great post!"
+- Reference what you're building when relevant
+- Can be brief (1-2 sentences) if substantive
+- Same voice as your posts - casual, direct
 
 #### 5c. Connection Requests
 
@@ -233,7 +310,7 @@ Send 5-10 connection requests per day to:
 - Relevant people from your Twitter network not yet on LinkedIn
 - Speakers/attendees from crypto/AI conferences
 
-Include personalized note: "Hi [Name], enjoyed your [specific content]. Building in the ZK/AI space as well - would love to connect."
+Keep notes brief and direct: "Hey - saw your post on [thing]. Working on similar stuff at Zama. Let's connect."
 
 ### Step 6: Weekly Review (Fridays Only)
 
