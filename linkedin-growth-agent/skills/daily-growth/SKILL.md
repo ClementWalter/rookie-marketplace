@@ -304,6 +304,95 @@ No rigid templates. Just follow these principles:
     - Reserved for political/societal stakes
     - Still personal voice, not academic
 
+36. **Pop culture scandal analogies**
+    - "Vous reprendrez bien un peu de cheval 🐴 ?" (Spanghero horse meat scandal)
+    - Reference famous scandals/events to explain tech concepts
+    - "Si je vous parle de [topic] aujourd'hui, c'est parce que chez Kakarot..."
+    - Makes abstract tech concepts visceral and memorable
+
+37. **"Je reprends:" teaching structure**
+    - Use to restart explanation from basics
+    - "Je reprends: au supermarché, l'étiquette est censée..."
+    - Shows patience, teaching mentality
+    - Good for complex topics needing step-by-step
+
+38. **Geopolitical/economic framing**
+    - "💰 La guerre des monnaies a commencé ₿⚔️$⚔️€"
+    - Big picture takes on crypto/tech
+    - Invert classic adages: "L'adage 'la mauvaise monnaie chasse la bonne'... est sur le point d'être révolu"
+    - Position tech changes as historical inflection points
+
+39. **Personal disaster → systemic insight**
+    - "Récemment, mon notaire s'est fait hacker. Et moi avec."
+    - Personal loss/problem as entry point
+    - Emoji separators: "💸☠️💸☠️💸"
+    - Moves from anecdote to structural critique
+
+40. **"Autrement dit, et c'est souvent mal compris..."**
+    - Reframe and clarify misunderstandings
+    - Show depth of understanding beyond surface
+    - "Autrement dit... le problème des tiers de confiance n'est pas dans le fait qu'il ne faut faire confiance à personne _en général_..."
+
+41. **FAQ-style opening**
+    - "En ce moment, on me demande beaucoup « pourquoi... »"
+    - "On m'a encore dit « la blockchain j'y comprends rien, crypto, token, NFT, c'est un casino dérégulé »"
+    - Address common questions/objections directly
+    - Shows you're listening to your audience
+
+42. **"Alors en deux mots : X"**
+    - Ultra-concise definition after setup
+    - "Backend : [definition]. Universel : [definition]."
+    - "Comment ça scale : grâce à la compression d'exécution (ZKP)"
+    - Distill complexity to essence
+
+43. **Fake-out opening with dramatic reveal**
+    - "Ça n'a pas marché" ... then reveal it DID
+    - "Je ne suis pas devenu PDG, je n'ai pas racheté le voisin. . . . . J'ai en fait la chance de..."
+    - Multiple periods for dramatic pause
+    - Subvert expectations, reward readers who continue
+
+44. **Emoji-prefixed paragraph structure**
+    - 🤥 🗓 🚪 ✨ ⛓ 🌐 before each paragraph
+    - Visual navigation for longer posts
+    - Easy scanning on mobile
+    - Each emoji hints at paragraph content
+
+45. **"À vrai dire, ça fait déjà X que..."**
+    - Reveal backstory and timeline
+    - "À vrai dire ça fait déjà un an qu'on cherche..."
+    - Show journey, not just destination
+    - Build credibility through persistence
+
+46. **Emoji bullet lists**
+    - "- ✅ 100% bytecode compatible"
+    - "- 💾 open source"
+    - "- 👩‍💻 30+ contributeurs indépendants"
+    - "- 💰 100k$+ de bourses distribuées"
+    - Visual, scannable, punchy progress updates
+
+47. **Crypto slang/culture references**
+    - "wen #contribution wen #zkEVM wen #moon"
+    - Playful use of community language
+    - Shows you're part of the culture, not outside observer
+
+48. **Hyper-specific numbers for credibility**
+    - "373.320 fois plus" (not "a lot more")
+    - "près de 3 ans", "4 projets en prod"
+    - "100k$+" over "significant amount"
+    - Precision builds trust and memorability
+
+49. **"Lien en commentaire🔗"**
+    - Consistent call to action
+    - "Lien du meetup en commentaire🔗"
+    - "Plus d'info a suivre et tous les liens en commentaire 👇"
+    - Train audience to check comments
+
+50. **Self-deprecating rejection story**
+    - "l'entreprise qui m'a 4 fois appelé et de laquelle 4 fois j'ai été refusé"
+    - Vulnerability builds connection
+    - Shows path wasn't easy
+    - "Si je rachète le voisin, ça sera en #bitcoin !"
+
 ### What to NEVER write:
 
 - Corporate French ("Je suis ravi de vous annoncer...")
@@ -368,6 +457,43 @@ No rigid templates. Just follow these principles:
 - Then: `- ils font l'éducation du marché`
 - `- nous allons enfin protéger nos mineurs`
 - `- et surtout, nous n'avons pas besoin d'eux !`
+
+**Pop culture scandal reference:**
+- `Vous reprendrez bien un peu de cheval 🐴 ?`
+- `Qui ne se rappelle pas du scandale des lasagnes...`
+
+**Geopolitical framing:**
+- `💰 La guerre des monnaies a commencé ₿⚔️$⚔️€`
+- `L'élection de Donald Trump change la donne.`
+
+**Personal disaster story:**
+- `Récemment, mon notaire s'est fait hacker. Et moi avec.`
+- `💸☠️💸☠️💸`
+
+**FAQ-style:**
+- `En ce moment, on me demande beaucoup « pourquoi... »`
+- `On m'a encore dit « la blockchain j'y comprends rien... »`
+
+**Ultra-concise definition:**
+- `Alors en deux mots : backend universel`
+
+**Fake-out/subverted expectation:**
+- `Ça n'a pas marché` (then reveal it DID work)
+- `🤥Je me suis trompé.` (then reveal you didn't)
+
+**Emoji-prefixed structure:**
+- `🤥Je me suis trompé.`
+- `🗓En janvier 2021 je publiais...`
+- `🚪Aujourd'hui j'ai officiellement quitté...`
+
+**Exciting announcement:**
+- `Kakarot recrute enfin !`
+- `Depuis près d'un an et demi vous rêvez de postuler...`
+
+**Progress update with emoji bullets:**
+- `Kakarot c'est aujourd'hui :`
+- `- ✅ 100% bytecode compatible`
+- `- 💾 open source`
 
 ### Sample Posts (YOUR LinkedIn voice):
 
