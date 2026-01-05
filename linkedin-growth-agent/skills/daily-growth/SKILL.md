@@ -111,7 +111,7 @@ Transform the selected Twitter content using this framework:
 
 [CTA - Question to drive comments]
 
-🥕
+
 ```
 
 #### Structure Template (Curated Content - Others' Tweets)
@@ -130,7 +130,7 @@ Transform the selected Twitter content using this framework:
 
 [CTA - Question to drive comments]
 
-🥕
+
 
 [First comment: Link to original tweet]
 ```
@@ -150,7 +150,7 @@ For anyone building on Ethereum L2s, this shapes the roadmap.
 
 What's your take on [specific point]?
 
-🥕
+
 ```
 
 #### Hook Formulas (rotate these)
@@ -187,7 +187,7 @@ What's your take on [specific point]?
 - Professional but not corporate
 - Technical credibility maintained
 - Direct, no fluff
-- Always include 🥕 signature at end
+
 - End with engagement question: "What's your take?" / "Anyone else seeing this?"
 
 ### Step 4: Post to LinkedIn

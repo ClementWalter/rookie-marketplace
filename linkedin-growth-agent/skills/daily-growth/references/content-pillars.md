@@ -36,7 +36,7 @@ We're using Starkware's Stwo system. The architecture that makes this possible: 
 
 What applications would you build if you could prove computation this fast?
 
-🥕
+
 ```
 
 ### Keywords to Include
@@ -89,7 +89,7 @@ Same management principles. Different workers.
 
 How are you organizing your AI workflows?
 
-🥕
+
 ```
 
 ### Keywords to Include
@@ -138,7 +138,7 @@ Two years of building FHE infrastructure. One transaction to prove it works.
 
 This is just the beginning.
 
-🥕
+
 
 [Link to transaction in comments]
 ```
@@ -185,7 +185,7 @@ I could be wrong. But after [experience], this is where I land.
 
 Change my mind?
 
-🥕
+
 ```
 
 ---
