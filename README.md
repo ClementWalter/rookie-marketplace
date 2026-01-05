@@ -10,20 +10,22 @@ This marketplace contains skills for Claude Code that provide specialized knowle
 
 ### chief-of-staff
 
-Agent coordination and task orchestration via VibeKanban.
+Agent coordination and task orchestration.
 
 **Skills:**
 
 | Skill | Triggers On |
 | ----- | ----------- |
 | `agent-coordination` | "coordinate agents", "orchestrate tasks", "chief of staff mode", "vibekanban workflow", "dispatch agents" |
+| `doc-writing-coordination` | "coordinate document writing", "manage doc writers", "orchestrate documentation" |
+| `efficient-scraping` | "scrape website", "extract data", "web scraping", "fetch API", "programmatic extraction" |
 
 **What it provides:**
 - Multi-agent coordination patterns
 - Task lifecycle management
 - VibeKanban API reference
-- Chief of Staff workflow procedures
-- Task templates for agent work
+- Document writing coordination
+- **Efficient web scraping guidance** (uv scripts over reading thousands of lines)
 
 **Requires:** VibeKanban MCP server configured
 
@@ -55,11 +57,6 @@ GitHub issue, PR, and milestone management workflows.
 | `division_to_milestones.py` | Convert Division-labeled issues to milestones |
 | `move_subissues.py` | Move sub-issues between parent issues |
 
-Run scripts with uv:
-```bash
-uv run skills/github-workflow/scripts/set_milestone_recursive.py <milestone_url> --dry-run
-```
-
 ---
 
 ### rust-dev
@@ -70,7 +67,7 @@ Senior-level Rust development practices and workspace architecture.
 
 | Skill | Triggers On |
 | ----- | ----------- |
-| `senior-rust-practices` | "rust workspace", "rust best practices", "cargo workspace", "rust architecture", "rust dependencies", "rust testing strategy", "scalable rust" |
+| `senior-rust-practices` | "rust workspace", "rust best practices", "cargo workspace", "rust architecture", "rust dependencies", "rust testing strategy" |
 
 **What it provides:**
 - Workspace architecture patterns ("one product = one workspace")
@@ -78,7 +75,6 @@ Senior-level Rust development practices and workspace architecture.
 - Dependency hygiene (workspace deps, features, MSRV)
 - Testing pyramid (unit, integration, e2e, property tests)
 - CI quality gates and compile-time optimization
-- Project-specific patterns (CLI, services, ZK, WASM)
 
 **Hooks:**
 - `Stop`: Enforces running `cargo test` and `trunk check` before task completion
@@ -93,20 +89,153 @@ Expert-level AIR (Algebraic Intermediate Representation) cryptographer for ZK co
 
 | Skill | Triggers On |
 | ----- | ----------- |
-| `air-expertise` | "AIR", "algebraic intermediate representation", "ZK constraints", "trace design", "constraint soundness", "lookup arguments", "permutation arguments", "memory consistency", "transition constraints", "boundary constraints", "vanishing polynomial", "FRI", "STARK" |
+| `air-expertise` | "AIR", "algebraic intermediate representation", "ZK constraints", "trace design", "constraint soundness", "lookup arguments", "STARK" |
 
 **What it provides:**
 - Finite field foundations and polynomial mechanics
 - Trace design principles (column classification, row semantics)
 - Constraint categories (transition, boundary, booleanity, selectors)
 - Global consistency arguments (permutation, lookup, memory)
-- Quotient and composition reasoning
-- Fiat-Shamir hygiene
 - Adversarial witness exercises
-- Common vulnerability patterns
 
 **References:**
 - `review-checklist.md`: Complete systematic AIR soundness review procedure
+
+---
+
+### security-researcher
+
+Senior security researcher guidelines based on NIST, CIS, OWASP, MITRE ATT&CK, and SLSA frameworks.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `security-audit` | "security audit", "vulnerability assessment", "pentest", "security review", "threat model" |
+
+**What it provides:**
+- Web application security checklist (OWASP Top 10)
+- Smart contract security patterns
+- Supply chain security (SLSA)
+- ZK/cryptography security review
+- General crypto implementation review
+
+---
+
+### growth-hacker
+
+Modern growth strategy: loops + product-led growth + disciplined experimentation.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `growth-strategy` | "growth strategy", "GTM plan", "growth loops", "A/B testing", "viral loops", "PLG" |
+
+**What it provides:**
+- Growth model design (NSM, input metrics)
+- Growth loops > funnels framework
+- Experimentation engine (RICE/ICE scoring)
+- Lever-specific playbooks (activation, viral, SEO, lifecycle)
+- Privacy and measurement constraints
+
+**Note:** For LinkedIn-specific growth automation, see `linkedin-growth-agent`.
+
+---
+
+### linkedin-growth-agent
+
+Daily LinkedIn growth automation for Clément Walter.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `daily-growth` | "linkedin growth", "cross-post twitter", "linkedin engagement", "daily growth checklist" |
+
+**What it provides:**
+- Daily execution checklist
+- Twitter → LinkedIn content adaptation
+- French tone/voice guidelines (50 patterns)
+- LinkedIn algorithm best practices
+- Supervised workflow (draft only, user posts)
+
+**Target accounts:**
+- Twitter: @ClementWalter
+- LinkedIn: Clément Walter
+
+---
+
+### git-workflow
+
+Git worktree workflow commands.
+
+**Commands:**
+
+| Command | Purpose |
+| ------- | ------- |
+| `/merge` | Merge worktree changes back to main branch |
+
+---
+
+### 1password-mcp
+
+Secure 1Password credential access via official `op` CLI.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `credential-lookup` | "get credential", "1password", "fetch password", "vault lookup" |
+
+**MCP Tools:**
+- `get_credential`: Retrieve username/password from 1Password item
+
+**Requires:** 1Password CLI (`op`) installed and configured
+
+---
+
+### gmail-mcp
+
+Secure Gmail access via IMAP/SMTP with 1Password credential storage.
+
+**Skills:**
+
+| Skill | Triggers On |
+| ----- | ----------- |
+| `gmail-tools` | "send email", "read email", "gmail", "email inbox" |
+| `email-assistant` | "draft email", "compose email", "email workflow" |
+
+**MCP Tools:**
+- `list_emails`: List recent emails from inbox
+- `read_email`: Read full email content
+- `send_email`: Send email via SMTP
+- `search_emails`: Search emails using IMAP syntax
+
+**Requires:** Gmail app password stored in 1Password
+
+---
+
+## Key Guidelines
+
+### Efficient Data Extraction
+
+**Use uv scripts for web scraping instead of reading raw HTML/JSON into context:**
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = ["requests", "beautifulsoup4"]
+# ///
+# Extract ONLY needed fields → output structured JSON
+```
+
+This reduces token usage by 10-100x and improves output quality.
+
+See `chief-of-staff/skills/efficient-scraping/SKILL.md` for full guidance.
+
+---
 
 ## Installation
 
@@ -127,50 +256,38 @@ rookie-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json        # Marketplace metadata
 ├── chief-of-staff/
-│   ├── .claude-plugin/
-│   │   └── plugin.json         # Plugin metadata
 │   └── skills/
-│       └── agent-coordination/
-│           ├── SKILL.md        # Core knowledge (auto-loaded)
-│           ├── references/     # Detailed docs (loaded on demand)
-│           │   ├── vibekanban-api.md
-│           │   └── cos-workflow.md
-│           └── examples/       # Templates and examples
-│               └── task-templates.md
+│       ├── agent-coordination/
+│       ├── doc-writing-coordination/
+│       └── efficient-scraping/
 ├── github-issues/
-│   ├── .claude-plugin/
-│   │   └── plugin.json         # Plugin metadata
 │   └── skills/
 │       └── github-workflow/
-│           ├── SKILL.md        # Core knowledge (auto-loaded)
-│           ├── references/     # Detailed docs (loaded on demand)
-│           │   ├── gh-cli-patterns.md
-│           │   ├── commit-workflow.md
-│           │   ├── pr-workflow.md
-│           │   └── work-workflow.md
-│           ├── examples/       # Templates and examples
-│           │   └── issue-template.md
-│           └── scripts/        # uv Python scripts
-│               ├── set_milestone_recursive.py
-│               ├── milestone_from_issues.py
-│               ├── division_to_milestones.py
-│               └── move_subissues.py
 ├── rust-dev/
-│   ├── .claude-plugin/
-│   │   └── plugin.json         # Plugin metadata (includes Stop hook)
 │   └── skills/
 │       └── senior-rust-practices/
-│           └── SKILL.md        # Core knowledge (auto-loaded)
 ├── air-cryptographer/
-│   ├── .claude-plugin/
-│   │   └── plugin.json         # Plugin metadata
 │   └── skills/
 │       └── air-expertise/
-│           ├── SKILL.md        # Core knowledge (auto-loaded)
-│           └── references/     # Detailed docs (loaded on demand)
-│               └── review-checklist.md
-├── diagnostics/
-│   └── marketplace_debug.py    # Marketplace validation tool
+├── security-researcher/
+│   └── skills/
+│       └── security-audit/
+├── growth-hacker/
+│   └── skills/
+│       └── growth-strategy/
+├── linkedin-growth-agent/
+│   └── skills/
+│       └── daily-growth/
+├── git-workflow/
+│   └── commands/
+│       └── merge.md
+├── 1password-mcp/
+│   └── skills/
+│       └── credential-lookup/
+├── gmail-mcp/
+│   └── skills/
+│       ├── gmail-tools/
+│       └── email-assistant/
 └── README.md
 ```
 
@@ -213,7 +330,7 @@ skill-name/
 
 ### Script Requirements
 
-All Python scripts **must** use uv inline metadata (no plain Python):
+All Python scripts **must** use uv inline metadata:
 
 ```python
 #!/usr/bin/env -S uv run --script
@@ -222,15 +339,6 @@ All Python scripts **must** use uv inline metadata (no plain Python):
 # dependencies = []
 # ///
 ```
-
-### Writing Guidelines
-
-The `plugin-dev:skill-development` skill covers these in detail:
-
-- **Description:** Third-person format with specific trigger phrases
-- **Body:** Imperative/infinitive form (verb-first), not second person
-- **Progressive disclosure:** Keep SKILL.md lean, move details to references/
-- **Validation:** Use `skill-reviewer` agent to check quality
 
 ## License
 
