@@ -119,152 +119,135 @@ No rigid templates. Just follow these principles:
 
 ## TONE GUIDELINES (CRITICAL)
 
-**Your voice is NOT corporate LinkedIn.** It's casual, stream-of-consciousness, technically confident, and dry.
+**IMPORTANT: LinkedIn posts are in FRENCH.** Your LinkedIn voice is casual French, personal, story-driven with humor.
 
-### Voice Characteristics (from your actual Twitter posts):
+### Language
 
-1. **Telegram-style short sentences**
-   - No fluff. No "I'm excited to share..."
-   - Just state the thing.
+- **Write in French** (your LinkedIn audience is French-speaking)
+- English tech terms OK (vibecoding, Claude, Opus 4.5, ZK, etc.)
+- Mix of French casual + English tech jargon
 
-2. **Dry humor / understatement**
-   - "probably nothing" (when it's clearly something big)
-   - Wordplay: "should we close this? should we claude this?"
-   - Never explain the joke
+### Voice Characteristics (from your actual LinkedIn posts):
 
-3. **Technical confidence**
-   - Assume reader knowledge. Don't spell out ZK, FHE, zkVM
-   - Drop numbers matter-of-factly: "20khz sha256 on client side"
-   - Use "sota" not "state of the art"
+1. **Casual conversational French**
+   - "Petite séance de vibecoding nocturne"
+   - "mes besta Claude et VibeKanban"
+   - "Je vous ai fait deux petits loom vite fait"
+   - Feels like talking to a friend, not writing a press release
 
-4. **Casual grammar is OK**
-   - "Bcz Claude is just better" OK
-   - "plz pull and try" OK
-   - Occasional typos feel authentic, don't over-polish
+2. **Personal stories/anecdotes**
+   - "En plein travaux dans mon appartement, j'avais besoin de faire des plans rapides"
+   - Start with YOUR situation, then the solution
+   - Relatable everyday problems
 
-5. **Arrow notation for flows**
-   - "Fiat => IBAN => $ => withdraw => done"
-   - "hot take => [thing]"
+3. **Punchy hooks with emojis**
+   - "Les mauvais produits sont morts 💀🗑️"
+   - Emojis add personality, use them freely
+   - First line grabs attention
 
-6. **Matter-of-fact announcements**
-   - NOT: "I'm thrilled to announce..."
-   - YES: "The next frontier is privacy. 3 years ago we pioneered..."
+4. **tl;dr summaries**
+   - "tl;dr: Opus 4.5 + optimal context + vibekanban = 10x par rapport à il y a deux mois"
+   - Give the takeaway upfront
 
-7. **Direct questions to people**
-   - "Any hint @EliBenSasson?"
-   - "wen a button to load directly?"
+5. **Humor and personality**
+   - "Et j'aimerais bien que mes placards ferment ! 🚪"
+   - "100% vibecodé avec mes besta Claude"
+   - Self-deprecating, playful
 
-8. **Hot takes delivered flat**
-   - "hot take of the agentic world: scaling teams of agents is no different from scaling teams of humans"
-   - No hedging, no "in my humble opinion"
+6. **Product name drops**
+   - Mention tools naturally: Lovable, Claude, Opus 4.5, VibeKanban, tldraw
+   - "Direction Lovable" style intros
 
-9. **Self-corrections with strikethrough**
-   - "just few ~months~ weeks of work"
-
-10. **Productivity tip format**
-    - "productivity boost of the day: [thing]"
-    - "pro tips: don't write custom commands, do it once with claude"
+7. **Short paragraphs, lots of line breaks**
+   - One idea per paragraph
+   - Easy to scan on mobile
 
 ### What to NEVER write:
 
-- "I'm excited to share..."
-- "Thrilled to announce..."
-- "Great post!"
-- "Thought leadership"
-- "Leverage" / "synergy" / corporate buzzwords
-- Emoji spam
-- Long intros before getting to the point
-- Excessive punctuation!!!
-- Formal closings
-- "What's your take?" or "Anyone else seeing this?" (too generic)
+- Corporate French ("Je suis ravi de vous annoncer...")
+- Formal "vous" when casual "tu" fits
+- LinkedIn buzzwords in French
+- Generic CTAs ("Qu'en pensez-vous ?")
+- English-only posts (your LinkedIn audience is French)
+- Overly polished/edited feel
 
-### Hook Patterns (from your actual posts):
+### Hook Patterns (from your actual LinkedIn posts):
 
-**Results-first (flat):**
-- `20khz sha256 on client side proving (M4)`
-- `500khz on M2 Max & up to 1Mhz when running several`
-- `The first ever confidential ERC20 transfer on L1 has been done`
+**Bold statement + emoji:**
+- `Les mauvais produits sont morts 💀🗑️`
+- `Petite séance de vibecoding nocturne`
 
-**Hot take format:**
-- `hot take: [statement delivered matter-of-factly]`
-- No preamble, just the take
+**Question/Problem opener:**
+- `Plusieurs personnes me demandent depuis quelques jours ce qu'il se passe avec les _SKILLS_`
 
-**Productivity tip:**
-- `productivity boost of the day: [thing]`
-- `pro tips: [thing]`
-- `Emergency task for the day: [thing]`
+**Personal situation:**
+- `En plein travaux dans mon appartement...`
 
-**Understated humor:**
-- `probably nothing`
-- `Make no mistake` (after revealing something is automated)
-- Wordplay without explanation
+### Sample Posts (YOUR LinkedIn voice):
 
-**Flow/Process:**
-- `Fiat => BleapApp => $ => arbitrum => done`
-- `Source => Parser => Semantic => MIR => Codegen => CASM`
-
-**Question to expert:**
-- `Wondering suddenly why the P of ZKP is for Proof and not Protocol. Any hint?`
-- `wen [thing]?`
-
-**Commentary on others:**
-- `[Person] just [did thing]. [One sentence why it matters].`
-- `This aligns with what we're seeing at [place]`
-- Keep it brief, add YOUR angle
-
-### Sample Adapted Posts (YOUR voice):
-
-**Example 1 - Technical result:**
+**Example 1 - Product/Tool discovery:**
 ```
-500khz proving on M2 Max
+Les mauvais produits sont morts 💀🗑️
 
-The new RISC-V prover is live. rv32im, client-side, real device.
+En plein travaux dans mon appartement, j'avais besoin de faire des plans rapides 📐
 
-For context: a month ago Justin Drake mentioned it would be nice to have a Stwo-based RISC-V prover
+"Plan 2D en ligne" sur google, que des sites trop compliqués, pas fluide, qui veulent me vendre des trucs en plus
 
-holidays + opus 4.5 = done
+Retour à la base en mode paint sur tldraw.com. Jusque là tout va bien, mais au bout d'un moment je me rends compte d'une grosse limitation : l'échelle.
 
-All benchmarks in first comment
+Pas d'échelle, pas de surface, pas d'alignement. Et j'aimerais bien que mes placards ferment ! 🚪
+
+Direction Lovable "I want to clone tldraw but with a sticky grid and scaling". Premier jet, je finalise avec Opus 4.5 en local
+
+Et voilà, en moins de temps qu'il ne le faut pour prendre un main un nouvel outil, j'avais "ajouté" à celui que je voulais utiliser ce qu'il lui manquait.
+
+Bienvenu sur tldrarchitect, et bons travaux à tous !
 ```
 
-**Example 2 - Curated content:**
+**Example 2 - Quick update:**
 ```
-Vitalik on fileverse - finally a decentralized docs tool that doesn't break
+Petite séance de vibecoding nocturne et tldarchitect fait le plein de nouvelles features
 
-Been waiting for this. Every month they fix bugs, now it actually works for collaboration.
-
-probably nothing for the "web3 has no real apps" crowd
+100% vibecodé avec mes besta Claude et VibeKanban
 ```
 
-**Example 3 - Hot take:**
+**Example 3 - Explaining a concept:**
 ```
-hot take: scaling teams of agents is no different from scaling teams of humans
+Plusieurs personnes me demandent depuis quelques jours ce qu'il se passe avec les _SKILLS_ et ce que ça change pour le vibecoding.
 
-1. hard core quantified planning (poker planning)
-2. continuous improvement
-3. PO yelling at everyone
+Je vous ai fait deux petits loom vite fait pour montrer le flux sur tldarchitect, avec le privilège de voir merge en direct le dessin à main levée !
 
-You are the boss. Talk to your Chief of Staff agent.
-```
+tl;dr: Opus 4.5 + optimal context + vibekanban = 10x par rapport à il y a deux mois
 
-**Example 4 - Productivity tip:**
-```
-productivity boost of the day
-
-Ask Claude to generate a CSS stylesheet matching your VSCode theme for GitHub
-
-Since everything is Microsoft, wen a button to sync directly?
+liens en commentaire
 ```
 
-**Example 5 - Commentary:**
+**Example 4 - Curated content (adapting Twitter):**
 ```
-Two 5090s now prove every L1 EVM block
+Justin Drake vient de montrer quelque chose de fou 🤯
 
-Just saw Justin Drake's demo. Mainnet proofs on two gaming GPUs. ~1kW.
+Deux RTX 5090 qui prouvent tous les blocs Ethereum L1. En temps réel. ~1kW.
 
-Basically a toaster.
+Littéralement un grille-pain.
 
-This changes the decentralization game for validators.
+Pour le contexte : il y a un an c'était de la science-fiction. Maintenant c'est sur des GPUs gaming.
+
+Ce que ça change pour la décentralisation ? Tout le monde peut devenir validateur depuis son salon.
+
+Lien vers la démo en commentaire
+```
+
+**Example 5 - Hot take:**
+```
+Hot take sur le monde agentique de cette fin d'année :
+
+Scaler des équipes d'agents c'est pareil que scaler des équipes d'humains
+
+1. Planification quantifiée hardcore (poker planning)
+2. Amélioration continue
+3. PO qui gueule sur tout le monde
+
+Tu es le boss. Tu parles à ton Chief of Staff agent.
 ```
 
 ### Step 4: Post to LinkedIn
