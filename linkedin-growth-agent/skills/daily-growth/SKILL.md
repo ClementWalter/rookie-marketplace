@@ -162,6 +162,46 @@ No rigid templates. Just follow these principles:
    - One idea per paragraph
    - Easy to scan on mobile
 
+8. **Intellectual/Analytical depth**
+   - Longer form than Twitter, more context
+   - Explain the "why" behind things
+   - Connect dots between domains (crypto ↔ AI ↔ economics)
+
+9. **Everyday analogies to explain complex concepts**
+   - "🍏 3€/kg, 5€ les deux" to explain finance mechanisms
+   - Make abstract concepts tangible with real-world examples
+   - Relatable comparisons from daily life
+
+10. **Rhetorical questions for impact**
+    - "Grotesque, n'est-ce pas?"
+    - "Et si la solution était déjà là ?"
+    - Drive home a point with a question
+
+11. **Scoreboard format for comparisons**
+    - "1 Ethereum, 1 Google, 0 UE, 0 France Identité"
+    - Visual, scannable, punchy
+    - Good for competitive analysis or progress tracking
+
+12. **Timeline/Chronological storytelling**
+    - "2019: X happened. 2021: Y. 2024: Z."
+    - Show evolution and progress
+    - Build narrative momentum
+
+13. **Historical quotes for gravitas**
+    - "De l'audace, encore de l'audace, toujours de l'audace"
+    - Add intellectual weight
+    - Connect current events to timeless wisdom
+
+14. **Contrarian takes (respectful)**
+    - "Je ne suis pas contre X, mais..."
+    - Challenge conventional wisdom
+    - Present nuanced counterpoints
+
+15. **"Au menu" format for lists**
+    - "Au menu : feature 1, feature 2, feature 3"
+    - Light, appetizing framing
+    - Good for announcements
+
 ### What to NEVER write:
 
 - Corporate French ("Je suis ravi de vous annoncer...")
@@ -249,6 +289,214 @@ Scaler des équipes d'agents c'est pareil que scaler des équipes d'humains
 
 Tu es le boss. Tu parles à ton Chief of Staff agent.
 ```
+
+**Example 6 - Everyday analogy:**
+```
+🍏 3€/kg, 5€ les deux
+
+C'est exactement comme ça que fonctionne le yield farming en DeFi.
+
+Tu veux 1 pomme ? Prix normal.
+Tu en prends 2 ? Réduction.
+Tu en prends 100 ? T'es grossiste, t'as le meilleur prix.
+
+La différence : les pommes pourrissent. Les tokens aussi, mais plus vite.
+```
+
+**Example 7 - Scoreboard format:**
+```
+Identité numérique en Europe, le tableau des scores 📊
+
+1 Ethereum (ENS depuis 2017)
+1 Google (passkeys everywhere)
+0 UE (toujours en consultation)
+0 France Identité (téléchargements: 12)
+
+Qui gagne la course ? Pas les états.
+```
+
+**Example 8 - Timeline storytelling:**
+```
+ZK proofs : de la théorie à ton téléphone
+
+1985 : Goldwasser invente le concept
+2016 : Zcash, première blockchain ZK
+2020 : Rollups, scaling Ethereum
+2024 : Proofs sur mobile en <1 seconde
+
+40 ans pour passer de "papier académique" à "app grand public"
+
+La prochaine décennie sera celle de la privacy par défaut.
+```
+
+**Example 9 - Contrarian take:**
+```
+Je ne suis pas contre les régulations crypto.
+
+Je suis contre les régulations écrites par des gens qui ne comprennent pas la techno.
+
+Nuance importante.
+
+Quand un député confond wallet et exchange, on a un problème de compétence, pas d'intention.
+```
+
+**Example 10 - Historical quote + modern take:**
+```
+"De l'audace, encore de l'audace, toujours de l'audace" - Danton, 1792
+
+232 ans plus tard, c'est toujours le playbook.
+
+Sauf qu'aujourd'hui l'audace c'est :
+- Shipper en public
+- Itérer en live
+- Apprendre devant tout le monde
+
+Le courage n'a pas changé. Juste le théâtre.
+```
+
+---
+
+## LinkedIn Algorithm Best Practices (2025-2026)
+
+These are growth hacking tactics that work WITH Clément's authentic voice.
+
+### The Golden Hour
+
+The first 60 minutes after posting determine reach:
+- **Reply to EVERY comment** within the first hour
+- Comments are weighted 4x more than likes
+- Your own replies to comments boost the post
+
+### Hook Optimization
+
+First 150 characters appear before "See more":
+- Must grab attention AND hint at value
+- No wasted words
+- Create curiosity gap
+
+**Test**: Read just the first line. Would YOU click "See more"?
+
+### Dwell Time
+
+LinkedIn tracks how long people read your post:
+- Longer posts (800-1200 chars) perform well IF valuable
+- Line breaks increase dwell time (forces scrolling)
+- Bullet points/lists keep people reading
+
+### Link Placement
+
+**NEVER in main post body** - LinkedIn deprioritizes external links
+
+Always: Post first → Add link in first comment → Reference "lien en commentaire"
+
+### Engagement Triggers
+
+What drives comments (ranked):
+1. **Contrarian takes** - "Je ne suis pas contre..."
+2. **Specific numbers** - "2 RTX 5090", "40 ans"
+3. **Personal stories** - Relatable situations
+4. **Questions** (but NOT generic CTAs)
+5. **Timely topics** - React to news within 24h
+
+### Posting Frequency
+
+- **Max 1 post/day** (algorithm penalizes spam)
+- **3 posts/week optimal** for growth
+- **Tuesday-Thursday** highest engagement
+- **Consistency > volume**
+
+### Profile Optimization
+
+Keep updated:
+- Headline should intrigue (not just job title)
+- Featured section with best content
+- Activity visible (don't hide likes/comments)
+
+### Network Effects
+
+Comments on others' posts > your own posts for visibility:
+- Thoughtful comments get seen by THEIR network
+- Comment early on big accounts' posts
+- "First mover advantage" in comments
+
+---
+
+### Step 3.5: Draft Approval Workflow (MANDATORY)
+
+**CRITICAL: NEVER post directly. Always submit draft for approval first.**
+
+This workflow builds a learning database. Over time, with enough approved examples, the agent can work more autonomously.
+
+#### Submit Draft for Approval
+
+After adapting content (Step 3), present the draft to the user:
+
+```
+📝 DRAFT FOR APPROVAL
+
+Source: [Twitter link or "Original"]
+Content pillar: [ZK/AI/Founder/Hot Take/Commentary]
+
+---
+[Full post content here]
+---
+
+First comment will include:
+- [Link 1]
+- [Link 2]
+
+Approve? (yes/no/edit)
+```
+
+#### User Response Handling
+
+| Response | Action |
+|----------|--------|
+| `yes` or `approve` | Proceed to Step 4, log to approved-posts.md |
+| `no` or `reject` | Ask what to change, return to Step 3 |
+| `edit: [feedback]` | Apply feedback, resubmit draft |
+| User provides rewritten version | Use their version, log to approved-posts.md |
+
+#### Learning Database
+
+Every approved post gets logged to `references/approved-posts.md`:
+
+```markdown
+## [Date] - [Topic]
+
+**Source**: [Twitter link or Original]
+**Pillar**: [Content pillar]
+**Approval**: Direct / With edits
+
+### Final Post
+[The approved content]
+
+### First Comment
+[Comment content]
+
+### Notes
+[Any feedback from user, what worked, what was changed]
+```
+
+This database serves as:
+1. Training examples for tone calibration
+2. Reference for what works
+3. Pattern library for future posts
+
+#### Autonomy Levels
+
+As the database grows, agent autonomy increases:
+
+| Approved Posts | Autonomy Level |
+|----------------|----------------|
+| 0-10 | **Supervised**: Always submit draft, wait for approval |
+| 11-25 | **Guided**: Submit draft, can post if no response in 30min |
+| 26-50 | **Semi-autonomous**: Post directly, flag unusual content |
+| 50+ | **Autonomous**: Full posting rights, weekly review only |
+
+**Current level**: Supervised (always submit drafts)
+
+---
 
 ### Step 4: Post to LinkedIn
 
@@ -359,6 +607,7 @@ After each session, report:
 ## References
 
 See `references/` folder for:
+- `approved-posts.md`: **Learning database** - all approved posts with feedback
 - `hook-examples.md`: 50+ proven hook templates
 - `content-pillars.md`: Detailed topic guidelines
 - `weekly-logs.md`: Performance tracking
