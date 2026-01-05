@@ -32,6 +32,11 @@
       "name": "1password-mcp",
       "description": "Secure 1Password credential access via official op CLI.",
       "source": "./1password-mcp"
+    },
+    {
+      "name": "gmail-mcp",
+      "description": "Secure Gmail access via IMAP/SMTP with 1Password credential storage.",
+      "source": "./gmail-mcp"
     }
   ]
 }

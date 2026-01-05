@@ -1,0 +1,17 @@
+{
+  "name": "gmail-mcp",
+  "description": "Secure Gmail access via IMAP/SMTP with 1Password credential storage",
+  "version": "1.0.0",
+  "author": {
+    "name": "Clement Walter"
+  },
+  "mcp": {
+    "servers": {
+      "gmail": {
+        "type": "stdio",
+        "command": "uv",
+        "args": ["run", "${CLAUDE_PLUGIN_ROOT}/server.py"]
+      }
+    }
+  }
+}
