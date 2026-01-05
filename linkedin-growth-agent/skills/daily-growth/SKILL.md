@@ -393,14 +393,22 @@ No rigid templates. Just follow these principles:
     - Shows path wasn't easy
     - "Si je rachète le voisin, ça sera en #bitcoin !"
 
+### Core Rules:
+
+1. **Every post must have ONE clear message/thesis** - If someone asks "what's the point?", you should be able to answer in one sentence
+2. **Always use "vous"** - Never "tu" on LinkedIn, always formal "vous"
+3. **Write in French** - English tech terms OK, but post body in French
+
 ### What to NEVER write:
 
 - Corporate French ("Je suis ravi de vous annoncer...")
-- Formal "vous" when casual "tu" fits
+- "Tu" / "ton" / "tes" - Always use "vous" / "votre" / "vos"
 - LinkedIn buzzwords in French
 - Generic CTAs ("Qu'en pensez-vous ?")
 - English-only posts (your LinkedIn audience is French)
 - Overly polished/edited feel
+- Posts without a clear takeaway or message
+- Direct translations of English Twitter slang
 
 ### Hook Patterns (from your actual LinkedIn posts):
 
@@ -570,7 +578,7 @@ Scaler des équipes d'agents c'est pareil que scaler des équipes d'humains
 2. Amélioration continue
 3. PO qui gueule sur tout le monde
 
-Tu es le boss. Tu parles à ton Chief of Staff agent.
+Vous êtes le boss. Vous parlez à votre Chief of Staff agent.
 ```
 
 **Example 6 - Everyday analogy:**
@@ -579,9 +587,9 @@ Tu es le boss. Tu parles à ton Chief of Staff agent.
 
 C'est exactement comme ça que fonctionne le yield farming en DeFi.
 
-Tu veux 1 pomme ? Prix normal.
-Tu en prends 2 ? Réduction.
-Tu en prends 100 ? T'es grossiste, t'as le meilleur prix.
+Vous voulez 1 pomme ? Prix normal.
+Vous en prenez 2 ? Réduction.
+Vous en prenez 100 ? Vous êtes grossiste, vous avez le meilleur prix.
 
 La différence : les pommes pourrissent. Les tokens aussi, mais plus vite.
 ```
@@ -600,7 +608,7 @@ Qui gagne la course ? Pas les états.
 
 **Example 8 - Timeline storytelling:**
 ```
-ZK proofs : de la théorie à ton téléphone
+ZK proofs : de la théorie à votre téléphone
 
 1985 : Goldwasser invente le concept
 2016 : Zcash, première blockchain ZK
@@ -704,20 +712,29 @@ Comments on others' posts > your own posts for visibility:
 
 ---
 
-### Step 3.5: Draft Approval Workflow (MANDATORY)
+### Step 3.5: Draft & Monitor Workflow (MANDATORY)
 
-**CRITICAL: NEVER post directly. Always submit draft for approval first.**
+**CRITICAL: NEVER post directly. Draft only, user edits and sends manually.**
 
-This workflow builds a learning database. Over time, with enough approved examples, the agent can work more autonomously.
+This is a supervised workflow. The agent prepares, the user executes.
 
-#### Submit Draft for Approval
+#### Workflow
 
-After adapting content (Step 3), present the draft to the user:
+1. **Pull Twitter content** - Scan tweets/likes for candidates
+2. **Open LinkedIn** - Navigate to LinkedIn compose
+3. **Draft in chat** - Present draft to user (NEVER paste into LinkedIn directly)
+4. **User monitors browser** - User reviews, edits manually in the open browser
+5. **User sends** - User posts manually when satisfied
+6. **User says "next"** - Move to next task (engagement, comments, etc.)
+
+#### Draft Format
+
+Present drafts like this:
 
 ```
-📝 DRAFT FOR APPROVAL
+📝 DRAFT (do not submit - user will edit and post)
 
-Source: [Full Twitter URL - REQUIRED]
+Source: [Full Twitter URL]
 Content pillar: [ZK/AI/Founder/Hot Take/Commentary]
 
 ---
@@ -727,8 +744,6 @@ Content pillar: [ZK/AI/Founder/Hot Take/Commentary]
 Premier commentaire:
 🐦 https://x.com/[author]/status/[id]
 📎 [Any other links if relevant]
-
-Approve? (yes/no/edit)
 ```
 
 **MANDATORY - First Comment Must Include:**
@@ -777,18 +792,7 @@ This database serves as:
 2. Reference for what works
 3. Pattern library for future posts
 
-#### Autonomy Levels
-
-As the database grows, agent autonomy increases:
-
-| Approved Posts | Autonomy Level |
-|----------------|----------------|
-| 0-10 | **Supervised**: Always submit draft, wait for approval |
-| 11-25 | **Guided**: Submit draft, can post if no response in 30min |
-| 26-50 | **Semi-autonomous**: Post directly, flag unusual content |
-| 50+ | **Autonomous**: Full posting rights, weekly review only |
-
-**Current level**: Supervised (always submit drafts)
+**Current mode**: Fully supervised - agent drafts, user edits and posts manually.
 
 ---
 
