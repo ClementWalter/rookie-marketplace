@@ -37,6 +37,11 @@
       "name": "gmail-mcp",
       "description": "Secure Gmail access via IMAP/SMTP with 1Password credential storage.",
       "source": "./gmail-mcp"
+    },
+    {
+      "name": "security-researcher",
+      "description": "Senior security researcher guidelines based on NIST, CIS, OWASP, MITRE ATT&CK, and SLSA frameworks.",
+      "source": "./security-researcher"
     }
   ]
 }
