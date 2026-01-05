@@ -3,17 +3,25 @@
 # requires-python = ">=3.11"
 # dependencies = ["mcp"]
 # ///
-"""Minimal Gmail MCP server using IMAP/SMTP with 1Password for credentials."""
+"""Gmail MCP server using IMAP/SMTP with 1Password for credentials.
+
+Supports flexible 1Password item naming - extracts username from the item
+rather than using the item name as the login credential.
+"""
 
 import asyncio
 import email
 import imaplib
+import json
+import os
 import smtplib
 import subprocess
+from email import encoders
 from email.header import decode_header
+from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.utils import formatdate, parseaddr
+from email.utils import formatdate
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
@@ -25,20 +33,40 @@ server = Server("gmail")
 IMAP_HOST = "imap.gmail.com"
 IMAP_PORT = 993
 SMTP_HOST = "smtp.gmail.com"
-SMTP_PORT = 587
+SMTP_PORT = 465  # SSL port
 
 
-def get_password(account: str) -> str:
-    """Get app password from 1Password using account email as item name."""
+def get_credentials(item_name: str) -> dict:
+    """Get username and password from 1Password item.
+
+    This extracts the actual username field from the 1Password entry,
+    allowing flexible item naming (e.g., "Gmail Work Claude" instead of
+    requiring the item name to match the email address).
+    """
     result = subprocess.run(
-        ["op", "item", "get", account, "--fields", "password"],
+        ["op", "item", "get", item_name, "--format", "json"],
         capture_output=True,
         text=True,
         timeout=30,
     )
     if result.returncode != 0:
-        raise ValueError(f"Failed to get password for {account}: {result.stderr.strip()}")
-    return result.stdout.strip()
+        raise ValueError(f"Failed to get 1Password item '{item_name}': {result.stderr.strip()}")
+
+    item = json.loads(result.stdout)
+    creds = {"username": None, "password": None}
+
+    for field in item.get("fields", []):
+        field_id = field.get("id", "")
+        field_label = field.get("label", "").lower()
+        if field_id == "username" or field_label == "username":
+            creds["username"] = field.get("value")
+        elif field_id == "password" or field_label == "password":
+            creds["password"] = field.get("value")
+
+    if not creds["username"] or not creds["password"]:
+        raise ValueError(f"1Password item '{item_name}' missing username or password field")
+
+    return creds
 
 
 def decode_mime_header(header: str | None) -> str:
@@ -80,17 +108,17 @@ def get_email_body(msg: email.message.Message) -> str:
     return ""
 
 
-def connect_imap(account: str) -> imaplib.IMAP4_SSL:
-    """Connect to Gmail IMAP server."""
-    password = get_password(account)
+def connect_imap(item_name: str) -> tuple[imaplib.IMAP4_SSL, str]:
+    """Connect to Gmail IMAP server. Returns (imap, username)."""
+    creds = get_credentials(item_name)
     imap = imaplib.IMAP4_SSL(IMAP_HOST, IMAP_PORT)
-    imap.login(account, password)
-    return imap
+    imap.login(creds["username"], creds["password"])
+    return imap, creds["username"]
 
 
 def list_emails_impl(account: str, folder: str = "INBOX", limit: int = 10) -> list[dict]:
     """List recent emails from folder."""
-    imap = connect_imap(account)
+    imap, _ = connect_imap(account)
     try:
         imap.select(folder, readonly=True)
         _, data = imap.search(None, "ALL")
@@ -122,21 +150,33 @@ def list_emails_impl(account: str, folder: str = "INBOX", limit: int = 10) -> li
         imap.logout()
 
 
-def read_email_impl(account: str, email_id: str) -> dict:
+def read_email_impl(account: str, email_id: str, folder: str = "INBOX") -> dict:
     """Read full email content."""
-    imap = connect_imap(account)
+    imap, _ = connect_imap(account)
     try:
-        imap.select("INBOX", readonly=True)
+        imap.select(folder, readonly=True)
         _, msg_data = imap.fetch(email_id.encode(), "(RFC822)")
         if not msg_data or not msg_data[0]:
             raise ValueError(f"Email {email_id} not found")
         raw_email = msg_data[0][1]
         msg = email.message_from_bytes(raw_email)
+
+        # Extract reply-to address
+        from_header = decode_mime_header(msg.get("From"))
+        if "<" in from_header and ">" in from_header:
+            reply_to = from_header[from_header.index("<") + 1 : from_header.index(">")]
+        else:
+            reply_to = from_header
+
         return {
-            "from": decode_mime_header(msg.get("From")),
+            "id": email_id,
+            "from": from_header,
+            "reply_to": reply_to,
             "to": decode_mime_header(msg.get("To")),
             "subject": decode_mime_header(msg.get("Subject")),
             "date": msg.get("Date", ""),
+            "message_id": msg.get("Message-ID", ""),
+            "references": msg.get("References", ""),
             "body": get_email_body(msg),
         }
     finally:
@@ -150,18 +190,33 @@ def send_email_impl(
     body: str,
     cc: str | None = None,
     bcc: str | None = None,
+    attachments: list[str] | None = None,
 ) -> str:
     """Send email via SMTP."""
-    password = get_password(account)
+    creds = get_credentials(account)
 
-    msg = MIMEMultipart()
-    msg["From"] = account
+    if attachments:
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(body, "plain", "utf-8"))
+        for filepath in attachments:
+            if os.path.exists(filepath):
+                with open(filepath, "rb") as f:
+                    part = MIMEBase("application", "octet-stream")
+                    part.set_payload(f.read())
+                encoders.encode_base64(part)
+                filename = os.path.basename(filepath)
+                part.add_header("Content-Disposition", f"attachment; filename={filename}")
+                msg.attach(part)
+    else:
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(body, "plain", "utf-8"))
+
+    msg["From"] = creds["username"]
     msg["To"] = to
     msg["Subject"] = subject
     msg["Date"] = formatdate(localtime=True)
     if cc:
         msg["Cc"] = cc
-    msg.attach(MIMEText(body, "plain"))
 
     recipients = [addr.strip() for addr in to.split(",")]
     if cc:
@@ -169,19 +224,79 @@ def send_email_impl(
     if bcc:
         recipients.extend(addr.strip() for addr in bcc.split(","))
 
-    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as smtp:
-        smtp.starttls()
-        smtp.login(account, password)
+    with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as smtp:
+        smtp.login(creds["username"], creds["password"])
         smtp.send_message(msg, to_addrs=recipients)
 
-    return f"Email sent successfully to {to}"
+    attachment_info = f" with {len(attachments)} attachment(s)" if attachments else ""
+    return f"Email sent successfully to {to}{attachment_info}"
+
+
+def reply_email_impl(
+    account: str,
+    email_id: str,
+    body: str,
+    attachments: list[str] | None = None,
+    folder: str = "INBOX",
+) -> str:
+    """Reply to an email, maintaining the thread."""
+    creds = get_credentials(account)
+
+    # Get original email details for threading
+    original = read_email_impl(account, email_id, folder)
+
+    # Build references header (original references + original message-id)
+    references = original["references"]
+    if references and original["message_id"]:
+        references = f"{references} {original['message_id']}"
+    elif original["message_id"]:
+        references = original["message_id"]
+
+    # Prepare subject (add RE: if not present)
+    subject = original["subject"]
+    if not subject.upper().startswith("RE:"):
+        subject = f"RE: {subject}"
+
+    # Create message
+    if attachments:
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(body, "plain", "utf-8"))
+        for filepath in attachments:
+            if os.path.exists(filepath):
+                with open(filepath, "rb") as f:
+                    part = MIMEBase("application", "octet-stream")
+                    part.set_payload(f.read())
+                encoders.encode_base64(part)
+                filename = os.path.basename(filepath)
+                part.add_header("Content-Disposition", f"attachment; filename={filename}")
+                msg.attach(part)
+    else:
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(body, "plain", "utf-8"))
+
+    msg["From"] = creds["username"]
+    msg["To"] = original["reply_to"]
+    msg["Subject"] = subject
+    msg["Date"] = formatdate(localtime=True)
+    if original["message_id"]:
+        msg["In-Reply-To"] = original["message_id"]
+    if references:
+        msg["References"] = references
+
+    # Send via SMTP
+    with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as smtp:
+        smtp.login(creds["username"], creds["password"])
+        smtp.send_message(msg)
+
+    attachment_info = f" with {len(attachments)} attachment(s)" if attachments else ""
+    return f"Reply sent successfully to {original['reply_to']}{attachment_info}"
 
 
 def search_emails_impl(
     account: str, query: str, folder: str = "INBOX", limit: int = 10
 ) -> list[dict]:
     """Search emails using IMAP search syntax."""
-    imap = connect_imap(account)
+    imap, _ = connect_imap(account)
     try:
         imap.select(folder, readonly=True)
         _, data = imap.search(None, query)
@@ -216,39 +331,95 @@ async def list_tools() -> list[Tool]:
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "account": {"type": "string", "description": "Gmail address (must match 1Password item name)"},
-                    "folder": {"type": "string", "description": "Folder to list (default: INBOX)", "default": "INBOX"},
-                    "limit": {"type": "integer", "description": "Max emails to return (default: 10)", "default": 10},
+                    "account": {
+                        "type": "string",
+                        "description": "1Password item name containing Gmail credentials (username/password fields)",
+                    },
+                    "folder": {
+                        "type": "string",
+                        "description": "Folder to list (default: INBOX)",
+                        "default": "INBOX",
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Max emails to return (default: 10)",
+                        "default": 10,
+                    },
                 },
                 "required": ["account"],
             },
         ),
         Tool(
             name="read_email",
-            description="Read full content of an email",
+            description="Read full content of an email, including threading headers for reply",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "account": {"type": "string", "description": "Gmail address"},
+                    "account": {
+                        "type": "string",
+                        "description": "1Password item name containing Gmail credentials",
+                    },
                     "email_id": {"type": "string", "description": "Email ID from list_emails"},
+                    "folder": {
+                        "type": "string",
+                        "description": "Folder containing the email (default: INBOX)",
+                        "default": "INBOX",
+                    },
                 },
                 "required": ["account", "email_id"],
             },
         ),
         Tool(
             name="send_email",
-            description="Send an email via Gmail SMTP",
+            description="Send a new email via Gmail SMTP (with optional attachments)",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "account": {"type": "string", "description": "Gmail address to send from"},
+                    "account": {
+                        "type": "string",
+                        "description": "1Password item name containing Gmail credentials",
+                    },
                     "to": {"type": "string", "description": "Recipient email(s), comma-separated"},
                     "subject": {"type": "string", "description": "Email subject"},
                     "body": {"type": "string", "description": "Email body (plain text)"},
                     "cc": {"type": "string", "description": "CC recipients, comma-separated"},
                     "bcc": {"type": "string", "description": "BCC recipients, comma-separated"},
+                    "attachments": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "List of absolute file paths to attach",
+                    },
                 },
                 "required": ["account", "to", "subject", "body"],
+            },
+        ),
+        Tool(
+            name="reply_email",
+            description="Reply to an email, maintaining the thread (with optional attachments)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "account": {
+                        "type": "string",
+                        "description": "1Password item name containing Gmail credentials",
+                    },
+                    "email_id": {
+                        "type": "string",
+                        "description": "Email ID to reply to (from list_emails or read_email)",
+                    },
+                    "body": {"type": "string", "description": "Reply body (plain text)"},
+                    "attachments": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "List of absolute file paths to attach",
+                    },
+                    "folder": {
+                        "type": "string",
+                        "description": "Folder containing the email (default: INBOX)",
+                        "default": "INBOX",
+                    },
+                },
+                "required": ["account", "email_id", "body"],
             },
         ),
         Tool(
@@ -257,10 +428,24 @@ async def list_tools() -> list[Tool]:
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "account": {"type": "string", "description": "Gmail address"},
-                    "query": {"type": "string", "description": "IMAP search query (e.g., 'FROM sender@example.com', 'SUBJECT hello')"},
-                    "folder": {"type": "string", "description": "Folder to search (default: INBOX)", "default": "INBOX"},
-                    "limit": {"type": "integer", "description": "Max results (default: 10)", "default": 10},
+                    "account": {
+                        "type": "string",
+                        "description": "1Password item name containing Gmail credentials",
+                    },
+                    "query": {
+                        "type": "string",
+                        "description": "IMAP search query (e.g., 'FROM sender@example.com', 'SUBJECT hello')",
+                    },
+                    "folder": {
+                        "type": "string",
+                        "description": "Folder to search (default: INBOX)",
+                        "default": "INBOX",
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Max results (default: 10)",
+                        "default": 10,
+                    },
                 },
                 "required": ["account", "query"],
             },
@@ -278,7 +463,11 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
                 arguments.get("limit", 10),
             )
         elif name == "read_email":
-            result = read_email_impl(arguments["account"], arguments["email_id"])
+            result = read_email_impl(
+                arguments["account"],
+                arguments["email_id"],
+                arguments.get("folder", "INBOX"),
+            )
         elif name == "send_email":
             result = send_email_impl(
                 arguments["account"],
@@ -287,6 +476,15 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
                 arguments["body"],
                 arguments.get("cc"),
                 arguments.get("bcc"),
+                arguments.get("attachments"),
+            )
+        elif name == "reply_email":
+            result = reply_email_impl(
+                arguments["account"],
+                arguments["email_id"],
+                arguments["body"],
+                arguments.get("attachments"),
+                arguments.get("folder", "INBOX"),
             )
         elif name == "search_emails":
             result = search_emails_impl(
@@ -298,7 +496,6 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
         else:
             return [TextContent(type="text", text=f"Unknown tool: {name}")]
 
-        import json
         return [TextContent(type="text", text=json.dumps(result, indent=2, ensure_ascii=False))]
     except Exception as e:
         return [TextContent(type="text", text=f"Error: {e}")]

@@ -1,7 +1,7 @@
 {
   "name": "gmail-mcp",
-  "description": "Secure Gmail access via IMAP/SMTP with 1Password credential storage",
-  "version": "1.0.0",
+  "description": "Secure Gmail access via IMAP/SMTP with 1Password credential storage. Supports flexible item naming, email threading, and attachments.",
+  "version": "2.0.0",
   "author": {
     "name": "Clement Walter"
   },
@@ -13,5 +13,8 @@
         "args": ["run", "${CLAUDE_PLUGIN_ROOT}/server.py"]
       }
     }
+  },
+  "skills": {
+    "autoDiscover": true
   }
 }
