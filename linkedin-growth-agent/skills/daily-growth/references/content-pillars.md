@@ -1,0 +1,211 @@
+# Content Pillars - Detailed Guidelines
+
+## Pillar 1: ZK/Cryptography (40% of content)
+
+### Topics
+- RISC-V provers and VM proving
+- Stwo proving system (Starkware)
+- FHE (Fully Homomorphic Encryption)
+- Starknet ecosystem
+- Zero-knowledge proof benchmarks
+- Cairo language and tooling
+
+### Angle for LinkedIn
+- Focus on "why it matters" beyond crypto natives
+- Benchmark comparisons (speed, cost, efficiency)
+- Real-world applications enabled
+- Technical breakthroughs explained simply
+
+### Example Adaptations
+
+**Twitter (technical):**
+> NEW RISC-V rv32im prover reaching 500khz on M2 Max
+
+**LinkedIn (accessible):**
+```
+500,000 operations per second. On a laptop.
+
+That's our new RISC-V prover benchmark.
+
+Why this matters beyond crypto:
+→ Proves any computation happened correctly
+→ Without revealing the actual data
+→ Fast enough for real applications now
+
+We're using Starkware's Stwo system. The architecture that makes this possible: [technical detail]
+
+What applications would you build if you could prove computation this fast?
+
+🥕
+```
+
+### Keywords to Include
+- Zero-knowledge, ZK proofs
+- Verifiable computation
+- Cryptographic proving
+- Privacy-preserving
+- Trustless verification
+
+---
+
+## Pillar 2: AI/Agents (30% of content)
+
+### Topics
+- Claude Code and AI coding assistants
+- Agentic workflows and automation
+- Scaling AI agent teams
+- AI + crypto intersection
+- Developer productivity with AI
+
+### Angle for LinkedIn
+- Practical productivity gains
+- How-to and workflows
+- Team/organizational implications
+- Hot takes on AI hype vs reality
+
+### Example Adaptations
+
+**Twitter:**
+> hot take of the agentic world: scaling teams of agent is no different from scaling team of humans
+
+**LinkedIn:**
+```
+Hot take: Scaling AI agents = scaling human teams.
+
+After weeks of building with Claude Code, here's what I've learned:
+
+1. Quantified planning matters
+   → Agents need clear scope like humans need sprint planning
+
+2. Continuous improvement is mandatory
+   → Review agent outputs, refine prompts, iterate
+
+3. Someone needs to be the PO
+   → You're the boss. Agents need direction.
+
+The "Chief of Staff" pattern: one orchestrator agent managing specialized workers.
+
+Same management principles. Different workers.
+
+How are you organizing your AI workflows?
+
+🥕
+```
+
+### Keywords to Include
+- AI agents, agentic workflows
+- Claude Code, AI coding
+- Developer productivity
+- Automation, orchestration
+- Human-AI collaboration
+
+---
+
+## Pillar 3: Founder Journey (20% of content)
+
+### Topics
+- Kakarot zkEVM updates
+- Zama (FHE company) milestones
+- Building in public
+- Startup challenges and wins
+- Web3 ecosystem observations
+
+### Angle for LinkedIn
+- Authentic founder experiences
+- Milestones and announcements
+- Lessons learned
+- Team and culture
+
+### Example Adaptations
+
+**Twitter:**
+> The first ever confidential ERC20 transfer on L1 has been done and it costed only about 0.13$
+
+**LinkedIn:**
+```
+$0.13
+
+That's what the first confidential ERC20 transfer on Ethereum mainnet cost.
+
+Yesterday, Zama Protocol went live. We completed the first confidential stablecoin (cUSDT) transfer.
+
+What this means:
+→ Private transactions on public chains
+→ Compliance-friendly confidentiality
+→ At costs that actually make sense
+
+Two years of building FHE infrastructure. One transaction to prove it works.
+
+This is just the beginning.
+
+🥕
+
+[Link to transaction in comments]
+```
+
+### Keywords to Include
+- Building in public
+- Startup journey
+- Web3, crypto infrastructure
+- zkEVM, rollups
+- Blockchain scalability
+
+---
+
+## Pillar 4: Hot Takes (10% of content)
+
+### Topics
+- Industry predictions
+- Contrarian opinions
+- Calling out BS
+- Unpopular truths
+
+### Angle for LinkedIn
+- Thoughtful contrarianism (not edgy for edgy's sake)
+- Backed by experience/data
+- Invites discussion
+- Professional but direct
+
+### Guidelines
+- Use sparingly (1x every 2 weeks max)
+- Must be defensible
+- Should spark genuine debate
+- Avoid attacking individuals
+
+### Example Format
+```
+Unpopular opinion: [contrarian take]
+
+Here's why I believe this:
+→ [Evidence 1]
+→ [Evidence 2]
+→ [Evidence 3]
+
+I could be wrong. But after [experience], this is where I land.
+
+Change my mind?
+
+🥕
+```
+
+---
+
+## Content Mix by Day
+
+| Day | Primary Pillar | Reasoning |
+|-----|---------------|-----------|
+| Tuesday | ZK/Crypto or AI | Start week strong with expertise |
+| Wednesday | Founder Journey or repurposed banger | Mid-week engagement |
+| Thursday | Hot Take or AI | End-of-week reflection |
+
+---
+
+## Cross-Pillar Opportunities
+
+Some topics span multiple pillars - these often perform best:
+
+- "How I used Claude Code to build a ZK prover" (AI + ZK)
+- "Lessons from scaling Kakarot's AI-assisted development" (Founder + AI)
+- "Why FHE + ZK is the future of blockchain privacy" (ZK + Founder)
+
+Look for these intersections when selecting content to cross-post.
