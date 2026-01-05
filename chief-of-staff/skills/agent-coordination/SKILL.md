@@ -289,6 +289,37 @@ When handing off between agents or sessions:
 - Verify CI passes before considering task done
 - Maintain audit trail of decisions
 
+#### PR CI Monitoring Tool
+
+Use the `monitor-pr-ci.py` script to efficiently track CI status:
+
+```bash
+# Quick status check (minimal output)
+scripts/monitor-pr-ci.py 123 -R owner/repo
+
+# Wait for CI to complete (polls every 30s)
+scripts/monitor-pr-ci.py 123 --wait
+
+# With timeout and quiet mode
+scripts/monitor-pr-ci.py 123 --wait --timeout 600 --quiet
+
+# Using full PR URL
+scripts/monitor-pr-ci.py https://github.com/owner/repo/pull/123 --wait
+```
+
+**Output behavior:**
+- ✅ Success: One-line summary (`✅ CI Status: 16 passed`)
+- ⏳ Pending: Shows count of pending checks
+- ❌ Failure: Shows failed checks + error logs (auto-truncated)
+
+**Exit codes:**
+- 0: All checks passed
+- 1: One or more checks failed
+- 2: Checks still pending (or timeout)
+- 3: Unknown/no checks
+
+This keeps token usage minimal - full error output only when CI fails.
+
 ### Resource Management
 
 - Limit concurrent agents to available compute
@@ -319,6 +350,11 @@ When handing off between agents or sessions:
 For detailed patterns:
 - **`references/vibekanban-api.md`** - VibeKanban MCP tool reference
 - **`references/cos-workflow.md`** - Chief of Staff workflow procedure
+
+### Scripts
+
+Utility scripts in `scripts/`:
+- **`scripts/monitor-pr-ci.py`** - Token-efficient PR CI status monitoring
 
 ### Examples
 
