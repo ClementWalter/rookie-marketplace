@@ -261,6 +261,12 @@ tl;dr: Opus 4.5 + optimal context + vibekanban = 10x par rapport à il y a deux 
 
 liens en commentaire
 ```
+**First comment:**
+```
+🐦 https://x.com/ClementWalter/status/1234567890
+📎 Loom 1: [link]
+📎 Loom 2: [link]
+```
 
 **Example 4 - Curated content (adapting Twitter):**
 ```
@@ -274,7 +280,12 @@ Pour le contexte : il y a un an c'était de la science-fiction. Maintenant c'est
 
 Ce que ça change pour la décentralisation ? Tout le monde peut devenir validateur depuis son salon.
 
-Lien vers la démo en commentaire
+Lien en commentaire
+```
+**First comment:**
+```
+🐦 https://x.com/draborjake/status/1234567890
+📎 Démo complète: [video link]
 ```
 
 **Example 5 - Hot take:**
@@ -434,19 +445,30 @@ After adapting content (Step 3), present the draft to the user:
 ```
 📝 DRAFT FOR APPROVAL
 
-Source: [Twitter link or "Original"]
+Source: [Full Twitter URL - REQUIRED]
 Content pillar: [ZK/AI/Founder/Hot Take/Commentary]
 
 ---
 [Full post content here]
 ---
 
-First comment will include:
-- [Link 1]
-- [Link 2]
+Premier commentaire:
+🐦 https://x.com/[author]/status/[id]
+📎 [Any other links if relevant]
 
 Approve? (yes/no/edit)
 ```
+
+**MANDATORY - First Comment Must Include:**
+1. **Twitter source link** - Always include the original tweet URL (even for your own tweets)
+2. External links mentioned in the post
+3. Attribution: "@[Author] sur Twitter" if curating someone else's content
+
+**Why Twitter links matter:**
+- Drives cross-platform traffic
+- Credits original source
+- Lets readers see full thread/context
+- Builds credibility through transparency
 
 #### User Response Handling
 
@@ -505,10 +527,17 @@ As the database grows, agent autonomy increases:
 3. Paste adapted content
 4. **DO NOT include links in main post**
 5. Post it
-6. **Immediately** add first comment with:
-   - Link to original Twitter post (if relevant)
-   - Any external links mentioned
-   - Additional context if needed
+6. **IMMEDIATELY** add first comment with:
+   ```
+   🐦 [Twitter source URL]
+   📎 [Other links if any]
+   ```
+
+**First comment is MANDATORY** - never skip this step. The Twitter source link:
+- Credits the original content
+- Lets readers explore the full thread
+- Drives traffic to your Twitter
+- Shows transparency
 
 ### Step 5: Engagement Round (Do This EVERY Day)
 
