@@ -1,8 +1,9 @@
 {
   "name": "chief-of-staff",
   "description": "Agent coordination and task orchestration via VibeKanban",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "Clément Walter"
-  }
+  },
+  "hooks": "hooks/hooks.json"
 }

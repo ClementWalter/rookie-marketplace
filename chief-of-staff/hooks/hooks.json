@@ -1,0 +1,16 @@
+{
+  "description": "Session feedback and learning consolidation hooks",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Before ending this session, capture learnings for the knowledge base.\n\n**Required Action**: Use the Write tool to APPEND a retrospective entry to the learnings file at:\n`/Users/clementwalter/Documents/rookie-marketplace/chief-of-staff/learnings/session-learnings.md`\n\nFormat each entry as:\n```markdown\n## Session: YYYY-MM-DD HH:MM\n\n**Summary**: Brief 1-line summary of what was accomplished\n\n### What Worked Well\n- Item 1\n- Item 2\n\n### What Didn't Work\n- Item 1\n\n### Key Learnings\n- Insight 1\n- Insight 2\n\n---\n```\n\nAfter writing the learnings entry, return 'approve' to end the session.\nIf this was a trivial session with no significant learnings, return 'approve' immediately."
+          }
+        ]
+      }
+    ]
+  }
+}
