@@ -1,0 +1,174 @@
+---
+description: Detailed reference for pr workflow (Git & GitHub Workflow skill)
+alwaysApply: false
+---
+
+# Pr Workflow
+
+_Reference for Git & GitHub Workflow skill (git-master plugin)_
+
+# Pull Request Workflow
+
+Procedure for creating and managing pull requests.
+
+## Prerequisites
+
+Before creating a PR:
+1. All changes committed (see commit-workflow.md)
+2. Branch is up to date with main
+3. CI checks pass locally
+
+## Sync with Main
+
+```bash
+# Fetch latest and rebase
+git fetch origin main
+git rebase origin/main
+
+# If conflicts occur, resolve then continue
+git rebase --continue
+```
+
+## Generate PR Summary
+
+```bash
+# Get diff from main to current branch
+git diff origin/main...HEAD
+
+# Get commit messages
+git log origin/main..HEAD --oneline
+```
+
+## PR Structure
+
+```markdown
+## Summary
+
+[1-3 bullet points describing what changed and why]
+
+## Changes
+
+- Change 1
+- Change 2
+
+## Test Plan
+
+- [ ] Test case 1
+- [ ] Test case 2
+
+Closes #<issue-number>
+```
+
+## Check for Existing PR
+
+```bash
+# Check if PR exists for current branch
+gh pr list --head $(git branch --show-current) --state open
+
+# If PR exists, update it
+gh pr edit <number> --body "$(cat <<'EOF'
+Updated PR body...
+EOF
+)"
+```
+
+## Create New PR
+
+```bash
+# Push branch first
+git push -u origin $(git branch --show-current)
+
+# Create PR
+gh pr create --title "feat: description" --body "$(cat <<'EOF'
+## Summary
+
+- Description of changes
+
+## Test Plan
+
+- [ ] Test case
+
+Closes #123
+EOF
+)"
+```
+
+## Link to Issues
+
+Ways to link PRs to issues:
+
+```markdown
+# In PR body
+Closes #123
+Fixes #123
+Resolves #123
+
+# For multiple issues
+Closes #123, closes #456
+```
+
+## Review Workflow
+
+### Request Review
+
+```bash
+# Add reviewers
+gh pr edit <number> --add-reviewer @username
+```
+
+### Address Feedback
+
+```bash
+# Make changes
+git add -u
+git commit -m "address review: <description>"
+git push
+
+# Or amend if small fix
+git add -u
+git commit --amend --no-edit
+git push --force-with-lease
+```
+
+### Rebase During Review
+
+```bash
+# Rebase on main
+git fetch origin main
+git rebase origin/main
+
+# Force push (with lease for safety)
+git push --force-with-lease
+```
+
+## Merge PR
+
+```bash
+# Squash merge (preferred)
+gh pr merge <number> --squash --delete-branch
+
+# Rebase merge
+gh pr merge <number> --rebase --delete-branch
+```
+
+## Post-Merge Cleanup
+
+```bash
+# Switch to main
+git checkout main
+
+# Pull latest
+git pull origin main
+
+# Clean up local branch
+git branch -d <branch-name>
+
+# Remove stale worktrees if any
+git worktree prune
+```
+
+## Attribution
+
+- Do not add co-author mentions in PR
+- Do not add AI assistance attributions
+- Work attributed to repository owner

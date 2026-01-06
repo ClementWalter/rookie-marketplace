@@ -1,0 +1,198 @@
+---
+description: Detailed reference for work workflow (Git & GitHub Workflow skill)
+alwaysApply: false
+---
+
+# Work Workflow
+
+_Reference for Git & GitHub Workflow skill (git-master plugin)_
+
+# Autonomous Work Workflow
+
+Procedure for autonomously managing and resolving GitHub issues.
+
+## Overview
+
+This workflow enables autonomous issue resolution:
+1. Fetch unassigned issues
+2. Self-assign to claim work
+3. Create isolated worktrees
+4. Implement fixes in parallel
+5. Create PRs for each fix
+
+## Pre-flight: CI Discovery
+
+Before any work, identify CI requirements:
+
+```bash
+# Check for CI workflows
+ls .github/workflows/
+
+# Read workflow files
+cat .github/workflows/*.yml
+```
+
+Common CI checks to run locally:
+- `trunk check --ci` - Linting and formatting
+- `cargo build && cargo test` - Rust projects
+- `npm test && npm run build` - Node projects
+- `pytest` - Python projects
+
+**Never push code that would fail CI.**
+
+## Mode 1: PR Review
+
+When starting from a PR URL:
+
+```bash
+# Fetch PR details
+gh pr view <url> --json body,comments,reviews,diff
+
+# Analyze for:
+# - Code quality issues
+# - Improvement suggestions
+# - Consolidate into actionable issues
+```
+
+Create issues from PR feedback:
+- Group related comments
+- Minimize merge conflict potential
+- Include Why/What/How structure
+
+## Mode 2: Issue Resolution
+
+### Fetch Unassigned Issues
+
+```bash
+# Get issues with no assignees
+gh issue list --repo <repo> --state open \
+  --json number,title,assignees,body \
+  --jq '.[] | select(.assignees | length == 0)'
+```
+
+### Self-Assign
+
+```bash
+# Get current user
+gh api user --jq '.login'
+
+# Assign issue to self
+gh issue edit <number> --add-assignee "@me"
+```
+
+### Create Worktree
+
+For parallel work without conflicts:
+
+```bash
+# Create worktree for issue
+git worktree add -b fix/issue-<number> /tmp/<repo>-issue-<number> main
+
+# Work in worktree
+cd /tmp/<repo>-issue-<number>
+```
+
+### Implement Fix
+
+1. Read issue description
+2. Investigate codebase
+3. Implement solution
+4. Run ALL CI checks locally
+5. Fix any CI failures
+
+### Commit and PR
+
+```bash
+# Commit with issue reference
+git add -A
+git commit -m "fix: <description>
+
+Fixes #<number>"
+
+# Push and create PR
+git push -u origin fix/issue-<number>
+gh pr create --title "fix: <description>" --body "Fixes #<number>"
+```
+
+## Mode 3: Rebase Loop
+
+After PRs are created or when "rebase" is requested:
+
+```bash
+# List open PRs
+gh pr list --state open --json number,title,headRefName
+
+# Check for review comments
+gh api repos/<owner>/<repo>/pulls/<number>/comments
+```
+
+For each PR:
+
+```bash
+# Go to worktree
+cd /tmp/<repo>-issue-<number>
+
+# Rebase on main
+git fetch origin main
+git rebase origin/main
+
+# Resolve conflicts if any
+# Address review comments
+# Run CI checks
+
+# Force push
+git push --force-with-lease
+```
+
+## Cleanup
+
+When all PRs merged:
+
+```bash
+# Remove worktrees
+git worktree remove /tmp/<repo>-issue-<number> --force
+
+# Verify cleanup
+git worktree list
+
+# Update main
+git checkout main
+git pull origin main
+```
+
+## Parallel Execution
+
+For multiple issues:
+
+```bash
+# Assign multiple issues
+for issue in 1 2 3; do
+  gh issue edit $issue --add-assignee "@me"
+done
+
+# Create worktrees in parallel
+for issue in 1 2 3; do
+  git worktree add -b fix/issue-$issue /tmp/repo-issue-$issue main &
+done
+wait
+
+# Work on each in separate terminals/processes
+```
+
+## Repository Detection
+
+```bash
+# Get current repo
+gh repo view --json nameWithOwner --jq '.nameWithOwner'
+
+# Get default branch
+gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'
+```
+
+## Error Handling
+
+If implementation fails:
+1. Document what was attempted
+2. Update issue with findings
+3. Unassign self if blocked
+4. Move to next issue

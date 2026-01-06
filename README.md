@@ -334,6 +334,78 @@ All Python scripts **must** use uv inline metadata:
 # ///
 ```
 
+## Cursor IDE Integration
+
+Skills are also available for [Cursor IDE](https://cursor.com/) via generated `.mdc` rule files.
+
+### Generated Rules
+
+The `cursor-rules/` directory contains auto-generated Cursor rules translated from skills:
+
+```
+cursor-rules/
+├── chief-of-staff-agent-coordination.mdc
+├── chief-of-staff-agent-coordination--cos-workflow.mdc   # Reference
+├── git-master-git-and-git-hub-workflow.mdc
+├── rust-dev-senior-rust-practices.mdc
+└── ... (31 files total)
+```
+
+### Setup (Symlink Approach)
+
+To use these rules in your Cursor projects:
+
+```bash
+# Navigate to your project
+cd ~/projects/my-project
+
+# Create .cursor directory if needed
+mkdir -p .cursor
+
+# Symlink the rules directory
+ln -s ~/Documents/rookie-marketplace/cursor-rules .cursor/rules
+```
+
+After symlinking, restart Cursor IDE. Rules appear in the `@ Cursor Rules` menu.
+
+### How Rules Are Selected
+
+- Rules use Cursor's **Agent-Selected** mode (based on description)
+- The AI automatically picks relevant rules based on your query
+- You can also manually select rules via `@` mention in chat
+
+### Regenerating Rules
+
+Rules auto-regenerate on commit via git hook. To manually regenerate:
+
+```bash
+uv run scripts/translate-skills.py --output ./cursor-rules
+```
+
+### Translation Script
+
+```bash
+# Translate all skills
+uv run scripts/translate-skills.py
+
+# Translate specific plugins only
+uv run scripts/translate-skills.py --filter chief-of-staff,rust-dev
+
+# Preview without writing
+uv run scripts/translate-skills.py --dry-run
+```
+
+### What Gets Translated
+
+| Claude Code | Cursor Rule |
+|-------------|-------------|
+| `SKILL.md` | Main `.mdc` file |
+| `references/*.md` | Separate `--{ref-name}.mdc` files |
+| `examples/*.md` | Inlined in main rule |
+| `scripts/*.py` | Documented (location only) |
+
+---
+
 ## License
 
 MIT
