@@ -1,73 +1,98 @@
+---
+name: 1Password Credential Lookup
+description: This skill should be used when agents need to log into websites, retrieve passwords, or access credentials. CRITICAL - always use find_credential with the website URL, never guess item names.
+version: 2.0.0
+---
+
 # 1Password Credential Lookup
 
-Smart credential retrieval from 1Password using URL/domain and username filtering.
+## CRITICAL: Use URL, Not Item Names
 
-## When to Use
-
-- Logging into websites via Playwright or browser automation
-- Accessing services that require authentication
-- When you know the URL but not the 1Password item name
-
-## Key Principle: Search by URL, Filter by Username
-
-**Never search by item title.** 1Password items often have arbitrary names that don't match usernames. Instead:
-
-1. **Search by URL/domain** - Find all items associated with a website
-2. **Filter by username** - When multiple accounts exist, filter by the known username
-
-## MCP Tools
-
-### `find_credential`
-Primary tool for credential lookup. Searches by URL and optionally filters by username.
-
+**WRONG:**
 ```
-find_credential(url="twitter.com", username="clementwalter")
+get_credential(item_name="github.com")  ← NEVER DO THIS
+get_credential(item_name="GitHub")      ← NEVER DO THIS
 ```
 
-Returns:
-- Single match: Full credentials (username, password, item_name, item_id)
-- Multiple matches: List of available accounts to choose from
+**RIGHT:**
+```
+find_credential(url="github.com")                           ← CORRECT
+find_credential(url="github.com", username="clementwalter") ← EVEN BETTER
+```
+
+## The One Rule
+
+**When logging into a website, use `find_credential` with the domain.**
+
+1Password items have arbitrary names that don't match URLs. The `find_credential` tool searches by the URL field stored in 1Password, which matches the website you're visiting.
+
+## Tools (in order of preference)
+
+### 1. `find_credential` - PRIMARY TOOL
+
+Use this for ALL credential lookups:
+
+```
+find_credential(url="github.com")
+find_credential(url="linkedin.com", username="clement@example.com")
+```
+
+**Parameters:**
+- `url` (required): Domain of website (e.g., "github.com", "twitter.com")
+- `username` (optional): Filter by username when multiple accounts exist
+
+**Returns:**
+- Single match: `{"username": "...", "password": "...", "item_name": "..."}`
+- Multiple matches: List of accounts to choose from
 - No match: Error message
 
-### `list_items_for_url`
-Shows all 1Password items for a domain. Use when unsure which account to use.
+### 2. `list_items_for_url` - When unsure which account
 
 ```
 list_items_for_url(url="github.com")
 ```
 
-### `get_credential`
-Direct lookup by item name or ID. Use only when you know the exact item.
+Shows all accounts for a domain with usernames. Use before `find_credential` if you don't know which account to use.
 
-## Domain Aliases
+### 3. `get_credential` - RARELY NEEDED
 
-The tool handles common domain variations automatically:
-- `x.com` ↔ `twitter.com` (same credentials)
+Only use if you have an exact item ID (like `ct2jszznlzlp7r7jeb53rhy5li`). Never pass URLs or guessed names.
 
 ## Workflow Example
 
-```python
-# Step 1: User wants to log into twitter.com as "clementwalter"
-# Step 2: Use find_credential with URL + username
-result = find_credential(url="twitter.com", username="clementwalter")
+When logging into github.com:
 
-# If multiple accounts, tool returns list:
-# {"message": "Multiple items found", "items": [...]}
+```
+# Step 1: Get credentials for the domain
+find_credential(url="github.com", username="clementwalter")
 
-# If single match or filtered match:
-# {"username": "clementwalter", "password": "xxx", "item_name": "Twitter Personal"}
+# If multiple accounts and no username filter:
+# → Returns list: [{"username": "work@company.com"}, {"username": "personal@gmail.com"}]
+# → Pick one and retry with username filter
+
+# Step 2: Use returned credentials to fill login form
 ```
 
-## Best Practices
+## Domain Aliases
 
-1. **Always provide username when known** - Avoids ambiguity with multiple accounts
-2. **Use domain, not full URL** - `github.com` not `https://github.com/login`
-3. **Check list first if unsure** - `list_items_for_url` shows all options
-4. **Handle multiple matches** - Prompt user to specify which account
+These domains are treated as equivalent:
+- `x.com` ↔ `twitter.com`
 
 ## Error Handling
 
-- "No items found" → Check domain spelling, try aliases
-- "Multiple items found" → Add username filter
-- "op CLI not installed" → User needs to install 1Password CLI
-- "Timed out" → User needs to run `op signin`
+| Error | Solution |
+|-------|----------|
+| "No items found" | Check domain spelling |
+| "Multiple items found" | Add `username` parameter to filter |
+| "op CLI not installed" | User needs 1Password CLI |
+| "Timed out" | User needs to run `op signin` |
+
+## Anti-Patterns
+
+**NEVER do these:**
+- `get_credential(item_name="github.com")` - URL is not an item name
+- `get_credential(item_name="GitHub")` - Guessed names don't work
+- `get_credential(item_name="my github")` - Item names are arbitrary
+
+**ALWAYS do this:**
+- `find_credential(url="github.com")` - Search by the website URL

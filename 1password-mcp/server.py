@@ -109,25 +109,18 @@ def get_item_details(item_id: str) -> dict | None:
 async def list_tools() -> list[Tool]:
     return [
         Tool(
-            name="get_credential",
-            description="Retrieve username and password for a 1Password item by name or ID",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "item_name": {"type": "string", "description": "Name or ID of the 1Password item"},
-                    "vault": {"type": "string", "description": "Optional vault name or ID"},
-                },
-                "required": ["item_name"],
-            },
-        ),
-        Tool(
             name="find_credential",
-            description="Find credential by URL/domain and optionally filter by username. Use this when you know the website URL and/or username but not the 1Password item name. Handles domain aliases (e.g., x.com/twitter.com).",
+            description=(
+                "PRIMARY TOOL for credential lookup. Use the URL/domain of the website you are visiting. "
+                "ALWAYS use this tool when logging into a website - pass the domain (e.g., 'github.com', 'twitter.com'). "
+                "Optionally filter by username if you know it. Returns credentials directly if single match, "
+                "or list of available accounts if multiple. Handles domain aliases (x.com/twitter.com)."
+            ),
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "url": {"type": "string", "description": "Website URL or domain (e.g., 'twitter.com', 'https://github.com')"},
-                    "username": {"type": "string", "description": "Optional username to filter results when multiple entries exist"},
+                    "url": {"type": "string", "description": "Website domain you are logging into (e.g., 'github.com', 'linkedin.com')"},
+                    "username": {"type": "string", "description": "Username/email to filter by (use if you know which account)"},
                     "vault": {"type": "string", "description": "Optional vault name or ID"},
                 },
                 "required": ["url"],
@@ -135,14 +128,30 @@ async def list_tools() -> list[Tool]:
         ),
         Tool(
             name="list_items_for_url",
-            description="List all 1Password items matching a URL/domain. Shows item names and usernames. Useful to see available accounts before selecting one.",
+            description="List all 1Password items for a domain. Use to see available accounts before logging in.",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "url": {"type": "string", "description": "Website URL or domain"},
+                    "url": {"type": "string", "description": "Website domain (e.g., 'github.com')"},
                     "vault": {"type": "string", "description": "Optional vault name or ID"},
                 },
                 "required": ["url"],
+            },
+        ),
+        Tool(
+            name="get_credential",
+            description=(
+                "RARELY NEEDED. Only use if you have the exact 1Password item ID (like 'ct2jszznlzlp7r7jeb53rhy5li'). "
+                "DO NOT pass URLs or domains here - use find_credential instead. "
+                "DO NOT guess item names - they are arbitrary and won't match."
+            ),
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "item_name": {"type": "string", "description": "Exact 1Password item ID (NOT a URL or guessed name)"},
+                    "vault": {"type": "string", "description": "Optional vault name or ID"},
+                },
+                "required": ["item_name"],
             },
         ),
     ]
