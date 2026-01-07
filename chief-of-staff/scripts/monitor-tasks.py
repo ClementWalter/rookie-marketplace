@@ -4,28 +4,32 @@
 # dependencies = ["httpx", "rich"]
 # ///
 """
-VibeKanban Task Monitor - Polls task status every N minutes.
+VibeKanban Task Monitor - Direct API polling.
 
 Usage:
     ./monitor-tasks.py --project "Stark V" --interval 600
 """
 
 import argparse
-import subprocess
 import time
-import json
 import sys
 from datetime import datetime
 from pathlib import Path
+
+import httpx
 from rich.console import Console
 from rich.table import Table
 
 console = Console()
 
+# VibeKanban local API (MCP server must be running)
+VK_API_BASE = "http://localhost:62350"
+
 KNOWN_PROJECTS = {
     "Stark V": "1f96600e-a01a-4afa-a123-7586b080de92",
     "Gateway V2": "4e1f8355-73e7-429a-8fa0-4925bcce8e04",
     "fhevm": "3bdd6e49-46a2-4095-b355-9a9d95776cdd",
+    "rookie-marketplace": "4960ca4a-5481-46fb-9702-cc84928c79aa",
 }
 
 LOG_FILE = Path.home() / ".claude" / "task-monitor.log"
@@ -35,62 +39,70 @@ def log(msg: str):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     line = f"[{timestamp}] {msg}"
     console.print(line)
+    LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(LOG_FILE, "a") as f:
         f.write(line + "\n")
 
 
-def run_claude_prompt(prompt: str, cwd: str = None) -> str:
-    cmd = ["claude", "--print", "--output-format", "text", prompt]
+def fetch_tasks(project_id: str) -> list:
+    """Fetch tasks from VibeKanban API."""
     try:
-        result = subprocess.run(
-            cmd, capture_output=True, text=True, timeout=120,
-            cwd=cwd or str(Path.home() / "Documents" / "starkware" / "stark-v")
-        )
-        return result.stdout.strip()
-    except subprocess.TimeoutExpired:
-        return "ERROR: Claude CLI timed out"
+        resp = httpx.get(f"{VK_API_BASE}/api/tasks", params={"project_id": project_id}, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
+        if data.get("success"):
+            return data.get("data", [])
+        else:
+            log(f"API error: {data.get('message', 'Unknown')}")
+            return []
+    except httpx.ConnectError:
+        log("ERROR: Cannot connect to VibeKanban. Is 'npx vibe-kanban --mcp' running?")
+        return []
     except Exception as e:
-        return f"ERROR: {e}"
+        log(f"ERROR: {e}")
+        return []
 
 
-def check_tasks(project_id: str) -> dict:
-    prompt = f'Use mcp__vibe_kanban__list_tasks for project_id {project_id}. Return ONLY JSON: {{"tasks": [{{"id": "...", "title": "...", "status": "...", "has_in_progress_attempt": true/false}}]}}'
-    response = run_claude_prompt(prompt)
-    try:
-        start = response.find("{")
-        end = response.rfind("}") + 1
-        if start >= 0 and end > start:
-            return json.loads(response[start:end])
-    except json.JSONDecodeError:
-        pass
-    return {"error": response, "tasks": []}
-
-
-def display_status(tasks_data: dict):
-    if "error" in tasks_data and tasks_data.get("error"):
-        log(f"Error: {tasks_data['error']}")
-        return
-    tasks = tasks_data.get("tasks", [])
+def display_status(tasks: list):
     if not tasks:
         log("No tasks found")
         return
 
     table = Table(title="Task Status")
-    table.add_column("Status", style="cyan")
-    table.add_column("Title", style="white")
-    table.add_column("ID", style="dim")
+    table.add_column("Status", style="cyan", width=12)
+    table.add_column("Title", style="white", max_width=50)
+    table.add_column("ID", style="dim", width=8)
+    table.add_column("Agent", style="yellow", width=6)
 
-    status_emoji = {"todo": "📋", "inprogress": "⏳", "inreview": "🔍", "done": "✅", "cancelled": "❌"}
+    status_emoji = {
+        "todo": "📋",
+        "inprogress": "⏳",
+        "inreview": "🔍",
+        "done": "✅",
+        "cancelled": "❌",
+    }
 
     for task in tasks:
         status = task.get("status", "unknown")
-        table.add_row(f"{status_emoji.get(status, '❓')} {status}", task.get("title", "?")[:50], task.get("id", "?")[:8])
+        emoji = status_emoji.get(status, "❓")
+        agent = "Yes" if task.get("has_in_progress_attempt") else "-"
+        table.add_row(
+            f"{emoji} {status}",
+            task.get("title", "?")[:50],
+            task.get("id", "?")[:8],
+            agent,
+        )
 
     console.print(table)
-    in_progress = sum(1 for t in tasks if t.get("status") == "inprogress")
-    in_review = sum(1 for t in tasks if t.get("status") == "inreview")
-    done = sum(1 for t in tasks if t.get("status") == "done")
-    log(f"Summary: {in_progress} in progress, {in_review} in review, {done} done")
+
+    # Summary
+    counts = {}
+    for t in tasks:
+        s = t.get("status", "unknown")
+        counts[s] = counts.get(s, 0) + 1
+
+    summary = ", ".join(f"{v} {k}" for k, v in counts.items())
+    log(f"Summary: {summary}")
 
 
 def main():
@@ -106,25 +118,29 @@ def main():
         project_id = KNOWN_PROJECTS.get(args.project)
         if not project_id:
             console.print(f"[red]Unknown project: {args.project}[/red]")
+            console.print(f"Known: {list(KNOWN_PROJECTS.keys())}")
             sys.exit(1)
+
     if not project_id:
-        console.print("[red]Please specify --project or --project-id[/red]")
+        console.print("[red]Specify --project or --project-id[/red]")
         sys.exit(1)
 
-    log(f"Starting monitor for project {project_id}")
-    log(f"Poll interval: {args.interval}s | Log: {LOG_FILE}")
+    log(f"Monitoring project {project_id}")
+    log(f"Interval: {args.interval}s | Log: {LOG_FILE}")
 
     try:
         while True:
-            log("--- Checking tasks ---")
-            tasks_data = check_tasks(project_id)
-            display_status(tasks_data)
+            log("--- Polling ---")
+            tasks = fetch_tasks(project_id)
+            display_status(tasks)
+
             if args.once:
                 break
+
             log(f"Next check in {args.interval}s...")
             time.sleep(args.interval)
     except KeyboardInterrupt:
-        log("Monitor stopped")
+        log("Stopped")
 
 
 if __name__ == "__main__":
