@@ -7,12 +7,44 @@
 
 import asyncio
 import json
+import platform
 import subprocess
+
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
-from mcp.types import Tool, TextContent
+from mcp.types import TextContent, Tool
 
 server = Server("1password")
+
+
+def copy_to_clipboard(text: str) -> tuple[bool, str]:
+    """Copy text to system clipboard. Returns (success, message)."""
+    system = platform.system()
+    try:
+        if system == "Darwin":
+            subprocess.run(["pbcopy"], input=text.encode(), check=True)
+        elif system == "Linux":
+            # Try xclip first, fall back to xsel
+            try:
+                subprocess.run(
+                    ["xclip", "-selection", "clipboard"],
+                    input=text.encode(),
+                    check=True,
+                )
+            except FileNotFoundError:
+                subprocess.run(
+                    ["xsel", "--clipboard", "--input"], input=text.encode(), check=True
+                )
+        elif system == "Windows":
+            subprocess.run(["clip.exe"], input=text.encode(), check=True)
+        else:
+            return False, f"Unsupported platform: {system}"
+        return True, "Password copied to clipboard"
+    except FileNotFoundError as e:
+        return False, f"Clipboard tool not found: {e}"
+    except subprocess.CalledProcessError as e:
+        return False, f"Failed to copy to clipboard: {e}"
+
 
 # Common domain aliases (sites that share credentials)
 DOMAIN_ALIASES = {
@@ -24,12 +56,17 @@ DOMAIN_ALIASES = {
 def run_op(args: list[str]) -> tuple[bool, str]:
     """Execute op CLI command, return (success, output)."""
     try:
-        result = subprocess.run(["op", *args], capture_output=True, text=True, timeout=30)
+        result = subprocess.run(
+            ["op", *args], capture_output=True, text=True, timeout=30
+        )
         if result.returncode != 0:
             return False, result.stderr.strip() or "Unknown error"
         return True, result.stdout
     except FileNotFoundError:
-        return False, "op CLI not installed. Get it from https://1password.com/downloads/command-line/"
+        return (
+            False,
+            "op CLI not installed. Get it from https://1password.com/downloads/command-line/",
+        )
     except subprocess.TimeoutExpired:
         return False, "Timed out. Run `op signin` to authenticate."
 
@@ -113,15 +150,25 @@ async def list_tools() -> list[Tool]:
             description=(
                 "PRIMARY TOOL for credential lookup. Use the URL/domain of the website you are visiting. "
                 "ALWAYS use this tool when logging into a website - pass the domain (e.g., 'github.com', 'twitter.com'). "
-                "Optionally filter by username if you know it. Returns credentials directly if single match, "
-                "or list of available accounts if multiple. Handles domain aliases (x.com/twitter.com)."
+                "Optionally filter by username if you know it. Returns username and copies password to clipboard. "
+                "IMPORTANT: Tell the user to paste the password (Cmd+V / Ctrl+V) - it's already in their clipboard. "
+                "Returns list of available accounts if multiple matches. Handles domain aliases (x.com/twitter.com)."
             ),
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "url": {"type": "string", "description": "Website domain you are logging into (e.g., 'github.com', 'linkedin.com')"},
-                    "username": {"type": "string", "description": "Username/email to filter by (use if you know which account)"},
-                    "vault": {"type": "string", "description": "Optional vault name or ID"},
+                    "url": {
+                        "type": "string",
+                        "description": "Website domain you are logging into (e.g., 'github.com', 'linkedin.com')",
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "Username/email to filter by (use if you know which account)",
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "Optional vault name or ID",
+                    },
                 },
                 "required": ["url"],
             },
@@ -132,8 +179,14 @@ async def list_tools() -> list[Tool]:
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "url": {"type": "string", "description": "Website domain (e.g., 'github.com')"},
-                    "vault": {"type": "string", "description": "Optional vault name or ID"},
+                    "url": {
+                        "type": "string",
+                        "description": "Website domain (e.g., 'github.com')",
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "Optional vault name or ID",
+                    },
                 },
                 "required": ["url"],
             },
@@ -143,18 +196,44 @@ async def list_tools() -> list[Tool]:
             description=(
                 "RARELY NEEDED. Only use if you have the exact 1Password item ID (like 'ct2jszznlzlp7r7jeb53rhy5li'). "
                 "DO NOT pass URLs or domains here - use find_credential instead. "
-                "DO NOT guess item names - they are arbitrary and won't match."
+                "DO NOT guess item names - they are arbitrary and won't match. "
+                "Returns username and copies password to clipboard. Tell user to paste (Cmd+V / Ctrl+V)."
             ),
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "item_name": {"type": "string", "description": "Exact 1Password item ID (NOT a URL or guessed name)"},
-                    "vault": {"type": "string", "description": "Optional vault name or ID"},
+                    "item_name": {
+                        "type": "string",
+                        "description": "Exact 1Password item ID (NOT a URL or guessed name)",
+                    },
+                    "vault": {
+                        "type": "string",
+                        "description": "Optional vault name or ID",
+                    },
                 },
                 "required": ["item_name"],
             },
         ),
     ]
+
+
+def format_credential_response(creds: dict) -> dict:
+    """Format credential response, copying password to clipboard instead of returning it."""
+    password = creds.get("password")
+    response = {"username": creds.get("username")}
+
+    if password:
+        success, message = copy_to_clipboard(password)
+        if success:
+            response["password"] = (
+                "[COPIED TO CLIPBOARD - User can paste with Cmd+V / Ctrl+V]"
+            )
+        else:
+            response["password"] = f"[CLIPBOARD ERROR: {message}]"
+    else:
+        response["password"] = None
+
+    return response
 
 
 @server.call_tool()
@@ -172,7 +251,9 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
         creds = extract_creds(output)
         if "error" in creds:
             return [TextContent(type="text", text=f"Error: {creds['error']}")]
-        return [TextContent(type="text", text=json.dumps(creds))]
+        return [
+            TextContent(type="text", text=json.dumps(format_credential_response(creds)))
+        ]
 
     elif name == "find_credential":
         url = arguments.get("url")
@@ -197,28 +278,62 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
             if username_filter:
                 if username_filter == item_username:
                     # Exact match - return immediately
-                    return [TextContent(type="text", text=json.dumps({
-                        "item_name": item.get("title"),
-                        "item_id": item["id"],
-                        **creds
-                    }))]
-            candidates.append({
-                "item_name": item.get("title"),
-                "item_id": item["id"],
-                **creds
-            })
+                    formatted = format_credential_response(creds)
+                    return [
+                        TextContent(
+                            type="text",
+                            text=json.dumps(
+                                {
+                                    "item_name": item.get("title"),
+                                    "item_id": item["id"],
+                                    **formatted,
+                                }
+                            ),
+                        )
+                    ]
+            candidates.append(
+                {"item_name": item.get("title"), "item_id": item["id"], **creds}
+            )
 
         if not candidates:
-            return [TextContent(type="text", text=f"No matching credentials found for URL: {url}" + (f" with username: {username_filter}" if username_filter else ""))]
+            return [
+                TextContent(
+                    type="text",
+                    text=f"No matching credentials found for URL: {url}"
+                    + (f" with username: {username_filter}" if username_filter else ""),
+                )
+            ]
 
         if len(candidates) == 1:
-            return [TextContent(type="text", text=json.dumps(candidates[0]))]
+            formatted = format_credential_response(candidates[0])
+            return [
+                TextContent(
+                    type="text",
+                    text=json.dumps(
+                        {
+                            "item_name": candidates[0]["item_name"],
+                            "item_id": candidates[0]["item_id"],
+                            **formatted,
+                        }
+                    ),
+                )
+            ]
 
-        # Multiple matches - return list for user to choose
-        return [TextContent(type="text", text=json.dumps({
-            "message": f"Multiple items found for {url}. Specify username to filter.",
-            "items": [{"item_name": c["item_name"], "username": c["username"]} for c in candidates]
-        }))]
+        # Multiple matches - return list for user to choose (no password copied yet)
+        return [
+            TextContent(
+                type="text",
+                text=json.dumps(
+                    {
+                        "message": f"Multiple items found for {url}. Specify username to filter.",
+                        "items": [
+                            {"item_name": c["item_name"], "username": c["username"]}
+                            for c in candidates
+                        ],
+                    }
+                ),
+            )
+        ]
 
     elif name == "list_items_for_url":
         url = arguments.get("url")
@@ -238,11 +353,13 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
             if details:
                 creds = extract_creds_from_item(details)
                 username = creds.get("username")
-            result.append({
-                "item_name": item.get("title"),
-                "item_id": item["id"],
-                "username": username
-            })
+            result.append(
+                {
+                    "item_name": item.get("title"),
+                    "item_id": item["id"],
+                    "username": username,
+                }
+            )
 
         return [TextContent(type="text", text=json.dumps(result))]
 
@@ -251,7 +368,10 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
 
 async def main():
     async with stdio_server() as (read_stream, write_stream):
-        await server.run(read_stream, write_stream, server.create_initialization_options())
+        await server.run(
+            read_stream, write_stream, server.create_initialization_options()
+        )
+
 
 if __name__ == "__main__":
     asyncio.run(main())
