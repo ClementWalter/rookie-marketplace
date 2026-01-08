@@ -8,11 +8,11 @@
   "hooks": {
     "Stop": [
       {
-        "matcher": "Cargo.toml",
+        "matcher": ".*\\.rs$",
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Before completing this Rust task, verify that:\n1. Tests pass: `cargo test --workspace`\n2. Linting is clean: `trunk check`\n\nIf you haven't run these checks yet, run them now. If they fail, fix the issues before completing.",
+            "prompt": "Before completing this Rust task, verify that:\n1. Tests pass: `cargo test --release --workspace`\n2. Linting is clean: `trunk check --fix`\n\nIf you haven't run these checks yet, run them now. If they fail, fix the issues before completing.",
             "timeout": 120
           }
         ]
