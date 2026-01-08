@@ -1,19 +1,18 @@
 {
   "name": "rust-dev",
   "description": "Senior-level Rust development best practices and workspace architecture patterns",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": {
     "name": "Clément Walter"
   },
   "hooks": {
     "Stop": [
       {
-        "matcher": ".*\\.rs$",
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "Before completing this Rust task, verify that:\n1. Tests pass: `cargo test --release --workspace`\n2. Linting is clean: `trunk check --fix`\n\nIf you haven't run these checks yet, run them now. If they fail, fix the issues before completing.",
-            "timeout": 120
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/rust-quality-check.py",
+            "timeout": 300
           }
         ]
       }
