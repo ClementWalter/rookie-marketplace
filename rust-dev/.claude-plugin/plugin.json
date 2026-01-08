@@ -8,6 +8,7 @@
   "hooks": {
     "Stop": [
       {
+        "matcher": "Cargo.toml",
         "hooks": [
           {
             "type": "prompt",
