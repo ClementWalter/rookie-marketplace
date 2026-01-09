@@ -1,8 +1,0 @@
-{
-  "name": "git-master",
-  "description": "Complete Git and GitHub workflow: issues, PRs, milestones, commits, worktrees, and merge utilities",
-  "version": "3.0.0",
-  "author": {
-    "name": "Clément Walter"
-  }
-}
