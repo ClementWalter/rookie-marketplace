@@ -1,7 +1,7 @@
 {
   "description": "Chief of Staff hooks: session feedback, code quality enforcement, and marketplace cleanup",
   "hooks": {
-    "PostToolUse": [
+    "Stop": [
       {
         "matcher": "Bash",
         "hooks": [
@@ -11,9 +11,7 @@
             "timeout": 5
           }
         ]
-      }
-    ],
-    "Stop": [
+      },
       {
         "matcher": "*",
         "hooks": [
