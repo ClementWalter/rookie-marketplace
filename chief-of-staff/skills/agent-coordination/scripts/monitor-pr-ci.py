@@ -93,7 +93,8 @@ def get_check_runs(repo: str | None, pr_number: int) -> list[CheckRun]:
 
     # Use gh pr checks - most reliable method
     code, stdout, stderr = run_gh(
-        ["pr", "checks", str(pr_number), "--json", "name,state,link,workflow"] + repo_arg
+        ["pr", "checks", str(pr_number), "--json", "name,state,link,workflow"]
+        + repo_arg
     )
     if code != 0:
         # Check if it's just "no checks" which is not an error
@@ -141,7 +142,6 @@ def get_failed_job_logs(repo: str | None, check: CheckRun) -> str | None:
         return None
 
     run_id = run_match.group(1)
-    repo_arg = f"-R {repo}" if repo else ""
 
     # Get failed job logs - gh run view shows summary with errors
     code, stdout, stderr = run_gh(
@@ -156,7 +156,9 @@ def get_failed_job_logs(repo: str | None, check: CheckRun) -> str | None:
         )
         if code == 0:
             data = json.loads(stdout)
-            failed_jobs = [j for j in data.get("jobs", []) if j.get("conclusion") == "failure"]
+            failed_jobs = [
+                j for j in data.get("jobs", []) if j.get("conclusion") == "failure"
+            ]
             if failed_jobs:
                 return f"Failed jobs: {', '.join(j.get('name', 'unknown') for j in failed_jobs)}"
         return None
@@ -164,7 +166,9 @@ def get_failed_job_logs(repo: str | None, check: CheckRun) -> str | None:
     # Truncate logs if too long - keep last 100 lines (usually has the error)
     lines = stdout.strip().split("\n")
     if len(lines) > 100:
-        return f"[... truncated {len(lines) - 100} lines ...]\n" + "\n".join(lines[-100:])
+        return f"[... truncated {len(lines) - 100} lines ...]\n" + "\n".join(
+            lines[-100:]
+        )
     return stdout.strip()
 
 
@@ -248,11 +252,29 @@ def main():
         epilog=__doc__,
     )
     parser.add_argument("pr", help="PR number or full GitHub PR URL")
-    parser.add_argument("-R", "--repo", help="Repository (owner/repo), defaults to current")
-    parser.add_argument("-w", "--wait", action="store_true", help="Wait for CI to complete")
-    parser.add_argument("-t", "--timeout", type=int, default=1800, help="Max wait time in seconds (default: 1800)")
-    parser.add_argument("-i", "--interval", type=int, default=30, help="Poll interval in seconds (default: 30)")
-    parser.add_argument("-q", "--quiet", action="store_true", help="Minimal output while waiting")
+    parser.add_argument(
+        "-R", "--repo", help="Repository (owner/repo), defaults to current"
+    )
+    parser.add_argument(
+        "-w", "--wait", action="store_true", help="Wait for CI to complete"
+    )
+    parser.add_argument(
+        "-t",
+        "--timeout",
+        type=int,
+        default=1800,
+        help="Max wait time in seconds (default: 1800)",
+    )
+    parser.add_argument(
+        "-i",
+        "--interval",
+        type=int,
+        default=30,
+        help="Poll interval in seconds (default: 30)",
+    )
+    parser.add_argument(
+        "-q", "--quiet", action="store_true", help="Minimal output while waiting"
+    )
 
     args = parser.parse_args()
 
@@ -280,7 +302,9 @@ def main():
             # Only print if status changed or first iteration
             if not args.quiet or last_status != status:
                 pending_count = sum(1 for c in checks if c.state == Status.PENDING)
-                print(f"⏳ Waiting... {pending_count} checks pending ({int(elapsed)}s elapsed)")
+                print(
+                    f"⏳ Waiting... {pending_count} checks pending ({int(elapsed)}s elapsed)"
+                )
 
             last_status = status
             time.sleep(args.interval)

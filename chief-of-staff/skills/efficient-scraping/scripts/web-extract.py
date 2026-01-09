@@ -31,7 +31,9 @@ from bs4 import BeautifulSoup
 def extract_metadata(soup: BeautifulSoup) -> dict:
     """Extract common metadata from page."""
     return {
-        "title": soup.find("title").get_text(strip=True) if soup.find("title") else None,
+        "title": (
+            soup.find("title").get_text(strip=True) if soup.find("title") else None
+        ),
         "description": (
             soup.find("meta", {"name": "description"})["content"]
             if soup.find("meta", {"name": "description"})
@@ -41,7 +43,9 @@ def extract_metadata(soup: BeautifulSoup) -> dict:
     }
 
 
-def extract_selector(soup: BeautifulSoup, selector: str, fields: list[str]) -> list[dict]:
+def extract_selector(
+    soup: BeautifulSoup, selector: str, fields: list[str]
+) -> list[dict]:
     """Extract elements matching selector with specified fields."""
     results = []
     elements = soup.select(selector)
@@ -65,7 +69,9 @@ def extract_selector(soup: BeautifulSoup, selector: str, fields: list[str]) -> l
     return results
 
 
-def fetch_and_extract(url: str, selector: str | None = None, fields: list[str] | None = None) -> dict:
+def fetch_and_extract(
+    url: str, selector: str | None = None, fields: list[str] | None = None
+) -> dict:
     """Fetch URL and extract data."""
     response = requests.get(
         url,
@@ -90,10 +96,16 @@ def fetch_and_extract(url: str, selector: str | None = None, fields: list[str] |
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Extract structured data from web pages")
+    parser = argparse.ArgumentParser(
+        description="Extract structured data from web pages"
+    )
     parser.add_argument("url", help="URL to fetch and extract from")
     parser.add_argument("--selector", "-s", help="CSS selector for elements to extract")
-    parser.add_argument("--fields", "-f", help="Comma-separated fields to extract (text,html,href,class-name)")
+    parser.add_argument(
+        "--fields",
+        "-f",
+        help="Comma-separated fields to extract (text,html,href,class-name)",
+    )
 
     args = parser.parse_args()
 

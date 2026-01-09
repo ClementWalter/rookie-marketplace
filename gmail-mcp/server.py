@@ -50,7 +50,9 @@ def get_credentials(item_name: str) -> dict:
         timeout=30,
     )
     if result.returncode != 0:
-        raise ValueError(f"Failed to get 1Password item '{item_name}': {result.stderr.strip()}")
+        raise ValueError(
+            f"Failed to get 1Password item '{item_name}': {result.stderr.strip()}"
+        )
 
     item = json.loads(result.stdout)
     creds = {"username": None, "password": None}
@@ -64,7 +66,9 @@ def get_credentials(item_name: str) -> dict:
             creds["password"] = field.get("value")
 
     if not creds["username"] or not creds["password"]:
-        raise ValueError(f"1Password item '{item_name}' missing username or password field")
+        raise ValueError(
+            f"1Password item '{item_name}' missing username or password field"
+        )
 
     return creds
 
@@ -116,7 +120,9 @@ def connect_imap(item_name: str) -> tuple[imaplib.IMAP4_SSL, str]:
     return imap, creds["username"]
 
 
-def list_emails_impl(account: str, folder: str = "INBOX", limit: int = 10) -> list[dict]:
+def list_emails_impl(
+    account: str, folder: str = "INBOX", limit: int = 10
+) -> list[dict]:
     """List recent emails from folder."""
     imap, _ = connect_imap(account)
     try:
@@ -138,13 +144,15 @@ def list_emails_impl(account: str, folder: str = "INBOX", limit: int = 10) -> li
                 snippet_bytes = msg_data[1][1] if len(msg_data[1]) > 1 else b""
                 snippet = snippet_bytes.decode("utf-8", errors="replace")[:100]
 
-            results.append({
-                "id": eid.decode(),
-                "from": decode_mime_header(msg.get("From")),
-                "subject": decode_mime_header(msg.get("Subject")),
-                "date": msg.get("Date", ""),
-                "snippet": snippet.replace("\n", " ").strip(),
-            })
+            results.append(
+                {
+                    "id": eid.decode(),
+                    "from": decode_mime_header(msg.get("From")),
+                    "subject": decode_mime_header(msg.get("Subject")),
+                    "date": msg.get("Date", ""),
+                    "snippet": snippet.replace("\n", " ").strip(),
+                }
+            )
         return results
     finally:
         imap.logout()
@@ -205,7 +213,9 @@ def send_email_impl(
                     part.set_payload(f.read())
                 encoders.encode_base64(part)
                 filename = os.path.basename(filepath)
-                part.add_header("Content-Disposition", f"attachment; filename={filename}")
+                part.add_header(
+                    "Content-Disposition", f"attachment; filename={filename}"
+                )
                 msg.attach(part)
     else:
         msg = MIMEMultipart()
@@ -268,7 +278,9 @@ def reply_email_impl(
                     part.set_payload(f.read())
                 encoders.encode_base64(part)
                 filename = os.path.basename(filepath)
-                part.add_header("Content-Disposition", f"attachment; filename={filename}")
+                part.add_header(
+                    "Content-Disposition", f"attachment; filename={filename}"
+                )
                 msg.attach(part)
     else:
         msg = MIMEMultipart()
@@ -311,12 +323,14 @@ def search_emails_impl(
                 continue
             header_data = msg_data[0][1] if isinstance(msg_data[0], tuple) else b""
             msg = email.message_from_bytes(header_data)
-            results.append({
-                "id": eid.decode(),
-                "from": decode_mime_header(msg.get("From")),
-                "subject": decode_mime_header(msg.get("Subject")),
-                "date": msg.get("Date", ""),
-            })
+            results.append(
+                {
+                    "id": eid.decode(),
+                    "from": decode_mime_header(msg.get("From")),
+                    "subject": decode_mime_header(msg.get("Subject")),
+                    "date": msg.get("Date", ""),
+                }
+            )
         return results
     finally:
         imap.logout()
@@ -359,7 +373,10 @@ async def list_tools() -> list[Tool]:
                         "type": "string",
                         "description": "1Password item name containing Gmail credentials",
                     },
-                    "email_id": {"type": "string", "description": "Email ID from list_emails"},
+                    "email_id": {
+                        "type": "string",
+                        "description": "Email ID from list_emails",
+                    },
                     "folder": {
                         "type": "string",
                         "description": "Folder containing the email (default: INBOX)",
@@ -379,11 +396,23 @@ async def list_tools() -> list[Tool]:
                         "type": "string",
                         "description": "1Password item name containing Gmail credentials",
                     },
-                    "to": {"type": "string", "description": "Recipient email(s), comma-separated"},
+                    "to": {
+                        "type": "string",
+                        "description": "Recipient email(s), comma-separated",
+                    },
                     "subject": {"type": "string", "description": "Email subject"},
-                    "body": {"type": "string", "description": "Email body (plain text)"},
-                    "cc": {"type": "string", "description": "CC recipients, comma-separated"},
-                    "bcc": {"type": "string", "description": "BCC recipients, comma-separated"},
+                    "body": {
+                        "type": "string",
+                        "description": "Email body (plain text)",
+                    },
+                    "cc": {
+                        "type": "string",
+                        "description": "CC recipients, comma-separated",
+                    },
+                    "bcc": {
+                        "type": "string",
+                        "description": "BCC recipients, comma-separated",
+                    },
                     "attachments": {
                         "type": "array",
                         "items": {"type": "string"},
@@ -407,7 +436,10 @@ async def list_tools() -> list[Tool]:
                         "type": "string",
                         "description": "Email ID to reply to (from list_emails or read_email)",
                     },
-                    "body": {"type": "string", "description": "Reply body (plain text)"},
+                    "body": {
+                        "type": "string",
+                        "description": "Reply body (plain text)",
+                    },
                     "attachments": {
                         "type": "array",
                         "items": {"type": "string"},
@@ -496,14 +528,20 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
         else:
             return [TextContent(type="text", text=f"Unknown tool: {name}")]
 
-        return [TextContent(type="text", text=json.dumps(result, indent=2, ensure_ascii=False))]
+        return [
+            TextContent(
+                type="text", text=json.dumps(result, indent=2, ensure_ascii=False)
+            )
+        ]
     except Exception as e:
         return [TextContent(type="text", text=f"Error: {e}")]
 
 
 async def main():
     async with stdio_server() as (read_stream, write_stream):
-        await server.run(read_stream, write_stream, server.create_initialization_options())
+        await server.run(
+            read_stream, write_stream, server.create_initialization_options()
+        )
 
 
 if __name__ == "__main__":

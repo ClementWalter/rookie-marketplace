@@ -56,13 +56,13 @@
 
 ## Common Circuit Bugs
 
-| Bug | Impact | Check |
-|-----|--------|-------|
-| Under-constrained | Fake proofs | Verify all paths constrained |
-| Over-constrained | Valid inputs fail | Test valid edge cases |
-| Missing range check | Overflow exploits | Bound all inputs |
-| Transcript omission | Challenge manipulation | Audit transcript |
-| Copy constraint missing | Value substitution | Verify value flow |
+| Bug                     | Impact                 | Check                        |
+| ----------------------- | ---------------------- | ---------------------------- |
+| Under-constrained       | Fake proofs            | Verify all paths constrained |
+| Over-constrained        | Valid inputs fail      | Test valid edge cases        |
+| Missing range check     | Overflow exploits      | Bound all inputs             |
+| Transcript omission     | Challenge manipulation | Audit transcript             |
+| Copy constraint missing | Value substitution     | Verify value flow            |
 
 ## Testing
 
@@ -76,16 +76,19 @@
 ## Proof Systems Specific
 
 ### SNARK (Groth16, PLONK)
+
 - [ ] Pairing-friendly curve security level adequate
 - [ ] Trusted setup handled (or universal setup)
 - [ ] Proof size vs. verification time tradeoff understood
 
 ### STARK
+
 - [ ] Hash function security (collision resistance)
 - [ ] FRI parameters (blowup factor, queries)
 - [ ] Field size adequate for security level
 
 ### Recursive Proofs
+
 - [ ] Inner circuit soundness
 - [ ] Accumulator security
 - [ ] Depth limits considered

@@ -14,13 +14,14 @@ Agent coordination and task orchestration.
 
 **Skills:**
 
-| Skill | Triggers On |
-| ----- | ----------- |
-| `agent-coordination` | "coordinate agents", "orchestrate tasks", "chief of staff mode", "vibekanban workflow", "dispatch agents" |
-| `doc-writing-coordination` | "coordinate document writing", "manage doc writers", "orchestrate documentation" |
-| `efficient-scraping` | "scrape website", "extract data", "web scraping", "fetch API", "programmatic extraction" |
+| Skill                      | Triggers On                                                                                               |
+| -------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `agent-coordination`       | "coordinate agents", "orchestrate tasks", "chief of staff mode", "vibekanban workflow", "dispatch agents" |
+| `doc-writing-coordination` | "coordinate document writing", "manage doc writers", "orchestrate documentation"                          |
+| `efficient-scraping`       | "scrape website", "extract data", "web scraping", "fetch API", "programmatic extraction"                  |
 
 **What it provides:**
+
 - Multi-agent coordination patterns
 - Task lifecycle management
 - VibeKanban API reference
@@ -37,11 +38,12 @@ Senior-level Rust development practices and workspace architecture.
 
 **Skills:**
 
-| Skill | Triggers On |
-| ----- | ----------- |
+| Skill                   | Triggers On                                                                                                                   |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `senior-rust-practices` | "rust workspace", "rust best practices", "cargo workspace", "rust architecture", "rust dependencies", "rust testing strategy" |
 
 **What it provides:**
+
 - Workspace architecture patterns ("one product = one workspace")
 - Crate organization and boundary design
 - Dependency hygiene (workspace deps, features, MSRV)
@@ -49,6 +51,7 @@ Senior-level Rust development practices and workspace architecture.
 - CI quality gates and compile-time optimization
 
 **Hooks:**
+
 - `Stop`: Enforces running `cargo test` and `trunk check` before task completion
 
 ---
@@ -59,11 +62,12 @@ Expert-level AIR (Algebraic Intermediate Representation) cryptographer for ZK co
 
 **Skills:**
 
-| Skill | Triggers On |
-| ----- | ----------- |
+| Skill           | Triggers On                                                                                                                           |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `air-expertise` | "AIR", "algebraic intermediate representation", "ZK constraints", "trace design", "constraint soundness", "lookup arguments", "STARK" |
 
 **What it provides:**
+
 - Finite field foundations and polynomial mechanics
 - Trace design principles (column classification, row semantics)
 - Constraint categories (transition, boundary, booleanity, selectors)
@@ -71,6 +75,7 @@ Expert-level AIR (Algebraic Intermediate Representation) cryptographer for ZK co
 - Adversarial witness exercises
 
 **References:**
+
 - `review-checklist.md`: Complete systematic AIR soundness review procedure
 
 ---
@@ -81,11 +86,12 @@ Senior security researcher guidelines based on NIST, CIS, OWASP, MITRE ATT&CK, a
 
 **Skills:**
 
-| Skill | Triggers On |
-| ----- | ----------- |
+| Skill            | Triggers On                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------ |
 | `security-audit` | "security audit", "vulnerability assessment", "pentest", "security review", "threat model" |
 
 **What it provides:**
+
 - Web application security checklist (OWASP Top 10)
 - Smart contract security patterns
 - Supply chain security (SLSA)
@@ -100,11 +106,12 @@ Modern growth strategy: loops + product-led growth + disciplined experimentation
 
 **Skills:**
 
-| Skill | Triggers On |
-| ----- | ----------- |
+| Skill             | Triggers On                                                                        |
+| ----------------- | ---------------------------------------------------------------------------------- |
 | `growth-strategy` | "growth strategy", "GTM plan", "growth loops", "A/B testing", "viral loops", "PLG" |
 
 **What it provides:**
+
 - Growth model design (NSM, input metrics)
 - Growth loops > funnels framework
 - Experimentation engine (RICE/ICE scoring)
@@ -119,11 +126,12 @@ Secure 1Password credential access via official `op` CLI.
 
 **Skills:**
 
-| Skill | Triggers On |
-| ----- | ----------- |
+| Skill               | Triggers On                                                     |
+| ------------------- | --------------------------------------------------------------- |
 | `credential-lookup` | "get credential", "1password", "fetch password", "vault lookup" |
 
 **MCP Tools:**
+
 - `get_credential`: Retrieve username/password from 1Password item
 
 **Requires:** 1Password CLI (`op`) installed and configured
@@ -136,12 +144,13 @@ Secure Gmail access via IMAP/SMTP with 1Password credential storage.
 
 **Skills:**
 
-| Skill | Triggers On |
-| ----- | ----------- |
-| `gmail-tools` | "send email", "read email", "gmail", "email inbox" |
-| `email-assistant` | "draft email", "compose email", "email workflow" |
+| Skill             | Triggers On                                        |
+| ----------------- | -------------------------------------------------- |
+| `gmail-tools`     | "send email", "read email", "gmail", "email inbox" |
+| `email-assistant` | "draft email", "compose email", "email workflow"   |
 
 **MCP Tools:**
+
 - `list_emails`: List recent emails from inbox
 - `read_email`: Read full email content
 - `send_email`: Send email via SMTP
@@ -186,7 +195,7 @@ git clone https://github.com/clementwalter/rookie-marketplace.git
 
 ## Structure
 
-```
+```text
 rookie-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json        # Marketplace metadata
@@ -231,7 +240,8 @@ When you ask Claude about "milestone planning" or "coordinate agents", the relev
 ## Contributing
 
 **Primary Guide:** Use the `plugin-dev:skill-development` skill for comprehensive skill creation guidance:
-```
+
+```text
 /skill plugin-dev:skill-development
 ```
 
@@ -244,7 +254,7 @@ When you ask Claude about "milestone planning" or "coordinate agents", the relev
 
 ### Skill Structure
 
-```
+```text
 skill-name/
 ├── SKILL.md           # Required: Core knowledge
 │   ├── YAML frontmatter (name, description with triggers)
@@ -274,7 +284,7 @@ Skills are also available for [Cursor IDE](https://cursor.com/) via generated `.
 
 The `cursor-rules/` directory contains auto-generated Cursor rules translated from skills:
 
-```
+```text
 cursor-rules/
 ├── chief-of-staff-agent-coordination.mdc
 ├── chief-of-staff-agent-coordination--cos-workflow.mdc   # Reference
@@ -329,12 +339,12 @@ uv run scripts/translate-skills.py --dry-run
 
 ### What Gets Translated
 
-| Claude Code | Cursor Rule |
-|-------------|-------------|
-| `SKILL.md` | Main `.mdc` file |
+| Claude Code       | Cursor Rule                       |
+| ----------------- | --------------------------------- |
+| `SKILL.md`        | Main `.mdc` file                  |
 | `references/*.md` | Separate `--{ref-name}.mdc` files |
-| `examples/*.md` | Inlined in main rule |
-| `scripts/*.py` | Documented (location only) |
+| `examples/*.md`   | Inlined in main rule              |
+| `scripts/*.py`    | Documented (location only)        |
 
 ---
 

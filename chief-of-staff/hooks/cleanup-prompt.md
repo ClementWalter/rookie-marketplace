@@ -89,19 +89,22 @@ When updating this prompt:
 
 Provide a brief summary:
 
-```
+```markdown
 ## Cleanup Summary
 
 **Issues Found**: N
 **Issues Fixed**: N
 
 ### Fixes Applied
+
 - [file]: [what was fixed]
 
 ### Remaining Issues
+
 - [issue that needs manual attention]
 
 ### Prompt Improvements
+
 - [any changes made to this cleanup prompt]
 ```
 

@@ -68,10 +68,12 @@ As a [role], I want [capability] so that [benefit].
 ## Requirements
 
 ### Must Have
+
 - [ ] Requirement 1
 - [ ] Requirement 2
 
 ### Nice to Have
+
 - [ ] Optional enhancement
 
 ## Technical Approach
@@ -121,10 +123,12 @@ As a [role], I want [capability] so that [benefit].
 ## Scope
 
 ### Include
+
 - [File/module 1]
 - [File/module 2]
 
 ### Exclude
+
 - [What not to touch]
 
 ## Approach
@@ -230,35 +234,38 @@ As a [role], I want [capability] so that [benefit].
 
 ## Quick Reference: Task Title Prefixes
 
-| Prefix | Use When |
-| ------ | -------- |
-| `Bug:` | Something is broken |
-| `Feature:` | New capability |
-| `Chore:` | Maintenance, deps, config |
-| `Refactor:` | Code improvement, no behavior change |
-| `Docs:` | Documentation only |
-| `Test:` | Test coverage improvement |
-| `Investigate:` | Research, discovery |
-| `Migration:` | Version/system upgrade |
+| Prefix         | Use When                             |
+| -------------- | ------------------------------------ |
+| `Bug:`         | Something is broken                  |
+| `Feature:`     | New capability                       |
+| `Chore:`       | Maintenance, deps, config            |
+| `Refactor:`    | Code improvement, no behavior change |
+| `Docs:`        | Documentation only                   |
+| `Test:`        | Test coverage improvement            |
+| `Investigate:` | Research, discovery                  |
+| `Migration:`   | Version/system upgrade               |
 
 ---
 
 ## Tips for Writing Agent-Friendly Tasks
 
 ### Be Specific
-```
+
+```text
 Bad:  "Fix the login bug"
 Good: "Bug: Login button unresponsive on Safari iOS - check touch event handlers in LoginButton.tsx"
 ```
 
 ### Include File Paths
-```
+
+```text
 Bad:  "Update the API"
 Good: "Feature: Add /api/users/export endpoint in src/routes/users.ts"
 ```
 
 ### Define Done Clearly
-```
+
+```text
 Bad:  "Make it work"
 Good: "Acceptance Criteria:
        - [ ] Endpoint returns CSV
@@ -268,7 +275,8 @@ Good: "Acceptance Criteria:
 ```
 
 ### Set Boundaries
-```
+
+```text
 Bad:  "Improve the codebase"
 Good: "Chore: Extract validation logic from UserForm.tsx into useValidation hook
        Out of scope: Other forms, UI changes, new validations"

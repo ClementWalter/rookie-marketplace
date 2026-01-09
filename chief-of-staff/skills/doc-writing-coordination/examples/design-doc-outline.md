@@ -209,4 +209,4 @@ TODO: Section pending
 
 ---
 
-*This document is maintained by [team/owner].*
+_This document is maintained by [team/owner]._

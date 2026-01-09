@@ -40,10 +40,17 @@ def parse_skill_md(path: Path) -> dict | None:
     match = re.match(r"^---\n(.*?)\n---\n(.*)$", content, re.DOTALL)
     if not match:
         # No frontmatter - use directory name and full content as body
-        print(f"  Warning: No frontmatter in {path} - using directory name", file=sys.stderr)
+        print(
+            f"  Warning: No frontmatter in {path} - using directory name",
+            file=sys.stderr,
+        )
         # Try to extract first heading as name
         heading_match = re.match(r"^#\s+(.+)$", content, re.MULTILINE)
-        name = heading_match.group(1) if heading_match else skill_dir_name.replace("-", " ").title()
+        name = (
+            heading_match.group(1)
+            if heading_match
+            else skill_dir_name.replace("-", " ").title()
+        )
         return {
             "name": name,
             "description": f"This skill provides guidance for {name.lower()}",
@@ -56,7 +63,7 @@ def parse_skill_md(path: Path) -> dict | None:
 
     try:
         frontmatter = yaml.safe_load(frontmatter_str)
-    except yaml.YAMLError as e:
+    except yaml.YAMLError:
         # YAML parse error - try manual extraction
         print(f"  Warning: YAML error in {path}, trying manual parse", file=sys.stderr)
         frontmatter = {}
@@ -117,7 +124,12 @@ def parse_reference_md(path: Path, skill_name: str, plugin_name: str) -> dict:
     }
 
 
-def generate_mdc(skill_data: dict, plugin_name: str, examples: list[Path] | None = None, scripts: list[Path] | None = None) -> str:
+def generate_mdc(
+    skill_data: dict,
+    plugin_name: str,
+    examples: list[Path] | None = None,
+    scripts: list[Path] | None = None,
+) -> str:
     """Generate .mdc file content from skill data."""
     lines = [
         "---",
@@ -159,7 +171,9 @@ def generate_mdc(skill_data: dict, plugin_name: str, examples: list[Path] | None
         lines.append("")
         lines.append("## Available Scripts")
         lines.append("")
-        lines.append("The following scripts are available in the marketplace but cannot be executed from Cursor rules:")
+        lines.append(
+            "The following scripts are available in the marketplace but cannot be executed from Cursor rules:"
+        )
         lines.append("")
         for script_path in scripts:
             script_name = script_path.name
@@ -167,12 +181,16 @@ def generate_mdc(skill_data: dict, plugin_name: str, examples: list[Path] | None
             script_content = script_path.read_text(encoding="utf-8")
             docstring_match = re.search(r'"""(.*?)"""', script_content, re.DOTALL)
             if docstring_match:
-                docstring = docstring_match.group(1).strip().split("\n")[0]  # First line only
+                docstring = (
+                    docstring_match.group(1).strip().split("\n")[0]
+                )  # First line only
             else:
                 docstring = "No description available"
             lines.append(f"- `{script_name}`: {docstring}")
         lines.append("")
-        lines.append("To use these scripts, run them via `uv run` from the marketplace directory.")
+        lines.append(
+            "To use these scripts, run them via `uv run` from the marketplace directory."
+        )
 
     return "\n".join(lines)
 

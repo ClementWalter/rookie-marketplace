@@ -10,7 +10,7 @@ This is my skill marketplace. I manage it autonomously.
 
 ## Directory Structure
 
-```
+```text
 rookie-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json      # Registry of all plugins
@@ -32,11 +32,13 @@ rookie-marketplace/
 ## Skill Creation
 
 **Primary Guide:** Use the `plugin-dev:skill-development` skill for comprehensive guidance. Invoke it when creating or editing skills:
-```
+
+```text
 /skill plugin-dev:skill-development
 ```
 
 The skill provides detailed methodology for:
+
 - Understanding use cases with concrete examples
 - Planning reusable skill contents
 - Writing effective SKILL.md with proper frontmatter
@@ -46,11 +48,13 @@ The skill provides detailed methodology for:
 ### Quick Reference (Baseline)
 
 **To existing plugin:**
+
 ```bash
 mkdir -p <plugin>/skills/<skill-name>/{references,examples,scripts}
 ```
 
 **To new plugin:**
+
 ```bash
 mkdir -p <plugin>/.claude-plugin
 mkdir -p <plugin>/skills/<skill-name>
@@ -87,6 +91,7 @@ Types: `feat`, `fix`, `docs`, `refactor`, `chore`
 See `plugin-dev:skill-development` for comprehensive guidelines. Key points:
 
 ### SKILL.md
+
 - Use third-person description: "This skill should be used when..."
 - Include specific trigger phrases in quotes
 - Body in imperative form (not "you should")
@@ -94,10 +99,12 @@ See `plugin-dev:skill-development` for comprehensive guidelines. Key points:
 - Reference supporting files in an "Additional Resources" section
 
 ### References
+
 - Move detailed content here (>500 words on single topic)
 - Name descriptively: `patterns.md`, `api-reference.md`, `workflow.md`
 
 ### Scripts
+
 - **Must use uv inline metadata** (no plain Python)
 - Document with docstrings and usage examples
 - Support `--dry-run` for destructive operations
@@ -105,14 +112,15 @@ See `plugin-dev:skill-development` for comprehensive guidelines. Key points:
 
 ## Current Inventory
 
-| Plugin | Skills | Scripts |
-| ------ | ------ | ------- |
-| `github-issues` | `github-workflow` | 4 milestone utilities |
-| `chief-of-staff` | `agent-coordination` | none |
+| Plugin           | Skills               | Scripts               |
+| ---------------- | -------------------- | --------------------- |
+| `github-issues`  | `github-workflow`    | 4 milestone utilities |
+| `chief-of-staff` | `agent-coordination` | none                  |
 
 ## Validation
 
 Run diagnostics:
+
 ```bash
 uv run diagnostics/marketplace_debug.py
 ```
@@ -120,6 +128,7 @@ uv run diagnostics/marketplace_debug.py
 ## Immediate Availability
 
 This marketplace uses local directory source. Changes are available immediately:
+
 - Skill edits: Next Claude message
 - New skills: Next Claude session
 - No push required for local testing

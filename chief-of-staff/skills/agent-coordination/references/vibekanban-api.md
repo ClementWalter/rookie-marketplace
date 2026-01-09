@@ -11,6 +11,7 @@ List all available projects.
 **Parameters**: None
 
 **Response**:
+
 ```json
 [
   {
@@ -23,7 +24,8 @@ List all available projects.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__list_projects()
 ```
 
@@ -34,13 +36,15 @@ mcp__vibe_kanban__list_projects()
 List tasks in a project with optional filtering.
 
 **Parameters**:
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| project_id | UUID | Yes | Project to list tasks from |
-| status | string | No | Filter: todo, inprogress, inreview, done, cancelled |
-| limit | int | No | Max tasks to return (default: 50) |
+
+| Parameter  | Type   | Required | Description                                         |
+| ---------- | ------ | -------- | --------------------------------------------------- |
+| project_id | UUID   | Yes      | Project to list tasks from                          |
+| status     | string | No       | Filter: todo, inprogress, inreview, done, cancelled |
+| limit      | int    | No       | Max tasks to return (default: 50)                   |
 
 **Response**:
+
 ```json
 [
   {
@@ -55,7 +59,8 @@ List tasks in a project with optional filtering.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__list_tasks(project_id="<uuid>")
 mcp__vibe_kanban__list_tasks(project_id="<uuid>", status="inprogress")
 ```
@@ -67,11 +72,13 @@ mcp__vibe_kanban__list_tasks(project_id="<uuid>", status="inprogress")
 Get detailed information about a specific task.
 
 **Parameters**:
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| task_id | UUID | Yes | Task to retrieve |
+
+| Parameter | Type | Required | Description      |
+| --------- | ---- | -------- | ---------------- |
+| task_id   | UUID | Yes      | Task to retrieve |
 
 **Response**:
+
 ```json
 {
   "id": "uuid",
@@ -92,7 +99,8 @@ Get detailed information about a specific task.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__get_task(task_id="<uuid>")
 ```
 
@@ -103,13 +111,15 @@ mcp__vibe_kanban__get_task(task_id="<uuid>")
 Create a new task in a project.
 
 **Parameters**:
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| project_id | UUID | Yes | Project to create task in |
-| title | string | Yes | Task title |
-| description | string | No | Task description |
+
+| Parameter   | Type   | Required | Description               |
+| ----------- | ------ | -------- | ------------------------- |
+| project_id  | UUID   | Yes      | Project to create task in |
+| title       | string | Yes      | Task title                |
+| description | string | No       | Task description          |
 
 **Response**:
+
 ```json
 {
   "id": "uuid",
@@ -121,7 +131,8 @@ Create a new task in a project.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__create_task(
   project_id="<uuid>",
   title="Bug: Fix login on mobile",
@@ -136,14 +147,16 @@ mcp__vibe_kanban__create_task(
 Update an existing task's title, description, or status.
 
 **Parameters**:
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| task_id | UUID | Yes | Task to update |
-| title | string | No | New title |
-| description | string | No | New description |
-| status | string | No | New status: todo, inprogress, inreview, done, cancelled |
+
+| Parameter   | Type   | Required | Description                                             |
+| ----------- | ------ | -------- | ------------------------------------------------------- |
+| task_id     | UUID   | Yes      | Task to update                                          |
+| title       | string | No       | New title                                               |
+| description | string | No       | New description                                         |
+| status      | string | No       | New status: todo, inprogress, inreview, done, cancelled |
 
 **Response**:
+
 ```json
 {
   "id": "uuid",
@@ -154,7 +167,8 @@ Update an existing task's title, description, or status.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__update_task(task_id="<uuid>", status="done")
 mcp__vibe_kanban__update_task(task_id="<uuid>", title="New title", description="Updated desc")
 ```
@@ -166,11 +180,13 @@ mcp__vibe_kanban__update_task(task_id="<uuid>", title="New title", description="
 Delete a task from a project.
 
 **Parameters**:
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| task_id | UUID | Yes | Task to delete |
+
+| Parameter | Type | Required | Description    |
+| --------- | ---- | -------- | -------------- |
+| task_id   | UUID | Yes      | Task to delete |
 
 **Response**:
+
 ```json
 {
   "success": true
@@ -178,7 +194,8 @@ Delete a task from a project.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__delete_task(task_id="<uuid>")
 ```
 
@@ -189,11 +206,13 @@ mcp__vibe_kanban__delete_task(task_id="<uuid>")
 List repositories associated with a project.
 
 **Parameters**:
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| project_id | UUID | Yes | Project to list repos from |
+
+| Parameter  | Type | Required | Description                |
+| ---------- | ---- | -------- | -------------------------- |
+| project_id | UUID | Yes      | Project to list repos from |
 
 **Response**:
+
 ```json
 [
   {
@@ -206,7 +225,8 @@ List repositories associated with a project.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__list_repos(project_id="<uuid>")
 ```
 
@@ -217,14 +237,16 @@ mcp__vibe_kanban__list_repos(project_id="<uuid>")
 Start working on a task by creating and launching a new workspace session.
 
 **Parameters**:
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| task_id | UUID | Yes | Task to work on |
-| executor | string | Yes | Agent type: CLAUDE_CODE, CODEX, GEMINI, CURSOR_AGENT, OPENCODE |
-| repos | array | Yes | Repo configurations: [{repo_id, base_branch}] |
-| variant | string | No | Executor variant if needed |
+
+| Parameter | Type   | Required | Description                                                    |
+| --------- | ------ | -------- | -------------------------------------------------------------- |
+| task_id   | UUID   | Yes      | Task to work on                                                |
+| executor  | string | Yes      | Agent type: CLAUDE_CODE, CODEX, GEMINI, CURSOR_AGENT, OPENCODE |
+| repos     | array  | Yes      | Repo configurations: [{repo_id, base_branch}]                  |
+| variant   | string | No       | Executor variant if needed                                     |
 
 **Response**:
+
 ```json
 {
   "id": "uuid",
@@ -236,7 +258,8 @@ Start working on a task by creating and launching a new workspace session.
 ```
 
 **Usage**:
-```
+
+```text
 mcp__vibe_kanban__start_workspace_session(
   task_id="<task-uuid>",
   executor="CLAUDE_CODE",
@@ -312,7 +335,7 @@ mcp__vibe_kanban__update_task(
 
 ## Task Status Flow
 
-```
+```text
                     ┌─────────────┐
                     │    todo     │
                     └──────┬──────┘
@@ -339,12 +362,12 @@ mcp__vibe_kanban__update_task(
 
 ### Common Errors
 
-| Error | Cause | Resolution |
-| ----- | ----- | ---------- |
-| Project not found | Invalid project_id | Use list_projects to get valid IDs |
-| Task not found | Invalid task_id | Use list_tasks to get valid IDs |
-| Repo not configured | Missing repo setup | Contact project admin |
-| Agent unavailable | Executor not available | Try different executor |
+| Error               | Cause                  | Resolution                         |
+| ------------------- | ---------------------- | ---------------------------------- |
+| Project not found   | Invalid project_id     | Use list_projects to get valid IDs |
+| Task not found      | Invalid task_id        | Use list_tasks to get valid IDs    |
+| Repo not configured | Missing repo setup     | Contact project admin              |
+| Agent unavailable   | Executor not available | Try different executor             |
 
 ### Retry Pattern
 

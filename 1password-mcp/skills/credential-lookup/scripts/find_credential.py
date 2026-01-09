@@ -27,7 +27,9 @@ DOMAIN_ALIASES = {
 def run_op(args: list[str]) -> tuple[bool, str]:
     """Execute op CLI command."""
     try:
-        result = subprocess.run(["op", *args], capture_output=True, text=True, timeout=30)
+        result = subprocess.run(
+            ["op", *args], capture_output=True, text=True, timeout=30
+        )
         if result.returncode != 0:
             return False, result.stderr.strip() or "Unknown error"
         return True, result.stdout
@@ -107,18 +109,16 @@ def main():
         item_username = (creds.get("username") or "").lower()
 
         if username_filter and username_filter == item_username:
-            print(json.dumps({
-                "item_name": item.get("title"),
-                "item_id": item["id"],
-                **creds
-            }))
+            print(
+                json.dumps(
+                    {"item_name": item.get("title"), "item_id": item["id"], **creds}
+                )
+            )
             sys.exit(0)
 
-        candidates.append({
-            "item_name": item.get("title"),
-            "item_id": item["id"],
-            **creds
-        })
+        candidates.append(
+            {"item_name": item.get("title"), "item_id": item["id"], **creds}
+        )
 
     if not candidates:
         print(json.dumps({"error": "No matching credentials found"}))
@@ -127,10 +127,17 @@ def main():
     if len(candidates) == 1:
         print(json.dumps(candidates[0]))
     else:
-        print(json.dumps({
-            "message": f"Multiple items found for {url}. Specify username to filter.",
-            "items": [{"item_name": c["item_name"], "username": c["username"]} for c in candidates]
-        }))
+        print(
+            json.dumps(
+                {
+                    "message": f"Multiple items found for {url}. Specify username to filter.",
+                    "items": [
+                        {"item_name": c["item_name"], "username": c["username"]}
+                        for c in candidates
+                    ],
+                }
+            )
+        )
         sys.exit(2)
 
 

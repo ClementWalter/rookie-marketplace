@@ -11,9 +11,9 @@ and appends it to the learnings file.
 """
 
 import json
+import os
 import re
 import sys
-import os
 from datetime import datetime
 from pathlib import Path
 

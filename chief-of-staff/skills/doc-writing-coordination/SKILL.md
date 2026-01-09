@@ -12,15 +12,15 @@ Coordinate multi-section document creation by delegating to doc writer agents th
 
 ### Role Separation
 
-| Role | Responsibility | Does NOT |
-|------|----------------|----------|
-| **Coordinator (You)** | Outline, delegate, monitor, review | Write content |
-| **Doc Writers** | Write assigned sections | Plan or coordinate |
-| **Reviewer (You)** | Approve/reject, ensure consistency | Implement fixes |
+| Role                  | Responsibility                     | Does NOT           |
+| --------------------- | ---------------------------------- | ------------------ |
+| **Coordinator (You)** | Outline, delegate, monitor, review | Write content      |
+| **Doc Writers**       | Write assigned sections            | Plan or coordinate |
+| **Reviewer (You)**    | Approve/reject, ensure consistency | Implement fixes    |
 
 ### Workflow Overview
 
-```
+```text
 1. Explore codebase → Understand scope
 2. Create outline → Scaffold document structure
 3. Create VK tasks → One per section
@@ -37,7 +37,7 @@ Coordinate multi-section document creation by delegating to doc writer agents th
 
 Before creating the outline, thoroughly explore the codebase:
 
-```
+```text
 Use Task tool with subagent_type=Explore to understand:
 - Project structure and components
 - Key technologies and patterns
@@ -48,12 +48,14 @@ Use Task tool with subagent_type=Explore to understand:
 ### Create Skeleton Document
 
 Write the document outline with:
+
 - Table of contents with all sections
 - HTML comments in each section describing scope
 - "TODO: Section pending" placeholder for content
 - Clear section numbering (1, 2, 3.1, 3.2, etc.)
 
 Example section scaffold:
+
 ```markdown
 ## 3.1 Component Name
 
@@ -75,32 +77,41 @@ Each VK task MUST include:
 
 ```markdown
 ## Task
+
 Write Section X "Section Title" of `/path/to/document.md`.
 
 ## Required Skill
+
 **MUST use doc writer skill** - Invoke `document-skills:doc-coauthoring` skill before writing.
 
 ## Context
+
 [2-3 sentences of essential background for a fresh agent]
 
 ## Scope
+
 - [Bullet list of what to cover]
 - [Specific topics]
 - [Diagrams to create]
 
 ## Source Files to Reference
+
 - `path/to/relevant/file.ts`
 - `path/to/another/file.md`
 
 ## Output
+
 Edit `/path/to/document.md` replacing "TODO: Section pending" under Section X with complete content.
 
 ## Delegation Rule
+
 If this section exceeds [N] words, scaffold subsections and create new VK tasks using vibe_kanban MCP tools (project_id: [UUID]):
+
 - X.1 Subsection A
 - X.2 Subsection B
 
 ## VK Task ID: [task-uuid]
+
 When done, mark task as "inreview" in VK.
 ```
 
@@ -114,7 +125,7 @@ When done, mark task as "inreview" in VK.
 
 ### Creating Tasks via MCP
 
-```
+```text
 mcp__vibe_kanban__create_task:
   project_id: [project-uuid]
   title: "Doc: Section 1 - Executive Summary"
@@ -127,7 +138,7 @@ mcp__vibe_kanban__create_task:
 
 To spawn agents via VK `start_workspace_session`:
 
-```
+```text
 mcp__vibe_kanban__start_workspace_session:
   task_id: [task-uuid]
   executor: CLAUDE_CODE
@@ -139,11 +150,12 @@ mcp__vibe_kanban__start_workspace_session:
 ### Fallback: Task Tool
 
 If VK repos not configured, use hybrid approach:
+
 1. Update VK task status to `inprogress`
 2. Spawn agent via Task tool with full context
 3. Update VK to `inreview` when agent completes
 
-```
+```text
 mcp__vibe_kanban__update_task:
   task_id: [uuid]
   status: inprogress
@@ -160,7 +172,7 @@ Task tool:
 
 Poll VK every ~60 seconds during active work:
 
-```
+```text
 mcp__vibe_kanban__list_tasks:
   project_id: [uuid]
   status: inprogress  # or inreview, todo
@@ -171,13 +183,13 @@ mcp__vibe_kanban__list_tasks:
 ```markdown
 ## Backlog Status
 
-| Section | Task ID | Status | Notes |
-|---------|---------|--------|-------|
-| 1. Exec Summary | 88e5... | inreview | Ready for review |
-| 2. Repo Org | f722... | inprogress | Writing |
-| 3.1 Benchmark | 371c... | todo | Blocked |
+| Section         | Task ID | Status     | Notes            |
+| --------------- | ------- | ---------- | ---------------- |
+| 1. Exec Summary | 88e5... | inreview   | Ready for review |
+| 2. Repo Org     | f722... | inprogress | Writing          |
+| 3.1 Benchmark   | 371c... | todo       | Blocked          |
 
-**Active**: 5/15  |  **In Review**: 2  |  **Done**: 8
+**Active**: 5/15 | **In Review**: 2 | **Done**: 8
 ```
 
 ## Phase 5: Review Process
@@ -202,6 +214,7 @@ Create follow-up task or update description:
 ## Revision Required
 
 **Issues Found:**
+
 - [ ] Missing architecture diagram
 - [ ] Incorrect API reference in line 45
 - [ ] Inconsistent terminology (use "coprocessor" not "processor")
@@ -222,6 +235,7 @@ After each section merges to `done`:
 ## Completion Criteria
 
 Task is complete when:
+
 - All VK tasks in `done` status
 - No pending or in-progress tasks
 - Document passes consistency review
@@ -231,19 +245,19 @@ Task is complete when:
 
 ### VK MCP Tools
 
-| Tool | Purpose |
-|------|---------|
-| `list_projects` | Get project UUIDs |
-| `list_tasks` | View all tasks with status |
-| `create_task` | Create new section task |
-| `update_task` | Change status/description |
-| `get_task` | Get task details |
+| Tool                      | Purpose                      |
+| ------------------------- | ---------------------------- |
+| `list_projects`           | Get project UUIDs            |
+| `list_tasks`              | View all tasks with status   |
+| `create_task`             | Create new section task      |
+| `update_task`             | Change status/description    |
+| `get_task`                | Get task details             |
 | `start_workspace_session` | Launch agent (needs repo_id) |
-| `list_repos` | Get repository UUID |
+| `list_repos`              | Get repository UUID          |
 
 ### Task Status Flow
 
-```
+```text
 todo → inprogress → inreview → done
                   ↘ (rejected) → inprogress
 ```

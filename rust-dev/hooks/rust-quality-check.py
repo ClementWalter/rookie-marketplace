@@ -79,18 +79,14 @@ def main():
     # Run cargo test
     print("Running cargo test --release --workspace...", file=sys.stderr)
     success, output = run_command(
-        ["cargo", "test", "--release", "--workspace"],
-        cargo_root
+        ["cargo", "test", "--release", "--workspace"], cargo_root
     )
     if not success:
         errors.append(f"cargo test failed:\n{output[-2000:]}")  # Last 2000 chars
 
     # Run trunk check if available
     print("Running trunk check...", file=sys.stderr)
-    success, output = run_command(
-        ["trunk", "check", "--ci"],
-        cargo_root
-    )
+    success, output = run_command(["trunk", "check", "--ci"], cargo_root)
     if not success and "Command not found" not in output:
         errors.append(f"trunk check failed:\n{output[-2000:]}")
 
@@ -98,7 +94,7 @@ def main():
         # Output error message for Claude to see
         error_response = {
             "decision": "block",
-            "reason": "Rust quality checks failed:\n\n" + "\n\n".join(errors)
+            "reason": "Rust quality checks failed:\n\n" + "\n\n".join(errors),
         }
         print(json.dumps(error_response))
         sys.exit(1)

@@ -76,6 +76,7 @@ Login button unresponsive on mobile Safari.
 ```
 
 Title prefixes:
+
 - `Bug:` - Something broken
 - `Feature:` - New functionality
 - `Chore:` - Maintenance task
@@ -110,20 +111,20 @@ tasks = mcp__vibe_kanban__list_tasks(project_id=<project_id>)
 
 Display as table:
 
-| Task | Status | Agent | Notes |
-| ---- | ------ | ----- | ----- |
-| Bug: Login mobile | inprogress | Agent-1 | Investigating |
-| Feature: Dark mode | todo | - | Ready |
+| Task               | Status     | Agent   | Notes         |
+| ------------------ | ---------- | ------- | ------------- |
+| Bug: Login mobile  | inprogress | Agent-1 | Investigating |
+| Feature: Dark mode | todo       | -       | Ready         |
 
 ## Task Statuses
 
-| Status | Meaning |
-| ------ | ------- |
-| `todo` | Not started |
+| Status       | Meaning             |
+| ------------ | ------------------- |
+| `todo`       | Not started         |
 | `inprogress` | Agent working on it |
-| `inreview` | Ready for review |
-| `done` | Completed |
-| `cancelled` | Dropped |
+| `inreview`   | Ready for review    |
+| `done`       | Completed           |
+| `cancelled`  | Dropped             |
 
 ## Communication Style
 
@@ -135,7 +136,7 @@ Display as table:
 
 ## Example Flow
 
-```
+```text
 User: "the login button is broken on mobile"
 
 CoS Response:
@@ -149,12 +150,14 @@ CoS Response:
 ## Escalation
 
 Escalate when:
+
 - Agent blocked >30 minutes
 - Requires decision outside agent scope
 - Conflicting requirements discovered
 - Security or breaking change concerns
 
 Format:
+
 ```markdown
 ## Escalation: [Brief title]
 
@@ -162,7 +165,8 @@ Format:
 **Agent**: Agent-1
 **Blocker**: [Description]
 **Options**:
+
 1. Option A - [pros/cons]
 2. Option B - [pros/cons]
-**Recommendation**: Option A because [reason]
+   **Recommendation**: Option A because [reason]
 ```

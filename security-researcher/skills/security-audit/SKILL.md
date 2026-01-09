@@ -12,15 +12,15 @@ Senior-grade security review guidelines anchored on canonical control frameworks
 
 ## Frameworks Reference
 
-| Framework | Purpose |
-|-----------|---------|
-| NIST CSF 2.0 | Org-wide risk outcomes |
-| CIS Controls v8 | Practical enterprise controls |
-| NIST SSDF SP 800-218 | Secure development lifecycle |
-| OWASP ASVS | App security requirements |
-| OWASP Top 10 (2025) | Common web app failures |
-| MITRE ATT&CK | Adversary techniques mapping |
-| SLSA + OpenSSF | Supply chain integrity |
+| Framework            | Purpose                       |
+| -------------------- | ----------------------------- |
+| NIST CSF 2.0         | Org-wide risk outcomes        |
+| CIS Controls v8      | Practical enterprise controls |
+| NIST SSDF SP 800-218 | Secure development lifecycle  |
+| OWASP ASVS           | App security requirements     |
+| OWASP Top 10 (2025)  | Common web app failures       |
+| MITRE ATT&CK         | Adversary techniques mapping  |
+| SLSA + OpenSSF       | Supply chain integrity        |
 
 ## Non-Negotiables
 
@@ -38,6 +38,7 @@ Before any deep review, verify these fundamentals:
 ### 1. Threat Model First
 
 Use STRIDE categories:
+
 - **S**poofing - Can attacker impersonate?
 - **T**ampering - Can data be modified?
 - **R**epudiation - Can actions be denied?
@@ -46,12 +47,14 @@ Use STRIDE categories:
 - **E**levation of privilege - Unauthorized access?
 
 Document for each trust boundary:
+
 - Auth strategy
 - Data classification
 - Rate limits
 - Audit requirements
 
 **Assume compromise review:**
+
 - If one service key leaks, what's the blast radius?
 - If one dependency is malicious, what stops it?
 
@@ -60,6 +63,7 @@ Document for each trust boundary:
 Broken access control is the most common vulnerability.
 
 Check:
+
 - Default-deny authorization (by resource, not just endpoint)
 - Short-lived sessions, secure cookies, CSRF protection
 - Separation: authentication ≠ authorization ≠ accounting
@@ -67,6 +71,7 @@ Check:
 - RBAC/ABAC with explicit admin boundaries
 
 Protect against:
+
 - Credential stuffing (rate limits, breached password checks)
 - Account takeover (MFA, risky-login alerts)
 - Session fixation/replay (rotation, binding, nonce/jti)
@@ -111,15 +116,18 @@ Protect against:
 ### 7. CI/CD & Supply Chain
 
 Protect the build pipeline like prod:
+
 - Least privilege runners
 - Secrets only in protected contexts
 - Reviews for workflow changes
 
 Dependencies:
+
 - Pin versions, verify integrity, monitor CVEs
 - Remove abandoned libs
 
 Supply chain:
+
 - Signed build provenance
 - OpenSSF Scorecard checks
 - SLSA levels adoption
@@ -127,17 +135,21 @@ Supply chain:
 ### 8. Detection & Response
 
 Log with context:
+
 - Auth events, privilege changes, key access
 - Config changes, CI/CD events, unusual egress
 
 Protect logs:
+
 - Append-only/immutable, restricted access
 
 Alerting:
+
 - Brute force, impossible travel, new admin grants
 - Anomalous token use
 
 Readiness:
+
 - Tabletop exercises, forensic snapshots, kill switches
 - Post-incident RCA, patch bug classes
 
@@ -182,7 +194,7 @@ Readiness:
 
 When conducting a review, structure findings as:
 
-```
+```text
 ## Finding: [Title]
 **Severity**: Critical / High / Medium / Low / Info
 **Category**: [STRIDE category or framework reference]

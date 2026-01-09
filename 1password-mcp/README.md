@@ -12,7 +12,7 @@ Minimal, secure MCP server for accessing 1Password credentials in Claude Code se
 
 ## Prerequisites
 
-1. Install the 1Password CLI from https://1password.com/downloads/command-line/
+1. Install the 1Password CLI from <https://1password.com/downloads/command-line/>
 2. Authenticate with your 1Password account:
    ```bash
    op signin
@@ -22,7 +22,7 @@ Minimal, secure MCP server for accessing 1Password credentials in Claude Code se
 
 Once installed, the credential tools are available in Claude Code sessions:
 
-```
+```text
 Get credentials for github.com
 ```
 
@@ -31,11 +31,13 @@ The password is automatically copied to your clipboard - just paste it!
 ### Tool: find_credential (Primary)
 
 **Arguments:**
+
 - `url` (required): Website domain (e.g., 'github.com', 'linkedin.com')
 - `username` (optional): Username/email to filter by
 - `vault` (optional): Vault name or ID
 
 **Returns:**
+
 ```json
 {
   "item_name": "GitHub",
@@ -50,6 +52,7 @@ The password is automatically copied to your clipboard - just paste it!
 ### Tool: get_credential
 
 **Arguments:**
+
 - `item_name` (required): Exact 1Password item ID (not URL or guessed name)
 - `vault` (optional): Vault name or ID to search in
 
@@ -58,6 +61,7 @@ The password is automatically copied to your clipboard - just paste it!
 ### Tool: list_items_for_url
 
 **Arguments:**
+
 - `url` (required): Website domain
 - `vault` (optional): Vault name or ID
 
@@ -71,17 +75,18 @@ When credentials are retrieved, **passwords are never returned in the response**
 2. The response includes `"password": "[COPIED TO CLIPBOARD - User can paste with Cmd+V / Ctrl+V]"`
 
 **Your job as an agent:** Tell the user their password is ready to paste. Example responses:
+
 - "I found your credentials. Your password is now in your clipboard - just paste it with Cmd+V (or Ctrl+V on Windows/Linux)."
-- "Got it! The password for user@example.com has been copied. Paste it into the password field."
+- "Got it! The password for `user@example.com` has been copied. Paste it into the password field."
 
 ## Troubleshooting
 
-| Error | Solution |
-|-------|----------|
-| `op not installed` | Install from https://1password.com/downloads/command-line/ |
-| `Command timed out` | Run `op signin` to authenticate |
-| `Item not found` | Check item name spelling or specify vault |
-| `Clipboard error` | Ensure `pbcopy` (macOS), `xclip`/`xsel` (Linux), or `clip` (Windows) is available |
+| Error               | Solution                                                                          |
+| ------------------- | --------------------------------------------------------------------------------- |
+| `op not installed`  | Install from <https://1password.com/downloads/command-line/>                      |
+| `Command timed out` | Run `op signin` to authenticate                                                   |
+| `Item not found`    | Check item name spelling or specify vault                                         |
+| `Clipboard error`   | Ensure `pbcopy` (macOS), `xclip`/`xsel` (Linux), or `clip` (Windows) is available |
 
 ## Implementation Notes
 

@@ -3,4 +3,3 @@
 Consolidated knowledge from Claude Code sessions.
 
 ---
-

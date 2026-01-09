@@ -94,9 +94,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--folder", "-f", default="INBOX", help="Folder to list (default: INBOX)"
     )
-    parser.add_argument(
-        "--json", "-j", action="store_true", help="Output as JSON"
-    )
+    parser.add_argument("--json", "-j", action="store_true", help="Output as JSON")
 
     args = parser.parse_args()
 

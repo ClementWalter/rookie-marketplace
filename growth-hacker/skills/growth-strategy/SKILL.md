@@ -17,49 +17,58 @@ Modern growth hacking: loops + product-led growth + disciplined experimentation,
 ## 1. Growth Model First
 
 ### North Star Metric (NSM)
+
 - Single metric aligning the whole org
 - Plus input metrics (leading indicators you can move weekly)
 - Avoid vanity metrics
 
 ### Growth Loops > Funnels
+
 - **Loops**: Closed systems where outputs feed inputs → compounding growth
 - **Funnels**: Linear → diminishing returns
 
 Common loops:
-| Loop Type | Example |
-|-----------|---------|
-| Viral | User creates → shares → new users |
-| UGC/SEO | User creates content → indexed → new users find |
-| Paid | Revenue → reinvest in ads → more revenue |
-| Sales | Customer → case study → new leads |
+
+| Loop Type | Example                                         |
+| --------- | ----------------------------------------------- |
+| Viral     | User creates → shares → new users               |
+| UGC/SEO   | User creates content → indexed → new users find |
+| Paid      | Revenue → reinvest in ads → more revenue        |
+| Sales     | Customer → case study → new leads               |
 
 ### Product-Led Growth (B2B/SaaS)
+
 Product itself drives: Acquisition → Activation → Retention → Monetization
 
 ## 2. Instrumentation
 
 ### Event Taxonomy
+
 - Clean identity resolution: anonymous → user → account
 - Cohort retention tracking
 - Activation milestones defined
 
 ### Incrementality
+
 - Holdouts / geo splits when attribution is noisy
 - Don't trust last-click blindly
 
 ### Metric Categories
-| Type | Examples |
-|------|----------|
-| Core | NSM + input metrics |
+
+| Type       | Examples                                |
+| ---------- | --------------------------------------- |
+| Core       | NSM + input metrics                     |
 | Guardrails | Churn, spam rate, refunds, latency, NPS |
 
 ## 3. Experimentation Engine
 
 ### Intake System
+
 - Single queue + scoring (RICE/ICE)
 - Weekly cadence
 
 ### Test Definition (Required)
+
 - [ ] Hypothesis
 - [ ] Target segment
 - [ ] Success metric
@@ -68,6 +77,7 @@ Product itself drives: Acquisition → Activation → Retention → Monetization
 - [ ] Kill criteria
 
 ### High-ROI Test Areas
+
 - Onboarding steps
 - Paywall copy
 - Pricing/packaging
@@ -78,28 +88,34 @@ Product itself drives: Acquisition → Activation → Retention → Monetization
 ## 4. Lever-Specific Playbooks
 
 ### Activation & Onboarding (Highest ROI)
+
 - Reduce time-to-value
 - Templates, importers, "one-click first win"
 - Progressive disclosure (ask when needed, not upfront)
 - Guided setup flows
 
 ### Viral/Referral Loops
+
 - Build shareable artifacts (reports, badges, embeds)
 - "Invite teammates" as natural workflow
 - Reward activated referrals, not just signups
 
 ### Content + SEO
+
 - Programmatic SEO: template + real value + strong linking
 - Audit/prune thin pages (don't endlessly generate)
 - Quality > quantity
 
 ### Lifecycle (Email/Push)
+
 **Deliverability is gating factor:**
+
 - SPF/DKIM for all senders
 - DMARC for bulk
 - Keep complaint/spam rates low
 
 ### Community-Led Growth
+
 - Seed right early members
 - Great "first experience"
 - Connect to business outcomes (support deflection, referrals)
@@ -107,11 +123,13 @@ Product itself drives: Acquisition → Activation → Retention → Monetization
 ## 5. Privacy & Measurement Constraints
 
 ### Expect
+
 - Less reliable cross-site tracking
 - Cookie-based attribution unstable
 - Platform policy changes
 
 ### Adapt
+
 - First-party data focus
 - Server-side signals
 - Incrementality testing
@@ -120,12 +138,14 @@ Product itself drives: Acquisition → Activation → Retention → Monetization
 ## 6. AI in Growth
 
 ### Good Uses
+
 - Generate creative/landing page variants to test (humans review)
 - Summarize qualitative feedback
 - Cluster objections
 - Speed up research
 
 ### Avoid
+
 - "AI content spam" at scale without quality control
 - Backfires in SEO and brand
 
@@ -134,6 +154,7 @@ Product itself drives: Acquisition → Activation → Retention → Monetization
 **If a tactic can't survive being in a postmortem or public doc, don't ship it.**
 
 Never:
+
 - Spam (email/SMS)
 - Fake reviews
 - Scraping that violates ToS
@@ -144,7 +165,7 @@ Never:
 
 When proposing growth initiatives:
 
-```
+```text
 ## Initiative: [Name]
 **Loop/Lever**: [Which growth loop or lever this strengthens]
 **Hypothesis**: [If we do X, Y metric will improve by Z because...]

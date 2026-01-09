@@ -28,7 +28,9 @@ def run_op(args: list[str]) -> tuple[bool, str]:
 
 def get_all_items() -> list[dict]:
     """Get all login items from 1Password."""
-    success, output = run_op(["item", "list", "--categories", "Login", "--format", "json"])
+    success, output = run_op(
+        ["item", "list", "--categories", "Login", "--format", "json"]
+    )
     if not success:
         print(f"Error listing items: {output}", file=sys.stderr)
         return []
@@ -93,12 +95,14 @@ def main():
             continue
         username = extract_username(details)
         if username:
-            by_username[username].append({
-                "id": item["id"],
-                "title": item.get("title", "Untitled"),
-                "vault": item.get("vault", {}).get("name", "Unknown"),
-                "updated_at": item.get("updated_at", ""),
-            })
+            by_username[username].append(
+                {
+                    "id": item["id"],
+                    "title": item.get("title", "Untitled"),
+                    "vault": item.get("vault", {}).get("name", "Unknown"),
+                    "updated_at": item.get("updated_at", ""),
+                }
+            )
 
     # Find duplicates
     duplicates = {u: items for u, items in by_username.items() if len(items) > 1}
@@ -142,7 +146,7 @@ def main():
 
     deleted = 0
     failed = 0
-    for username, items in deletion_plan:
+    for _username, items in deletion_plan:
         for item in items:
             print(f"  Deleting: {item['title']}...", end=" ")
             if delete_item(item["id"]):

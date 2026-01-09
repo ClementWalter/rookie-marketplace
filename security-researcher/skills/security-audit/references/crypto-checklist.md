@@ -69,11 +69,11 @@
 
 ## Common Pitfalls
 
-| Issue | Problem | Fix |
-|-------|---------|-----|
-| ECB mode | Pattern leakage | Use AEAD |
-| Unauthenticated encryption | Malleability | Use AEAD |
-| Reused nonce | Key recovery | Counter or random nonce |
-| strcmp for MAC | Timing attack | Constant-time compare |
-| MD5/SHA1 | Broken | Use SHA-256+ |
-| Raw RSA | Padding oracle | Use RSA-OAEP/PSS |
+| Issue                      | Problem         | Fix                     |
+| -------------------------- | --------------- | ----------------------- |
+| ECB mode                   | Pattern leakage | Use AEAD                |
+| Unauthenticated encryption | Malleability    | Use AEAD                |
+| Reused nonce               | Key recovery    | Counter or random nonce |
+| strcmp for MAC             | Timing attack   | Constant-time compare   |
+| MD5/SHA1                   | Broken          | Use SHA-256+            |
+| Raw RSA                    | Padding oracle  | Use RSA-OAEP/PSS        |

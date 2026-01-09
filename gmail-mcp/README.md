@@ -33,6 +33,7 @@ op signin
 ### 3. Store in 1Password
 
 Create a 1Password item with:
+
 - **Item name**: Any descriptive name (e.g., "Gmail Work Claude")
 - **username** field: Your Gmail address (e.g., `user@gmail.com`)
 - **password** field: The app password from step 2
@@ -42,6 +43,7 @@ Create a 1Password item with:
 ### 4. Enable in Claude Code
 
 The plugin auto-loads from the marketplace. Verify with:
+
 ```bash
 claude /mcp
 ```
@@ -52,8 +54,8 @@ claude /mcp
 
 List recent emails from a folder.
 
-```
-account: "Gmail Work Claude"  # 1Password item name
+```yaml
+account: "Gmail Work Claude" # 1Password item name
 folder: INBOX (optional)
 limit: 10 (optional)
 ```
@@ -64,7 +66,7 @@ Returns: `[{id, from, subject, date, snippet}, ...]`
 
 Read full email content including threading headers.
 
-```
+```yaml
 account: "Gmail Work Claude"
 email_id: "46" (from list_emails)
 folder: INBOX (optional)
@@ -76,7 +78,7 @@ Returns: `{id, from, reply_to, to, subject, date, message_id, references, body}`
 
 Send an email with optional attachments.
 
-```
+```yaml
 account: "Gmail Work Claude"
 to: recipient@example.com
 subject: Hello
@@ -92,7 +94,7 @@ Returns: Success/error message
 
 Reply to an email, maintaining the thread.
 
-```
+```yaml
 account: "Gmail Work Claude"
 email_id: "46" (from list_emails or read_email)
 body: "Thanks for your message!"
@@ -103,6 +105,7 @@ folder: INBOX (optional)
 Returns: Success/error message
 
 Threading is automatic:
+
 - Sets `In-Reply-To` to original `Message-ID`
 - Builds proper `References` header chain
 - Adds `RE:` prefix to subject if needed
@@ -112,7 +115,7 @@ Threading is automatic:
 
 Search using IMAP syntax.
 
-```
+```yaml
 account: "Gmail Work Claude"
 query: FROM sender@example.com
 folder: INBOX (optional)
@@ -120,6 +123,7 @@ limit: 10 (optional)
 ```
 
 Common IMAP search queries:
+
 - `FROM sender@example.com`
 - `SUBJECT meeting`
 - `UNSEEN` (unread)

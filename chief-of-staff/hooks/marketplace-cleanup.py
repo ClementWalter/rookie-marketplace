@@ -77,7 +77,7 @@ Task tool:
 ```
 
 This is an automated quality check. The cleanup agent has full autonomy in the marketplace directory.
-"""
+""",
         }
     }
 

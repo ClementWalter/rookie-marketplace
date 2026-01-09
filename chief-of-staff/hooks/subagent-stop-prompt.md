@@ -1,9 +1,11 @@
-## MANDATORY: Completion Checklist
+# Completion Checklist
 
 **You CANNOT complete this task until you have done ALL of the following:**
 
-### 1. Run CI/Build/Tests
+## 1. Run CI/Build/Tests
+
 Run the project's test suite or build command. Common patterns:
+
 ```bash
 # Check for package.json scripts
 npm test OR npm run build OR npm run check
@@ -18,15 +20,18 @@ cargo test && cargo clippy
 pytest OR uv run pytest
 ```
 
-### 2. Verify git status is clean
+## 2. Verify git status is clean
+
 ```bash
 git status
 ```
+
 All changes should be committed. No untracked files that should be included.
 
 ---
 
 **RESPOND WITH:**
+
 - `approve` — ONLY if CI/tests passed and git is clean
 - `block: [reason]` — if you haven't completed the checklist, explaining what's missing
 

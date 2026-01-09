@@ -11,8 +11,8 @@ Usage:
 """
 
 import argparse
-import time
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -47,7 +47,9 @@ def log(msg: str):
 def fetch_tasks(project_id: str) -> list:
     """Fetch tasks from VibeKanban API."""
     try:
-        resp = httpx.get(f"{VK_API_BASE}/api/tasks", params={"project_id": project_id}, timeout=10)
+        resp = httpx.get(
+            f"{VK_API_BASE}/api/tasks", params={"project_id": project_id}, timeout=10
+        )
         resp.raise_for_status()
         data = resp.json()
         if data.get("success"):
@@ -109,7 +111,12 @@ def main():
     parser = argparse.ArgumentParser(description="Monitor VibeKanban tasks")
     parser.add_argument("--project", help="Project name (e.g., 'Stark V')")
     parser.add_argument("--project-id", help="Project UUID")
-    parser.add_argument("--interval", type=int, default=600, help="Poll interval in seconds (default: 600)")
+    parser.add_argument(
+        "--interval",
+        type=int,
+        default=600,
+        help="Poll interval in seconds (default: 600)",
+    )
     parser.add_argument("--once", action="store_true", help="Run once and exit")
     args = parser.parse_args()
 
