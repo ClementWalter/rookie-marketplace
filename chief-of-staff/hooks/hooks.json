@@ -1,5 +1,5 @@
 {
-  "description": "Chief of Staff hooks: session feedback, code quality enforcement, and marketplace cleanup",
+  "description": "Chief of Staff hooks: session learnings, code quality enforcement, and marketplace cleanup",
   "hooks": {
     "Stop": [
       {
@@ -9,10 +9,18 @@
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/hooks/marketplace-cleanup.py",
             "timeout": 5
-          },
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "*",
+        "hooks": [
           {
-            "type": "prompt",
-            "prompt": "Before ending this session, capture learnings for the knowledge base.\n\n**Required Action**: Use the Write tool to APPEND a retrospective entry to the learnings file at:\n`/Users/clementwalter/Documents/rookie-marketplace/chief-of-staff/learnings/session-learnings.md`\n\nFormat each entry as:\n```markdown\n## Session: YYYY-MM-DD HH:MM\n\n**Summary**: Brief 1-line summary of what was accomplished\n\n### What Worked Well\n- Item 1\n- Item 2\n\n### What Didn't Work\n- Item 1\n\n### Key Learnings\n- Insight 1\n- Insight 2\n\n---\n```\n\nAfter writing the learnings entry, return 'approve' to end the session.\nIf this was a trivial session with no significant learnings, return 'approve' immediately."
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/session-learnings.py",
+            "timeout": 5
           }
         ]
       }
@@ -22,8 +30,9 @@
         "matcher": "*",
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "## MANDATORY: Code Quality Checklist Before Completion\n\n**You CANNOT complete this task until you have done ALL of the following:**\n\n### 1. Run trunk check --fix\n```bash\ntrunk check --fix\n```\nIf trunk is not available, run the project's linter/formatter instead.\n\n### 2. Run CI/Build/Tests\nRun the project's test suite or build command. Common patterns:\n```bash\n# Check for package.json scripts\nnpm test OR npm run build OR npm run check\n\n# Check for Makefile\nmake test OR make check\n\n# Check for Cargo.toml\ncargo test && cargo clippy\n\n# Check for pyproject.toml\npytest OR uv run pytest\n```\n\n### 3. Verify git status is clean\n```bash\ngit status\n```\nAll changes should be committed. No untracked files that should be included.\n\n---\n\n**RESPOND WITH:**\n- `approve` — ONLY if you have run trunk check, CI/tests passed, and git is clean\n- `block: [reason]` — if you haven't completed the checklist, explaining what's missing\n\n**If you claim completion without running these checks, you are violating process. The Chief of Staff will reject your work.**"
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/subagent-stop.py",
+            "timeout": 5
           }
         ]
       }
