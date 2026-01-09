@@ -76,7 +76,7 @@ If you discover:
 - Better validation approaches
 - New quality patterns to enforce
 
-**Edit this file** (`/Users/clementwalter/Documents/rookie-marketplace/hooks/cleanup-prompt.md`) to update the cleanup prompt. Your improvements will apply to all future cleanup runs.
+**Edit this file** (`/Users/clementwalter/Documents/rookie-marketplace/chief-of-staff/hooks/cleanup-prompt.md`) to update the cleanup prompt. Your improvements will apply to all future cleanup runs.
 
 When updating this prompt:
 

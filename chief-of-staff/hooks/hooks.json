@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/../hooks/marketplace-cleanup.py",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/marketplace-cleanup.py",
             "timeout": 5
           }
         ]

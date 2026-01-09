@@ -17,8 +17,8 @@ from pathlib import Path
 
 MARKETPLACE_PATH = Path("/Users/clementwalter/Documents/rookie-marketplace")
 
-# Path to the cleanup prompt file (can be updated by cleanup agents)
-CLEANUP_PROMPT_FILE = MARKETPLACE_PATH / "hooks" / "cleanup-prompt.md"
+# Path to the cleanup prompt file (colocated with this hook)
+CLEANUP_PROMPT_FILE = Path(__file__).parent / "cleanup-prompt.md"
 
 
 def get_cleanup_prompt() -> str:
