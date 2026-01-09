@@ -1,6 +1,18 @@
 {
-  "description": "Session feedback, learning consolidation, and code quality enforcement hooks",
+  "description": "Chief of Staff hooks: session feedback, code quality enforcement, and marketplace cleanup",
   "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/../hooks/marketplace-cleanup.py",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "*",

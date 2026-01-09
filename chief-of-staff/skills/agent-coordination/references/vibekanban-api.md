@@ -212,9 +212,9 @@ mcp__vibe_kanban__list_repos(project_id="<uuid>")
 
 ---
 
-### start_task_attempt
+### start_workspace_session
 
-Start working on a task by launching an agent.
+Start working on a task by creating and launching a new workspace session.
 
 **Parameters**:
 | Parameter | Type | Required | Description |
@@ -237,7 +237,7 @@ Start working on a task by launching an agent.
 
 **Usage**:
 ```
-mcp__vibe_kanban__start_task_attempt(
+mcp__vibe_kanban__start_workspace_session(
   task_id="<task-uuid>",
   executor="CLAUDE_CODE",
   repos=[{"repo_id": "<repo-uuid>", "base_branch": "main"}]
@@ -276,7 +276,7 @@ task = mcp__vibe_kanban__create_task(
 repos = mcp__vibe_kanban__list_repos(project_id=project_id)
 
 # 3. Start agent
-attempt = mcp__vibe_kanban__start_task_attempt(
+attempt = mcp__vibe_kanban__start_workspace_session(
     task_id=task["id"],
     executor="CLAUDE_CODE",
     repos=[{"repo_id": repos[0]["id"], "base_branch": "main"}]
@@ -316,7 +316,7 @@ mcp__vibe_kanban__update_task(
                     ┌─────────────┐
                     │    todo     │
                     └──────┬──────┘
-                           │ start_task_attempt
+                           │ start_workspace_session
                            ▼
                     ┌─────────────┐
            ┌────────│ inprogress  │────────┐
@@ -354,7 +354,7 @@ import time
 def start_with_retry(task_id, executor, repos, max_attempts=3):
     for attempt in range(max_attempts):
         try:
-            return mcp__vibe_kanban__start_task_attempt(
+            return mcp__vibe_kanban__start_workspace_session(
                 task_id=task_id,
                 executor=executor,
                 repos=repos
