@@ -96,7 +96,7 @@ Title prefixes:
 repos = mcp__vibe_kanban__list_repos(project_id=<project_id>)
 
 # Start agent
-mcp__vibe_kanban__start_task_attempt(
+mcp__vibe_kanban__start_workspace_session(
     task_id=<task_id>,
     executor="CLAUDE_CODE",
     repos=[{"repo_id": repos[0]["id"], "base_branch": "main"}]
@@ -151,7 +151,7 @@ CoS Response:
 1. Ask clarifying questions (what's broken? error? browser?)
 2. Create task: "Bug: Login button broken on mobile"
 3. Add detailed description with investigation steps
-4. Attempt to assign agent via start_task_attempt
+4. Attempt to assign agent via start_workspace_session
 5. Report task created and assignment status
 ```
 

@@ -225,19 +225,24 @@ if __name__ == "__main__":
 
 ## Script Location
 
-Store reusable scraping scripts in skill directories:
+Reusable scraping scripts are in this skill's scripts directory:
 
 ```
 chief-of-staff/skills/efficient-scraping/scripts/
-├── twitter_profile.py
-├── linkedin_posts.py
-└── github_stars.py
+└── web-extract.py    # Generic web content extractor
 ```
 
-Reference from other skills:
+### Using web-extract.py
+
 ```bash
-uv run ~/.claude/plugins/cache/.../scripts/twitter_profile.py "@username"
+# Basic metadata extraction
+uv run scripts/web-extract.py "https://example.com"
+
+# Extract specific elements
+uv run scripts/web-extract.py "https://example.com" --selector ".article" --fields "text,href"
 ```
+
+Output is always minimal JSON - no raw HTML in context.
 
 ## Error Handling
 
@@ -277,3 +282,13 @@ except Exception as e:
 - [ ] Run script, read JSON output (not raw HTML)
 - [ ] Handle errors gracefully
 ```
+
+---
+
+## Available Scripts
+
+The following scripts are available in the marketplace but cannot be executed from Cursor rules:
+
+- `web-extract.py`: Generic web content extractor - extracts structured data from any URL.
+
+To use these scripts, run them via `uv run` from the marketplace directory.

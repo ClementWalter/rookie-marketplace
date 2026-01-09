@@ -229,7 +229,7 @@ mcp__vibe_kanban__update_task:
 
 ### Start Task Attempt (if repos configured)
 ```
-mcp__vibe_kanban__start_task_attempt:
+mcp__vibe_kanban__start_workspace_session:
   task_id: "uuid-here"
   executor: "CLAUDE_CODE"
   repos: [{"repo_id": "uuid", "base_branch": "main"}]

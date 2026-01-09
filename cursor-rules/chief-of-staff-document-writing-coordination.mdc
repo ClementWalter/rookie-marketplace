@@ -128,10 +128,10 @@ mcp__vibe_kanban__create_task:
 
 ### VK Attempt Requirements
 
-To spawn agents via VK `start_task_attempt`:
+To spawn agents via VK `start_workspace_session`:
 
 ```
-mcp__vibe_kanban__start_task_attempt:
+mcp__vibe_kanban__start_workspace_session:
   task_id: [task-uuid]
   executor: CLAUDE_CODE
   repos: [{repo_id: [repo-uuid], base_branch: main}]
@@ -241,7 +241,7 @@ Task is complete when:
 | `create_task` | Create new section task |
 | `update_task` | Change status/description |
 | `get_task` | Get task details |
-| `start_task_attempt` | Launch agent (needs repo_id) |
+| `start_workspace_session` | Launch agent (needs repo_id) |
 | `list_repos` | Get repository UUID |
 
 ### Task Status Flow
