@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """
-Marketplace Cleanup Hook - Triggers cleanup review after commits to rookie-marketplace.
+Marketplace Cleanup Hook - Triggers cleanup review at session end.
 
-This PostToolUse hook monitors for successful git commits in the marketplace directory
+This Stop hook checks if the session involved the marketplace directory
 and instructs Claude to spawn a cleanup agent for quality review.
 
-Hook Type: PostToolUse
-Matcher: Bash
+Hook Type: Stop
+Matcher: *
 """
 from __future__ import annotations
 
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -30,32 +29,15 @@ def get_cleanup_prompt() -> str:
     return """Review the rookie-marketplace for quality issues and fix them."""
 
 
-def is_marketplace_commit(tool_input: dict, tool_output: str, cwd: str) -> bool:
-    """Check if this was a git commit in the marketplace directory."""
-    command = tool_input.get("command", "")
-
-    # Must be a git commit command
-    if "git commit" not in command:
-        return False
-
-    # Check for error indicators
-    if "error" in tool_output.lower() or "fatal" in tool_output.lower():
-        return False
-
-    # Must be in marketplace directory
+def should_run_cleanup(cwd: str) -> bool:
+    """Check if we should run cleanup (session was in marketplace)."""
     cwd_path = Path(cwd).resolve()
 
     try:
         cwd_path.relative_to(MARKETPLACE_PATH)
         return True
     except ValueError:
-        pass
-
-    # Check if we're committing to marketplace from another location
-    if str(MARKETPLACE_PATH) in command:
-        return True
-
-    return False
+        return False
 
 
 def main():
@@ -64,29 +46,23 @@ def main():
     except json.JSONDecodeError:
         sys.exit(0)
 
-    tool_name = input_data.get("tool_name", "")
-    tool_input = input_data.get("tool_input", {})
-    tool_output = input_data.get("tool_output", "")
-    cwd = input_data.get("cwd", os.getcwd())
+    # Stop hook input has different structure
+    cwd = input_data.get("cwd", "")
 
-    # Only process Bash tool calls
-    if tool_name != "Bash":
+    # Check if session was in marketplace directory
+    if not should_run_cleanup(cwd):
         sys.exit(0)
 
-    # Check if this was a successful marketplace commit
-    if not is_marketplace_commit(tool_input, tool_output, cwd):
-        sys.exit(0)
-
-    # Load the cleanup prompt (can be self-updated by cleanup agents)
+    # Load the cleanup prompt
     cleanup_prompt = get_cleanup_prompt()
 
     # Return instruction to spawn cleanup agent
     output = {
         "hookSpecificOutput": {
-            "hookEventName": "PostToolUse",
-            "message": f"""## Marketplace Commit Detected
+            "hookEventName": "Stop",
+            "message": f"""## Marketplace Session Ending
 
-A commit was made to rookie-marketplace. Spawn a background cleanup agent.
+This session was in rookie-marketplace. Spawn a cleanup agent before ending.
 
 **Required Action**: Use the Task tool to spawn a cleanup agent:
 
@@ -100,7 +76,7 @@ Task tool:
 {cleanup_prompt}
 ```
 
-This is an automated quality check. The cleanup agent has full autonomy in the marketplace directory and can update its own prompt for future improvements.
+This is an automated quality check. The cleanup agent has full autonomy in the marketplace directory.
 """
         }
     }
