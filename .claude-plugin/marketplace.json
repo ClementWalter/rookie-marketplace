@@ -47,11 +47,6 @@
       "name": "growth-hacker",
       "description": "Modern growth strategy: loops, PLG, experimentation, and ethical constraints.",
       "source": "./growth-hacker"
-    },
-    {
-      "name": "linkedin-growth-agent",
-      "description": "Daily LinkedIn growth automation: cross-post from Twitter, engagement strategy, audience building.",
-      "source": "./linkedin-growth-agent"
     }
   ]
 }
