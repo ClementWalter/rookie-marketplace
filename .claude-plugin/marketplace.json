@@ -9,11 +9,6 @@
   },
   "plugins": [
     {
-      "name": "git-master",
-      "description": "Complete Git and GitHub workflow: issues, PRs, milestones, commits, worktrees, and merge utilities.",
-      "source": "./git-master"
-    },
-    {
       "name": "chief-of-staff",
       "description": "VibeKanban-powered project coordination and task orchestration for agent teams.",
       "source": "./chief-of-staff"

@@ -8,41 +8,6 @@ This marketplace contains skills for Claude Code that provide specialized knowle
 
 ## Available Plugins
 
-### git-master
-
-Complete Git and GitHub workflow management.
-
-**Skills:**
-
-| Skill | Triggers On |
-| ----- | ----------- |
-| `git-workflow` | "github issue", "milestone planning", "PR workflow", "git commit", "git worktree", "merge worktrees", "work on issues", "sub-issues" |
-
-**Commands:**
-
-| Command | Purpose |
-| ------- | ------- |
-| `/merge` | Merge all worktree changes back to main branch |
-
-**What it provides:**
-- Git worktree workflow (create, manage, merge)
-- GitHub issue hierarchy and milestones
-- Commit and PR workflows
-- Autonomous issue resolution patterns
-- gh CLI command reference
-- Milestone management scripts (uv)
-
-**Scripts:**
-
-| Script | Purpose |
-| ------ | ------- |
-| `set_milestone_recursive.py` | Set milestone on sub-issues recursively |
-| `milestone_from_issues.py` | Convert issues into new milestones |
-| `division_to_milestones.py` | Convert Division-labeled issues to milestones |
-| `move_subissues.py` | Move sub-issues between parent issues |
-
----
-
 ### chief-of-staff
 
 Agent coordination and task orchestration.
@@ -146,31 +111,6 @@ Modern growth strategy: loops + product-led growth + disciplined experimentation
 - Lever-specific playbooks (activation, viral, SEO, lifecycle)
 - Privacy and measurement constraints
 
-**Note:** For LinkedIn-specific growth automation, see `linkedin-growth-agent`.
-
----
-
-### linkedin-growth-agent
-
-Daily LinkedIn growth automation for Clément Walter.
-
-**Skills:**
-
-| Skill | Triggers On |
-| ----- | ----------- |
-| `daily-growth` | "linkedin growth", "cross-post twitter", "linkedin engagement", "daily growth checklist" |
-
-**What it provides:**
-- Daily execution checklist
-- Twitter → LinkedIn content adaptation
-- French tone/voice guidelines (50 patterns)
-- LinkedIn algorithm best practices
-- Supervised workflow (draft only, user posts)
-
-**Target accounts:**
-- Twitter: @ClementWalter
-- LinkedIn: Clément Walter
-
 ---
 
 ### 1password-mcp
@@ -250,11 +190,6 @@ git clone https://github.com/clementwalter/rookie-marketplace.git
 rookie-marketplace/
 ├── .claude-plugin/
 │   └── marketplace.json        # Marketplace metadata
-├── git-master/
-│   ├── skills/
-│   │   └── git-workflow/
-│   └── commands/
-│       └── merge.md
 ├── chief-of-staff/
 │   └── skills/
 │       ├── agent-coordination/
@@ -272,9 +207,6 @@ rookie-marketplace/
 ├── growth-hacker/
 │   └── skills/
 │       └── growth-strategy/
-├── linkedin-growth-agent/
-│   └── skills/
-│       └── daily-growth/
 ├── 1password-mcp/
 │   └── skills/
 │       └── credential-lookup/
