@@ -93,16 +93,16 @@ _Reference for Security Researcher skill (security-researcher plugin)_
 
 ## Common Vulnerabilities
 
-| Vulnerability | Check |
-|--------------|-------|
-| Reentrancy | CEI pattern, guards |
-| Access control | Modifier on all admin functions |
-| Oracle manipulation | TWAP, multiple sources |
-| Flash loan | Spot price avoided |
-| Front-running | Commit-reveal, MEV protection |
-| Denial of service | Bounded loops, pull payments |
-| Integer overflow | SafeMath or 0.8+ |
-| Uninitialized proxy | Initializer protection |
+| Vulnerability       | Check                           |
+| ------------------- | ------------------------------- |
+| Reentrancy          | CEI pattern, guards             |
+| Access control      | Modifier on all admin functions |
+| Oracle manipulation | TWAP, multiple sources          |
+| Flash loan          | Spot price avoided              |
+| Front-running       | Commit-reveal, MEV protection   |
+| Denial of service   | Bounded loops, pull payments    |
+| Integer overflow    | SafeMath or 0.8+                |
+| Uninitialized proxy | Initializer protection          |
 
 ## Testing Requirements
 

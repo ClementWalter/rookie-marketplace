@@ -107,7 +107,7 @@ Based on OWASP Top 10 (2025) and ASVS.
 
 ## Security Headers
 
-```
+```text
 Strict-Transport-Security: max-age=31536000; includeSubDomains
 Content-Security-Policy: default-src 'self'; script-src 'self'
 X-Content-Type-Options: nosniff

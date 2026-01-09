@@ -13,12 +13,12 @@ Extract data from websites efficiently using uv scripts. Never bloat context by 
 
 ## Core Principle
 
-**Programmatic extraction > Reading thousands of lines**
+### Programmatic extraction > Reading thousands of lines
 
-| Approach | Tokens | Quality | Speed |
-|----------|--------|---------|-------|
-| Read raw HTML into context | 50,000+ | Poor | Slow |
-| uv script + structured output | ~200 | Excellent | Fast |
+| Approach                      | Tokens  | Quality   | Speed |
+| ----------------------------- | ------- | --------- | ----- |
+| Read raw HTML into context    | 50,000+ | Poor      | Slow  |
+| uv script + structured output | ~200    | Excellent | Fast  |
 
 ## When This Applies
 
@@ -227,7 +227,7 @@ if __name__ == "__main__":
 
 Reusable scraping scripts are in this skill's scripts directory:
 
-```
+```text
 chief-of-staff/skills/efficient-scraping/scripts/
 └── web-extract.py    # Generic web content extractor
 ```
@@ -262,9 +262,9 @@ except Exception as e:
 
 ## Token Savings Example
 
-| Scenario | Without Script | With Script |
-|----------|----------------|-------------|
-| LinkedIn profile page | ~45,000 tokens | ~150 tokens |
+| Scenario                 | Without Script | With Script |
+| ------------------------ | -------------- | ----------- |
+| LinkedIn profile page    | ~45,000 tokens | ~150 tokens |
 | Twitter feed (20 tweets) | ~30,000 tokens | ~800 tokens |
 | API response (100 items) | ~20,000 tokens | ~500 tokens |
 

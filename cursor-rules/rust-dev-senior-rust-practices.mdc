@@ -34,13 +34,14 @@ If trunk has formatting issues, run `trunk fmt` to auto-fix.
 ### Start from "One Product = One Repo = One Workspace"
 
 Use a Rust workspace when you have:
+
 - Multiple crates that ship together (binary + libraries)
 - Shared tooling / CI
 - Shared versioning policy
 
 **Canonical workspace structure:**
 
-```
+```text
 repo/
   Cargo.toml            # workspace root
   crates/
@@ -55,6 +56,7 @@ repo/
 ### Keep Crates "Thin" and Boundaries "Hard"
 
 **Layered architecture:**
+
 - **core**: Pure logic, types, validation, algorithms. Minimal deps.
 - **adapters**: IO boundaries (db, network, rpc, filesystem). Trait-based boundary, minimal leakage.
 - **app / service**: Wiring (DI), config, runtime, orchestration.
@@ -67,6 +69,7 @@ repo/
 Too many crates is busywork. Start with 2–5 max.
 
 **Split only when:**
+
 - Compile times are painful and boundaries are real
 - You need separate release cadence
 - You need different dependency profiles (no-std, wasm, etc.)
@@ -126,7 +129,7 @@ Organize by capability / domain, not by "models/handlers/utils" spaghetti.
 
 **Good organization:**
 
-```
+```text
 core/
   src/
     lib.rs
@@ -142,7 +145,7 @@ core/
 
 **Avoid:**
 
-```
+```text
 models.rs
 handlers.rs
 utils.rs
@@ -167,6 +170,7 @@ Preludes tend to hide dependencies and make code review harder. Prefer explicit 
 ### Error Strategy: Pick One and Stick to It
 
 **Common approach:**
+
 - Library crates: `thiserror` for typed errors
 - Binaries: `anyhow` at the top level
 
@@ -175,6 +179,7 @@ Don't leak `anyhow::Error` across library boundaries unless you explicitly want 
 ### Keep Async at the Edge
 
 If you can keep core synchronous and pure, you gain:
+
 - Simpler tests
 - Portability
 - Less lifetime/pinning headaches
@@ -184,6 +189,7 @@ If you can keep core synchronous and pure, you gain:
 ### Be Picky: Fewer Deps, Higher-Quality Deps
 
 Every dependency adds:
+
 - Build time
 - Audit surface
 - Semver risk
@@ -211,12 +217,14 @@ Think "pyramid":
 ### 2. Integration Tests: Black-Box the Public API
 
 Use `crates/<crate>/tests/*.rs` for API-level tests.
+
 - Treat it as "a consumer of the crate"
 - Don't reach into private internals
 
 ### 3. End-to-End Tests: Few, But Real
 
 If you have a service:
+
 - Spin up dependencies (db) in CI (containers)
 - Run a small set of scenario tests
 
@@ -250,6 +258,7 @@ dbg!(value);
 ```
 
 **Why:**
+
 - Structured logging with levels (filter noise in production)
 - Spans for distributed tracing
 - Configurable output (JSON, pretty, etc.)
@@ -275,6 +284,7 @@ async fn test_async_something() {
 ```
 
 Add to `Cargo.toml` (use latest versions):
+
 ```toml
 [dev-dependencies]
 test-log = { version = "*", features = ["trace"] }  # use latest
@@ -311,6 +321,7 @@ cargo test --workspace --all-features
 ```
 
 **Additional gates:**
+
 - MSRV check (if you claim one)
 - `cargo deny` / `cargo audit`
 - (optional) `cargo llvm-cov` for coverage, but don't worship %
@@ -324,24 +335,29 @@ cargo test --workspace --all-features
 ## Practical Rules of Thumb
 
 **One-way dependencies:**
+
 - `core` → (nothing)
 - `adapters` → `core`
 - `app` → `adapters` + `core`
 - `bin` → `app`
 
 **Visibility:**
+
 - Everything private by default
 - Public API is a deliberate design artifact
 
 **IO placement:**
+
 - No IO in `core`
 
 **Test distribution:**
+
 - Unit tests everywhere
 - Integration tests at boundaries
 - E2E tests sparingly
 
 **Tooling:**
+
 - Pin toolchain
 - Centralize versions
 - Police features

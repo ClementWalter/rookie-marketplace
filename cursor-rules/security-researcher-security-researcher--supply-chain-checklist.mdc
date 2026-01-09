@@ -39,19 +39,23 @@ Based on SLSA and OpenSSF Scorecard frameworks.
 ## Build Integrity (SLSA Levels)
 
 ### SLSA Level 1
+
 - [ ] Build process documented
 - [ ] Provenance generated (who, what, when)
 
 ### SLSA Level 2
+
 - [ ] Build service used (not local machine)
 - [ ] Provenance authenticated (signed)
 
 ### SLSA Level 3
+
 - [ ] Hardened build platform
 - [ ] Non-falsifiable provenance
 - [ ] Isolated builds
 
 ### SLSA Level 4
+
 - [ ] Two-party review
 - [ ] Hermetic builds
 - [ ] Reproducible builds
@@ -91,6 +95,7 @@ Based on SLSA and OpenSSF Scorecard frameworks.
 ## Third-Party Code Review
 
 Before adding a dependency:
+
 - [ ] Maintainer reputation
 - [ ] Download count / usage
 - [ ] Recent commits / active maintenance
@@ -116,11 +121,11 @@ Before adding a dependency:
 
 ## Common Supply Chain Attacks
 
-| Attack | Mitigation |
-|--------|------------|
-| Typosquatting | Verify package names |
-| Dependency confusion | Namespace scoping |
-| Compromised maintainer | Pin versions, audit updates |
-| Build system compromise | Hermetic builds, provenance |
-| Malicious PR | Review process, signed commits |
-| CI secret exfiltration | Minimal permissions, secret rotation |
+| Attack                  | Mitigation                           |
+| ----------------------- | ------------------------------------ |
+| Typosquatting           | Verify package names                 |
+| Dependency confusion    | Namespace scoping                    |
+| Compromised maintainer  | Pin versions, audit updates          |
+| Build system compromise | Hermetic builds, provenance          |
+| Malicious PR            | Review process, signed commits       |
+| CI secret exfiltration  | Minimal permissions, secret rotation |
