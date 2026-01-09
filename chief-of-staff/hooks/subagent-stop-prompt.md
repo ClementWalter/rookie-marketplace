@@ -1,14 +1,8 @@
-## MANDATORY: Code Quality Checklist Before Completion
+## MANDATORY: Completion Checklist
 
 **You CANNOT complete this task until you have done ALL of the following:**
 
-### 1. Run trunk check --fix
-```bash
-trunk check --fix
-```
-If trunk is not available, run the project's linter/formatter instead.
-
-### 2. Run CI/Build/Tests
+### 1. Run CI/Build/Tests
 Run the project's test suite or build command. Common patterns:
 ```bash
 # Check for package.json scripts
@@ -24,7 +18,7 @@ cargo test && cargo clippy
 pytest OR uv run pytest
 ```
 
-### 3. Verify git status is clean
+### 2. Verify git status is clean
 ```bash
 git status
 ```
@@ -33,7 +27,9 @@ All changes should be committed. No untracked files that should be included.
 ---
 
 **RESPOND WITH:**
-- `approve` — ONLY if you have run trunk check, CI/tests passed, and git is clean
+- `approve` — ONLY if CI/tests passed and git is clean
 - `block: [reason]` — if you haven't completed the checklist, explaining what's missing
+
+**Note:** Trunk formatting/linting is handled automatically by a global hook after each file edit.
 
 **If you claim completion without running these checks, you are violating process. The Chief of Staff will reject your work.**
